@@ -1,223 +1,29 @@
-
-const CONFIG = {
-  telegramUrl: "https://t.me/VOTRE_BOT_TELEGRAM",
-  cataloguePdfUrl: "#",
-  coaUrl: "#"
-};
-
-document.querySelectorAll("[data-telegram]").forEach(link => link.href = CONFIG.telegramUrl);
-document.querySelectorAll("[data-catalog-pdf]").forEach(link => link.href = CONFIG.cataloguePdfUrl);
-document.querySelectorAll("[data-coa]").forEach(link => link.href = CONFIG.coaUrl);
-
-const menuToggle = document.getElementById("menuToggle");
-const mainNav = document.getElementById("mainNav");
-menuToggle?.addEventListener("click", () => mainNav.classList.toggle("open"));
-mainNav?.querySelectorAll("a").forEach(a => a.addEventListener("click", () => mainNav.classList.remove("open")));
-
-const revealObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: .12 });
-document.querySelectorAll(".reveal").forEach(el => revealObserver.observe(el));
-
-let products = [];
-const productGrid = document.getElementById("productGrid");
-const productCount = document.getElementById("productCount");
-const searchInput = document.getElementById("searchInput");
-const categoryFilter = document.getElementById("categoryFilter");
-const clearFilters = document.getElementById("clearFilters");
-
-fetch("products.json")
-  .then(r => r.json())
-  .then(data => {
-    products = data;
-    const categories = [...new Set(products.map(p => p.category))].sort();
-    categories.forEach(category => {
-      const option = document.createElement("option");
-      option.value = category;
-      option.textContent = category;
-      categoryFilter.appendChild(option);
-    });
-    renderProducts();
-  })
-  .catch(() => {
-    productCount.textContent = "Catalogue indisponible";
-  });
-
-function renderProducts() {
-  const q = searchInput.value.trim().toLowerCase();
-  const category = categoryFilter.value;
-  const filtered = products.filter(product => {
-    const matchesText = !q || `${product.name} ${product.category}`.toLowerCase().includes(q);
-    const matchesCategory = !category || product.category === category;
-    return matchesText && matchesCategory;
-  });
-
-  productCount.textContent = `${filtered.length} référence${filtered.length > 1 ? "s" : ""}`;
-  productGrid.innerHTML = filtered.map(product => `
-    <article class="product-card">
-      <div class="product-top">
-        <span class="product-tag">${product.tag}</span>
-        <span class="product-category">${product.category}</span>
-      </div>
-      <h3>${product.name}</h3>
-      <div class="product-footer">
-        <div>
-          <div class="product-category">Prix indicatif</div>
-          <div class="price">${Number(product.price).toFixed(2)} €</div>
-        </div>
-        <button class="add-button" data-product="${product.name}">Commander</button>
-      </div>
-    </article>
-  `).join("");
-
-  productGrid.querySelectorAll(".add-button").forEach(button => {
-    button.addEventListener("click", () => {
-      const product = encodeURIComponent(button.dataset.product);
-      const message = encodeURIComponent(`Bonjour, je souhaite commander : ${button.dataset.product}`);
-      const deepLink = `${CONFIG.telegramUrl}?text=${message}`;
-      window.open(deepLink, "_blank", "noopener");
-    });
-  });
-}
-
-searchInput.addEventListener("input", renderProducts);
-categoryFilter.addEventListener("change", renderProducts);
-clearFilters.addEventListener("click", () => {
-  searchInput.value = "";
-  categoryFilter.value = "";
-  renderProducts();
-});
-
-// Animated biotechnology background: DNA ribbon + molecules + particles.
-const canvas = document.getElementById("bioCanvas");
-const ctx = canvas.getContext("2d");
-let width = 0;
-let height = 0;
-let dpr = Math.min(window.devicePixelRatio || 1, 2);
-let time = 0;
-let mouseX = 0;
-let mouseY = 0;
-
-const particles = Array.from({ length: 56 }, () => ({
-  x: Math.random(),
-  y: Math.random(),
-  z: .25 + Math.random() * .75,
-  r: .5 + Math.random() * 1.6,
-  speed: .00008 + Math.random() * .00016
-}));
-
-const molecules = Array.from({ length: 8 }, () => ({
-  x: Math.random(),
-  y: Math.random(),
-  size: 22 + Math.random() * 38,
-  phase: Math.random() * Math.PI * 2,
-  speed: .00012 + Math.random() * .0002
-}));
-
-function resize() {
-  width = window.innerWidth;
-  height = window.innerHeight;
-  dpr = Math.min(window.devicePixelRatio || 1, 2);
-  canvas.width = width * dpr;
-  canvas.height = height * dpr;
-  canvas.style.width = `${width}px`;
-  canvas.style.height = `${height}px`;
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-}
-window.addEventListener("resize", resize);
-window.addEventListener("pointermove", e => {
-  mouseX = (e.clientX / width - .5) * 18;
-  mouseY = (e.clientY / height - .5) * 12;
-});
-resize();
-
-function drawDNA(t) {
-  const centerX = width * .5 + mouseX;
-  const startY = -80;
-  const spacing = 24;
-  const amplitude = Math.min(110, width * .13);
-  const turns = Math.ceil((height + 160) / spacing);
-  ctx.lineWidth = 1;
-
-  for (let i = 0; i < turns; i++) {
-    const y = startY + i * spacing;
-    const phase = i * .42 + t * .00045;
-    const x1 = centerX + Math.sin(phase) * amplitude;
-    const x2 = centerX + Math.sin(phase + Math.PI) * amplitude;
-    const depth = (Math.cos(phase) + 1) / 2;
-    const alpha = .05 + depth * .12;
-
-    ctx.beginPath();
-    ctx.strokeStyle = `rgba(23,217,232,${alpha})`;
-    ctx.moveTo(x1, y);
-    ctx.lineTo(x2, y);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(118,239,101,${.06 + depth * .16})`;
-    ctx.arc(x1, y, 2.2 + depth * 1.5, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(155,71,255,${.05 + (1-depth) * .15})`;
-    ctx.arc(x2, y, 2.2 + (1-depth) * 1.5, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-function drawParticles(t) {
-  particles.forEach(p => {
-    p.y -= p.speed * 16;
-    if (p.y < -.02) { p.y = 1.02; p.x = Math.random(); }
-    const x = p.x * width + mouseX * p.z;
-    const y = p.y * height + mouseY * p.z;
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(164,228,255,${.05 + p.z * .12})`;
-    ctx.arc(x, y, p.r * p.z, 0, Math.PI * 2);
-    ctx.fill();
-  });
-}
-
-function drawMolecules(t) {
-  molecules.forEach(m => {
-    const x = m.x * width + Math.sin(t * m.speed + m.phase) * 24 + mouseX * .25;
-    const y = m.y * height + Math.cos(t * m.speed * .8 + m.phase) * 18 + mouseY * .25;
-    const s = m.size;
-    ctx.strokeStyle = "rgba(125,207,235,.065)";
-    ctx.fillStyle = "rgba(125,207,235,.08)";
-    ctx.lineWidth = 1;
-
-    const pts = [
-      [x, y],
-      [x + s*.7, y - s*.28],
-      [x + s*.9, y + s*.42],
-      [x + s*.2, y + s*.72]
-    ];
-    ctx.beginPath();
-    pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
-    ctx.closePath();
-    ctx.stroke();
-    pts.forEach((p, i) => {
-      ctx.beginPath();
-      ctx.arc(p[0], p[1], i === 0 ? 3.2 : 2.2, 0, Math.PI * 2);
-      ctx.fill();
-    });
-  });
-}
-
-function animate(t) {
-  time = t;
-  ctx.clearRect(0, 0, width, height);
-  drawParticles(t);
-  drawMolecules(t);
-  drawDNA(t);
-  requestAnimationFrame(animate);
-}
-if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-  requestAnimationFrame(animate);
-}
+const CONFIG={telegramUrl:"https://t.me/NexusCommande_bot"};
+const copy={
+fr:{intro:"ADVANCING BIOHACKING RESEARCH",navCatalogue:"Catalogue",navStandards:"Standards",navDelivery:"Livraison",navContact:"Contact",order:"Commander",kicker:"PEPTIDES DE RECHERCHE HAUTE PURETÉ",heroTitle:"La précision scientifique.<br><span>Sans compromis.</span>",heroText:"Composés de recherche sélectionnés selon des standards exigeants, paiement sécurisé en cryptomonnaie et expédition rapide en France.",explore:"Explorer le catalogue",quickOrder:"Commande rapide sur Telegram",days:"jours en France",crypto:"paiement sécurisé",shipping:"expédition européenne",strip1:"Exclusivement pour la recherche",strip2:"Livraison France rapide",strip3:"Paiements en cryptomonnaies",strip4:"Expédition européenne",library:"RESEARCH LIBRARY",catalogueTitle:"Explorez par <span>objectif de recherche</span>",catalogueIntro:"Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.",allCategories:"Toutes les catégories",availableOnly:"Disponibles uniquement",reset:"Réinitialiser",standardsKicker:"NEXUS QUALITY STANDARD",standardsTitle:"La recherche avance.<br><span>Nos exigences aussi.</span>",standardsText:"Une sélection rigoureuse, une présentation transparente et une expérience pensée pour accéder rapidement aux références, à leur disponibilité et à la documentation associée.",standard1Title:"Pureté & traçabilité",standard1Text:"Informations de lot et documentation destinées à la recherche.",standard2Title:"Conservation maîtrisée",standard2Text:"Indications de stockage clairement présentées pour chaque référence.",standard3Title:"Accès rapide",standard3Text:"Catalogue filtrable et commande Telegram simplifiée.",deliveryKicker:"EXPÉDITION",deliveryTitle:"Rapide en France. Étendue à l’Europe.",deliveryText:"Livraison généralement estimée entre 2 et 3 jours ouvrés en France métropolitaine. Les conditions et délais européens peuvent varier selon la destination.",contactKicker:"ORDER ACCESS",contactTitle:"Prêt à préparer votre commande ?",contactText:"Ouvrez le bot Nexus sur Telegram. Votre sélection peut être transmise en quelques instants.",openTelegram:"Ouvrir le bot Telegram",footer:"Exclusivement destiné à la recherche scientifique. Non destiné à la consommation humaine ou animale.",orderProduct:"Commander ce produit",continue:"Continuer à explorer",available:"Disponible",unavailable:"Indisponible",references:"références"},
+en:{intro:"ADVANCING BIOHACKING RESEARCH",navCatalogue:"Library",navStandards:"Standards",navDelivery:"Shipping",navContact:"Contact",order:"Order",kicker:"HIGH-PURITY RESEARCH PEPTIDES",heroTitle:"Scientific precision.<br><span>Without compromise.</span>",heroText:"Research compounds selected to demanding standards, secure cryptocurrency payments and fast shipping across France and Europe.",explore:"Explore the research library",quickOrder:"Fast order via Telegram",days:"days in France",crypto:"secure payment",shipping:"European shipping",strip1:"Research use only",strip2:"Fast France delivery",strip3:"Cryptocurrency payments",strip4:"European shipping",library:"RESEARCH LIBRARY",catalogueTitle:"Explore by <span>research objective</span>",catalogueIntro:"Search a compound, filter by field and review its current availability.",allCategories:"All categories",availableOnly:"Available only",reset:"Reset",standardsKicker:"NEXUS QUALITY STANDARD",standardsTitle:"Research moves forward.<br><span>So do our standards.</span>",standardsText:"Rigorous selection, transparent presentation and an experience built for fast access to compounds, availability and associated documentation.",standard1Title:"Purity & traceability",standard1Text:"Batch information and research documentation.",standard2Title:"Controlled storage",standard2Text:"Clear storage guidance for every reference.",standard3Title:"Fast access",standard3Text:"Filterable catalogue and simplified Telegram ordering.",deliveryKicker:"SHIPPING",deliveryTitle:"Fast in France. Extended across Europe.",deliveryText:"Delivery is generally estimated at 2 to 3 business days in metropolitan France. European conditions and transit times may vary by destination.",contactKicker:"ORDER ACCESS",contactTitle:"Ready to prepare your order?",contactText:"Open the Nexus bot on Telegram. Your selection can be transmitted in moments.",openTelegram:"Open Telegram bot",footer:"Strictly intended for scientific research. Not intended for human or animal consumption.",orderProduct:"Order this compound",continue:"Continue exploring",available:"Available",unavailable:"Unavailable",references:"references"}};
+let lang=localStorage.getItem("nexusLang")||"fr",products=[],availableOnly=false,activeProduct=null;
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+function translate(){document.documentElement.lang=lang;$$("[data-i18n]").forEach(el=>el.textContent=copy[lang][el.dataset.i18n]||el.textContent);$$("[data-i18n-html]").forEach(el=>el.innerHTML=copy[lang][el.dataset.i18nHtml]||el.innerHTML);$("#langToggle").textContent=lang==="fr"?"EN":"FR";$("#search").placeholder=$("#search").dataset[lang==="fr"?"placeholderFr":"placeholderEn"];renderCategories();renderProducts();if(activeProduct)fillModal(activeProduct)}
+$("#langToggle").onclick=()=>{lang=lang==="fr"?"en":"fr";localStorage.setItem("nexusLang",lang);translate()};
+$$("[data-telegram]").forEach(a=>a.href=CONFIG.telegramUrl);
+setTimeout(()=>$("#intro").classList.add("done"),1900);
+const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target)}}),{threshold:.12});$$(".reveal").forEach(e=>observer.observe(e));
+fetch("products.json").then(r=>r.json()).then(d=>{products=d;renderCategories();renderProducts()});
+function renderCategories(){if(!products.length)return;const select=$("#category"),current=select.value;const cats=[...new Map(products.map(p=>[(lang==="fr"?p.categoryFr:p.categoryEn),p.categoryFr])).entries()];select.innerHTML=`<option value="">${copy[lang].allCategories}</option>`+cats.sort((a,b)=>a[0].localeCompare(b[0])).map(([label,value])=>`<option value="${value}">${label}</option>`).join("");select.value=current}
+function renderProducts(){if(!products.length)return;const q=$("#search").value.toLowerCase().trim(),cat=$("#category").value;const filtered=products.filter(p=>(!q||(`${p.name} ${p.categoryFr} ${p.categoryEn}`).toLowerCase().includes(q))&&(!cat||p.categoryFr===cat)&&(!availableOnly||p.available));$("#count").textContent=`${filtered.length} ${copy[lang].references}`;$("#grid").innerHTML=filtered.map((p,i)=>`<article class="product" data-id="${p.id}" style="animation-delay:${Math.min(i,12)*35}ms"><div class="product-visual"><span class="status ${p.available?"yes":"no"}">${p.available?copy[lang].available:copy[lang].unavailable}</span><img src="${p.image}" alt="${p.name}" loading="lazy"></div><div class="product-copy"><small>${lang==="fr"?p.categoryFr:p.categoryEn}</small><h3>${p.name}</h3><div class="product-bottom"><span class="price">${p.price.toFixed(2)} €</span><span class="view">${lang==="fr"?"Voir la fiche":"View details"} ↗</span></div></div></article>`).join("");$$(".product").forEach(card=>card.onclick=()=>openModal(products.find(p=>p.id===card.dataset.id)))}
+$("#search").oninput=renderProducts;$("#category").onchange=renderProducts;$("#availableOnly").onclick=()=>{availableOnly=!availableOnly;$("#availableOnly").classList.toggle("active",availableOnly);renderProducts()};$("#reset").onclick=()=>{$("#search").value="";$("#category").value="";availableOnly=false;$("#availableOnly").classList.remove("active");renderProducts()};
+function fillModal(p){$("#modalImage").src=p.image;$("#modalImage").alt=p.name;$("#modalCategory").textContent=lang==="fr"?p.categoryFr:p.categoryEn;$("#modalName").textContent=p.name;$("#modalPrice").textContent=`${p.price.toFixed(2)} €`;$("#modalDescription").textContent=lang==="fr"?p.descriptionFr:p.descriptionEn;$("#modalStatus").textContent=p.available?copy[lang].available:copy[lang].unavailable;$("#modalStatus").className=`modal-status ${p.available?"status yes":"status no"}`;const msg=encodeURIComponent(lang==="fr"?`Bonjour, je souhaite commander : ${p.name}`:`Hello, I would like to order: ${p.name}`);$("#modalOrder").href=`${CONFIG.telegramUrl}?text=${msg}`;$("#modalOrder").style.opacity=p.available?"1":".45";$("#modalOrder").style.pointerEvents=p.available?"auto":"none"}
+function openModal(p){activeProduct=p;fillModal(p);$("#modal").classList.add("open");$("#modal").setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+function closeModal(){activeProduct=null;$("#modal").classList.remove("open");$("#modal").setAttribute("aria-hidden","true");document.body.style.overflow=""}
+$("#modalClose").onclick=closeModal;$("#modalBack").onclick=closeModal;$("#modal").onclick=e=>{if(e.target===$("#modal"))closeModal()};document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+translate();
+// Canvas: rotating DNA, molecular constellations, depth particles.
+const canvas=$("#scene"),ctx=canvas.getContext("2d");let w,h,dpr=Math.min(devicePixelRatio||1,2),mx=0,my=0;
+const particles=Array.from({length:75},()=>({x:Math.random(),y:Math.random(),z:.2+Math.random()*.8,r:.4+Math.random()*1.8,s:.00004+Math.random()*.00012}));
+const mols=Array.from({length:10},()=>({x:Math.random(),y:Math.random(),s:25+Math.random()*55,p:Math.random()*6.28,v:.00007+Math.random()*.00012}));
+function resize(){w=innerWidth;h=innerHeight;canvas.width=w*dpr;canvas.height=h*dpr;canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0)}resize();addEventListener("resize",resize);addEventListener("pointermove",e=>{mx=(e.clientX/w-.5)*24;my=(e.clientY/h-.5)*16});
+function dna(t){const cx=w*.72+mx,amp=Math.min(135,w*.13),step=25;for(let y=-100,i=0;y<h+100;y+=step,i++){const ph=i*.41+t*.00042,x1=cx+Math.sin(ph)*amp,x2=cx+Math.sin(ph+Math.PI)*amp,d=(Math.cos(ph)+1)/2;ctx.strokeStyle=`rgba(25,215,232,${.025+d*.09})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x1,y);ctx.lineTo(x2,y);ctx.stroke();ctx.fillStyle=`rgba(134,239,99,${.05+d*.14})`;ctx.beginPath();ctx.arc(x1,y,2+d*1.5,0,6.28);ctx.fill();ctx.fillStyle=`rgba(155,70,255,${.04+(1-d)*.13})`;ctx.beginPath();ctx.arc(x2,y,2+(1-d)*1.5,0,6.28);ctx.fill()}}
+function dust(){particles.forEach(p=>{p.y-=p.s;if(p.y<-.02){p.y=1.02;p.x=Math.random()}ctx.fillStyle=`rgba(165,225,245,${.025+p.z*.11})`;ctx.beginPath();ctx.arc(p.x*w+mx*p.z,p.y*h+my*p.z,p.r*p.z,0,6.28);ctx.fill()})}
+function molecules(t){mols.forEach(m=>{const x=m.x*w+Math.sin(t*m.v+m.p)*25+mx*.22,y=m.y*h+Math.cos(t*m.v*.8+m.p)*18+my*.22,s=m.s;const pts=[[x,y],[x+s*.65,y-s*.25],[x+s*.86,y+s*.38],[x+s*.18,y+s*.67]];ctx.strokeStyle="rgba(110,205,235,.045)";ctx.fillStyle="rgba(110,205,235,.065)";ctx.beginPath();pts.forEach((p,i)=>i?ctx.lineTo(...p):ctx.moveTo(...p));ctx.closePath();ctx.stroke();pts.forEach(p=>{ctx.beginPath();ctx.arc(p[0],p[1],2.1,0,6.28);ctx.fill()})})}
+function loop(t){ctx.clearRect(0,0,w,h);const g=ctx.createRadialGradient(w*.72,h*.35,0,w*.72,h*.35,Math.max(w,h)*.7);g.addColorStop(0,"rgba(18,111,140,.10)");g.addColorStop(.55,"rgba(45,30,110,.035)");g.addColorStop(1,"rgba(2,6,9,0)");ctx.fillStyle=g;ctx.fillRect(0,0,w,h);dust();molecules(t);dna(t);requestAnimationFrame(loop)}if(!matchMedia("(prefers-reduced-motion: reduce)").matches)requestAnimationFrame(loop);
