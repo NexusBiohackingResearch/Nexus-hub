@@ -1,0 +1,230 @@
+[
+  {
+    "name": "HGH 10U",
+    "price": 40,
+    "category": "Growth & Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "BAC Water 10ml",
+    "price": 10,
+    "category": "Supplies",
+    "tag": "Laboratory"
+  },
+  {
+    "name": "HMG 76",
+    "price": 50,
+    "category": "Hormonal Research",
+    "tag": "Research"
+  },
+  {
+    "name": "HCG 5000",
+    "price": 55,
+    "category": "Hormonal Research",
+    "tag": "Research"
+  },
+  {
+    "name": "Retatrutide 10mg",
+    "price": 100,
+    "category": "Metabolic Research",
+    "tag": "Research"
+  },
+  {
+    "name": "Retatrutide 20mg",
+    "price": 150,
+    "category": "Metabolic Research",
+    "tag": "Research"
+  },
+  {
+    "name": "BPC-157 5mg",
+    "price": 30,
+    "category": "Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "BPC-157 10mg",
+    "price": 50,
+    "category": "Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "TB-500 10mg",
+    "price": 70,
+    "category": "Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "BPC-157 + TB-500 5mg + 5mg",
+    "price": 70,
+    "category": "Recovery",
+    "tag": "Blend"
+  },
+  {
+    "name": "BPC-157 + TB-500 10mg + 10mg",
+    "price": 140,
+    "category": "Recovery",
+    "tag": "Blend"
+  },
+  {
+    "name": "GHK-Cu 50mg",
+    "price": 35,
+    "category": "Skin & Cellular",
+    "tag": "Research"
+  },
+  {
+    "name": "GLOW-70 70mg",
+    "price": 96,
+    "category": "Skin & Cellular",
+    "tag": "Blend"
+  },
+  {
+    "name": "MGF 2mg",
+    "price": 45,
+    "category": "Growth & Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "PEG MGF 2mg",
+    "price": 23,
+    "category": "Growth & Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "Epithalon 10mg",
+    "price": 35,
+    "category": "Longevity",
+    "tag": "Research"
+  },
+  {
+    "name": "Tesamorelin 12mg + Ipamorelin 6mg",
+    "price": 180,
+    "category": "Growth & Recovery",
+    "tag": "Blend"
+  },
+  {
+    "name": "Semax 10mg + Selank 10mg",
+    "price": 70,
+    "category": "Cognitive Research",
+    "tag": "Blend"
+  },
+  {
+    "name": "CJC-1295 w/o DAC + Ipamorelin 5mg + 5mg",
+    "price": 60,
+    "category": "Growth & Recovery",
+    "tag": "Blend"
+  },
+  {
+    "name": "NAD+ 1000mg",
+    "price": 100,
+    "category": "Longevity",
+    "tag": "Research"
+  },
+  {
+    "name": "GHRP-2 2mg",
+    "price": 21,
+    "category": "Growth & Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "GHRP-6 5mg",
+    "price": 21,
+    "category": "Growth & Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "IGF-LR3 1mg",
+    "price": 149,
+    "category": "Growth & Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "MOTS-C 10mg",
+    "price": 47,
+    "category": "Metabolic Research",
+    "tag": "Research"
+  },
+  {
+    "name": "DSIP 10mg",
+    "price": 50,
+    "category": "Sleep Research",
+    "tag": "Research"
+  },
+  {
+    "name": "Oxytocin 5mg",
+    "price": 35,
+    "category": "Neuro Research",
+    "tag": "Research"
+  },
+  {
+    "name": "AOD-9604 5mg",
+    "price": 50,
+    "category": "Metabolic Research",
+    "tag": "Research"
+  },
+  {
+    "name": "PT-141 10mg",
+    "price": 50,
+    "category": "Neuro Research",
+    "tag": "Research"
+  },
+  {
+    "name": "MT-I 10mg",
+    "price": 38,
+    "category": "Melanocortin Research",
+    "tag": "Research"
+  },
+  {
+    "name": "MT-II 10mg",
+    "price": 40,
+    "category": "Melanocortin Research",
+    "tag": "Research"
+  },
+  {
+    "name": "Kisspeptin 5mg",
+    "price": 40,
+    "category": "Hormonal Research",
+    "tag": "Research"
+  },
+  {
+    "name": "SS-31 10mg",
+    "price": 70,
+    "category": "Mitochondrial Research",
+    "tag": "Research"
+  },
+  {
+    "name": "KPV",
+    "price": 47,
+    "category": "Recovery",
+    "tag": "Research"
+  },
+  {
+    "name": "Glutathione",
+    "price": 55,
+    "category": "Cellular Research",
+    "tag": "Research"
+  },
+  {
+    "name": "5-Amino-1MQ 5mg",
+    "price": 45,
+    "category": "Metabolic Research",
+    "tag": "Research"
+  },
+  {
+    "name": "Bronchogen 20mg",
+    "price": 80,
+    "category": "Bioregulators",
+    "tag": "Research"
+  },
+  {
+    "name": "Livagen 20mg",
+    "price": 80,
+    "category": "Bioregulators",
+    "tag": "Research"
+  },
+  {
+    "name": "Pancragen 20mg",
+    "price": 80,
+    "category": "Bioregulators",
+    "tag": "Research"
+  }
+]
