@@ -1,5 +1,5 @@
 
-const CONFIG = window.NEXUS_CONFIG || { telegramUrl: "#" };
+const CONFIG = window.NEXUS_CONFIG || { telegramUrl: "https://t.me/NexusCommande_bot" };
 
 const translations = {
   fr: {
