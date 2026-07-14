@@ -3,147 +3,210 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#020609">
-  <meta name="description" content="NEXUS Biohacking Research — high-purity research compounds, fast France delivery and secure cryptocurrency payments.">
-  <title>NEXUS // Research Portal</title>
+  <meta name="theme-color" content="#03070b">
+  <meta name="description" content="NEXUS Biohacking Research — peptides de recherche haute pureté, paiement en cryptomonnaie et expédition France & Europe.">
+  <title>NEXUS Biohacking Research</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-  <canvas id="scene" aria-hidden="true"></canvas>
-  <div class="noise" aria-hidden="true"></div>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
 
-  <div class="intro" id="intro">
-    <div class="intro-core">
-      <div class="intro-line"></div>
+  <header class="header">
+    <a class="brand" href="#home" aria-label="Nexus accueil">
+      <span class="brand-mark"></span>
       <span>NEXUS</span>
-      <small data-i18n="intro">ADVANCING BIOHACKING RESEARCH</small>
-    </div>
-  </div>
+      <small>Biohacking Research</small>
+    </a>
 
-  <header>
-    <a class="brand" href="#home"><span class="signal"></span>NEXUS <b>// RESEARCH PORTAL</b></a>
-    <nav>
+    <button class="menu-button" id="menuButton" aria-label="Ouvrir le menu">Menu</button>
+
+    <nav class="nav" id="nav">
+      <a href="#domains" data-i18n="navDomains">Domaines</a>
       <a href="#catalogue" data-i18n="navCatalogue">Catalogue</a>
-      <a href="#standards" data-i18n="navStandards">Standards</a>
+      <a href="#quality" data-i18n="navQuality">Qualité</a>
       <a href="#delivery" data-i18n="navDelivery">Livraison</a>
       <a href="#contact" data-i18n="navContact">Contact</a>
     </nav>
+
     <div class="header-actions">
-      <button class="lang" id="langToggle">EN</button>
-      <a class="order-small" data-telegram href="#" data-i18n="order">Commander</a>
+      <button class="language-button" id="languageButton">EN</button>
+      <a class="header-order" data-telegram href="#" data-i18n="order">Commander</a>
     </div>
   </header>
 
   <main>
     <section class="hero" id="home">
-      <div class="hero-copy">
-        <p class="kicker reveal" data-i18n="kicker">PEPTIDES DE RECHERCHE HAUTE PURETÉ</p>
-        <h1 class="reveal" data-i18n-html="heroTitle">La précision scientifique.<br><span>Sans compromis.</span></h1>
-        <p class="hero-text reveal" data-i18n="heroText">
-          Composés de recherche sélectionnés selon des standards exigeants, paiement sécurisé en cryptomonnaie et expédition rapide en France.
+      <div class="hero-media" aria-hidden="true">
+        <video id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="assets/images/cinematic-poster.png">
+          <source src="assets/video/nexus-intro.mp4" type="video/mp4">
+        </video>
+        <div class="hero-media-shade"></div>
+      </div>
+
+      <div class="hero-content">
+        <p class="eyebrow reveal" data-i18n="heroEyebrow">PEPTIDES DE RECHERCHE HAUTE PURETÉ</p>
+        <h1 class="reveal" data-i18n-html="heroTitle">Pureté. Précision.<br><span>Recherche sans compromis.</span></h1>
+        <p class="hero-lead reveal" data-i18n="heroLead">
+          Sélection rigoureuse, paiement sécurisé en cryptomonnaie et livraison rapide en France et en Europe.
         </p>
-        <div class="hero-cta reveal">
-          <a class="primary" href="#catalogue" data-i18n="explore">Explorer le catalogue</a>
-          <a class="secondary" data-telegram href="#" data-i18n="quickOrder">Commande rapide sur Telegram</a>
+        <div class="hero-actions reveal">
+          <a class="button button-primary" href="#catalogue" data-i18n="exploreCatalogue">Explorer le catalogue</a>
+          <a class="button button-secondary" data-telegram href="#" data-i18n="fastOrder">Commander sur Telegram</a>
         </div>
-        <div class="proof reveal">
-          <div><strong>2–3</strong><span data-i18n="days">jours en France</span></div>
-          <div><strong>BTC</strong><span data-i18n="crypto">paiement sécurisé</span></div>
-          <div><strong>EU</strong><span data-i18n="shipping">expédition européenne</span></div>
+        <div class="hero-metrics reveal">
+          <div><strong>2–3</strong><span data-i18n="metricFrance">jours en France</span></div>
+          <div><strong>BTC</strong><span data-i18n="metricCrypto">paiement sécurisé</span></div>
+          <div><strong>FR / EU</strong><span data-i18n="metricEurope">expédition suivie</span></div>
         </div>
       </div>
-      <div class="hero-orbit reveal">
-        <div class="orbit-ring ring-a"></div><div class="orbit-ring ring-b"></div>
-        <img src="assets/nexus-logo.webp" alt="NEXUS Biohacking Research">
-        <span class="orbit-label label-a">PURITY</span>
-        <span class="orbit-label label-b">PRECISION</span>
-        <span class="orbit-label label-c">RESEARCH</span>
+
+      <div class="hero-signature reveal">
+        <img src="assets/images/nexus-logo.webp" alt="NEXUS Biohacking Research">
+        <p data-i18n="signature">Un portail pensé pour accéder rapidement aux références, disponibilités et informations de recherche.</p>
       </div>
     </section>
 
-    <section class="portal-strip">
-      <span data-i18n="strip1">Research use only</span><span>•</span>
-      <span data-i18n="strip2">Fast France delivery</span><span>•</span>
-      <span data-i18n="strip3">Cryptocurrency payments</span><span>•</span>
-      <span data-i18n="strip4">European shipping</span>
+    <section class="ticker" aria-label="Avantages">
+      <div>
+        <span data-i18n="ticker1">Research use only</span>
+        <i></i>
+        <span data-i18n="ticker2">Livraison France 2–3 jours</span>
+        <i></i>
+        <span data-i18n="ticker3">Paiement Bitcoin</span>
+        <i></i>
+        <span data-i18n="ticker4">Expédition européenne</span>
+      </div>
     </section>
 
-    <section class="catalogue section" id="catalogue">
-      <div class="section-head reveal">
+    <section class="section" id="domains">
+      <div class="section-heading reveal">
+        <p class="eyebrow" data-i18n="domainsEyebrow">DOMAINES DE RECHERCHE</p>
+        <h2 data-i18n-html="domainsTitle">Explorez selon votre<br><span>axe de recherche</span></h2>
+        <p data-i18n="domainsLead">Choisissez un domaine pour filtrer instantanément le catalogue.</p>
+      </div>
+
+      <div class="domain-grid">
+        <button class="domain-card reveal" data-category="Croissance & performance">
+          <span class="domain-visual domain-growth"></span><small>01</small>
+          <h3 data-i18n="domainGrowth">Croissance & performance</h3>
+        </button>
+        <button class="domain-card reveal" data-category="Régénération & réparation">
+          <span class="domain-visual domain-recovery"></span><small>02</small>
+          <h3 data-i18n="domainRecovery">Régénération & réparation</h3>
+        </button>
+        <button class="domain-card reveal" data-category="Longévité & anti-âge">
+          <span class="domain-visual domain-longevity"></span><small>03</small>
+          <h3 data-i18n="domainLongevity">Longévité & recherche cellulaire</h3>
+        </button>
+        <button class="domain-card reveal" data-category="Cognition & neuroprotection">
+          <span class="domain-visual domain-cognition"></span><small>04</small>
+          <h3 data-i18n="domainCognition">Cognition & neuroprotection</h3>
+        </button>
+        <button class="domain-card reveal" data-category="Métabolisme">
+          <span class="domain-visual domain-metabolism"></span><small>05</small>
+          <h3 data-i18n="domainMetabolism">Métabolisme</h3>
+        </button>
+        <button class="domain-card reveal" data-category="Santé reproductive">
+          <span class="domain-visual domain-reproductive"></span><small>06</small>
+          <h3 data-i18n="domainReproductive">Recherche reproductive</h3>
+        </button>
+      </div>
+    </section>
+
+    <section class="section catalogue-section" id="catalogue">
+      <div class="section-heading section-heading-row reveal">
         <div>
-          <p class="kicker" data-i18n="library">RESEARCH LIBRARY</p>
-          <h2 data-i18n-html="catalogueTitle">Explorez par <span>objectif de recherche</span></h2>
+          <p class="eyebrow" data-i18n="catalogueEyebrow">RESEARCH LIBRARY</p>
+          <h2 data-i18n-html="catalogueTitle">Le catalogue <span>Nexus</span></h2>
         </div>
-        <p data-i18n="catalogueIntro">Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.</p>
+        <p data-i18n="catalogueLead">Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.</p>
       </div>
 
-      <div class="tools reveal">
-        <div class="search-wrap"><span>⌕</span><input id="search" type="search" data-placeholder-fr="Rechercher un produit…" data-placeholder-en="Search a compound…"></div>
-        <select id="category"><option value="" data-i18n="allCategories">Toutes les catégories</option></select>
-        <button id="availableOnly" data-i18n="availableOnly">Disponibles uniquement</button>
+      <div class="catalogue-tools reveal">
+        <label class="search-field">
+          <span>⌕</span>
+          <input id="searchInput" type="search" data-placeholder-fr="Rechercher une référence…" data-placeholder-en="Search a compound…">
+        </label>
+        <select id="categorySelect" aria-label="Filtrer par catégorie"></select>
+        <button id="availableButton" class="filter-button" data-i18n="availableOnly">Disponibles uniquement</button>
       </div>
-      <div class="catalogue-line reveal"><span id="count"></span><button id="reset" data-i18n="reset">Réinitialiser</button></div>
-      <div class="grid" id="grid"></div>
+
+      <div class="catalogue-meta reveal">
+        <span id="productCount"></span>
+        <button id="resetButton" data-i18n="resetFilters">Réinitialiser</button>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
     </section>
 
-    <section class="standards section" id="standards">
-      <div class="standards-card reveal">
-        <div class="standards-copy">
-          <p class="kicker" data-i18n="standardsKicker">NEXUS QUALITY STANDARD</p>
-          <h2 data-i18n-html="standardsTitle">La recherche avance.<br><span>Nos exigences aussi.</span></h2>
-          <p data-i18n="standardsText">Une sélection rigoureuse, une présentation transparente et une expérience pensée pour accéder rapidement aux références, à leur disponibilité et à la documentation associée.</p>
+    <section class="section" id="quality">
+      <div class="quality-panel reveal">
+        <div class="quality-copy">
+          <p class="eyebrow" data-i18n="qualityEyebrow">NEXUS QUALITY STANDARD</p>
+          <h2 data-i18n-html="qualityTitle">L’exigence à chaque<br><span>étape du parcours</span></h2>
+          <p data-i18n="qualityLead">Informations claires, conservation maîtrisée et accès rapide aux références disponibles.</p>
         </div>
-        <div class="standard-list">
-          <article><b>01</b><h3 data-i18n="standard1Title">Pureté & traçabilité</h3><p data-i18n="standard1Text">Informations de lot et documentation destinées à la recherche.</p></article>
-          <article><b>02</b><h3 data-i18n="standard2Title">Conservation maîtrisée</h3><p data-i18n="standard2Text">Indications de stockage clairement présentées pour chaque référence.</p></article>
-          <article><b>03</b><h3 data-i18n="standard3Title">Accès rapide</h3><p data-i18n="standard3Text">Catalogue filtrable et commande Telegram simplifiée.</p></article>
+        <div class="quality-list">
+          <article><b>01</b><div><h3 data-i18n="quality1Title">Pureté & traçabilité</h3><p data-i18n="quality1Text">Documentation de recherche et informations de lot selon disponibilité.</p></div></article>
+          <article><b>02</b><div><h3 data-i18n="quality2Title">Conservation maîtrisée</h3><p data-i18n="quality2Text">Indications de stockage clairement présentées pour chaque référence.</p></div></article>
+          <article><b>03</b><div><h3 data-i18n="quality3Title">Commande simplifiée</h3><p data-i18n="quality3Text">Sélection rapide puis transmission directe vers le bot Nexus.</p></div></article>
         </div>
       </div>
     </section>
 
-    <section class="delivery section" id="delivery">
-      <div class="delivery-card reveal">
-        <div class="delivery-map"><span>FR</span><i></i><span>EU</span></div>
+    <section class="section" id="delivery">
+      <div class="delivery-panel reveal">
+        <div class="route"><span>FR</span><i></i><span>EU</span></div>
         <div>
-          <p class="kicker" data-i18n="deliveryKicker">EXPÉDITION</p>
+          <p class="eyebrow" data-i18n="deliveryEyebrow">EXPÉDITION</p>
           <h2 data-i18n="deliveryTitle">Rapide en France. Étendue à l’Europe.</h2>
-          <p data-i18n="deliveryText">Livraison généralement estimée entre 2 et 3 jours ouvrés en France métropolitaine. Les conditions et délais européens peuvent varier selon la destination.</p>
+          <p data-i18n="deliveryLead">Livraison généralement estimée entre 2 et 3 jours ouvrés en France métropolitaine. Les délais européens varient selon la destination.</p>
         </div>
       </div>
     </section>
 
-    <section class="contact section" id="contact">
-      <div class="contact-card reveal">
-        <p class="kicker" data-i18n="contactKicker">ORDER ACCESS</p>
-        <h2 data-i18n="contactTitle">Prêt à préparer votre commande ?</h2>
-        <p data-i18n="contactText">Ouvrez le bot Nexus sur Telegram. Votre sélection peut être transmise en quelques instants.</p>
-        <a class="primary" data-telegram href="#" data-i18n="openTelegram">Ouvrir le bot Telegram</a>
+    <section class="section" id="contact">
+      <div class="contact-panel reveal">
+        <img src="assets/images/nexus-logo.webp" alt="">
+        <div>
+          <p class="eyebrow" data-i18n="contactEyebrow">ORDER ACCESS</p>
+          <h2 data-i18n="contactTitle">Préparez votre commande en quelques instants.</h2>
+          <p data-i18n="contactLead">Ouvrez le bot Nexus sur Telegram et transmettez votre sélection.</p>
+        </div>
+        <a class="button button-primary" data-telegram href="#" data-i18n="openTelegram">Ouvrir Telegram</a>
       </div>
     </section>
   </main>
 
-  <footer><span>NEXUS BIOHACKING RESEARCH</span><span data-i18n="footer">Exclusivement destiné à la recherche scientifique. Non destiné à la consommation humaine ou animale.</span></footer>
+  <footer>
+    <span>NEXUS BIOHACKING RESEARCH</span>
+    <span data-i18n="footerLegal">Exclusivement destiné à la recherche scientifique. Non destiné à la consommation humaine ou animale.</span>
+  </footer>
 
-  <div class="modal" id="modal" aria-hidden="true">
-    <button class="modal-close" id="modalClose">×</button>
+  <div class="modal" id="productModal" aria-hidden="true">
+    <button class="modal-close" id="modalClose" aria-label="Fermer">×</button>
     <div class="modal-panel">
-      <div class="modal-image"><img id="modalImage" alt=""></div>
-      <div class="modal-copy">
-        <p class="kicker" id="modalCategory"></p>
+      <div class="modal-visual">
+        <img id="modalImage" alt="">
+      </div>
+      <div class="modal-content">
+        <p class="eyebrow" id="modalCategory"></p>
         <h2 id="modalName"></h2>
-        <div class="modal-status" id="modalStatus"></div>
-        <div class="modal-price" id="modalPrice"></div>
+        <span id="modalAvailability" class="availability"></span>
+        <strong id="modalPrice" class="modal-price"></strong>
         <p id="modalDescription"></p>
         <div class="modal-actions">
-          <a class="primary" id="modalOrder" href="#" data-i18n="orderProduct">Commander ce produit</a>
-          <button class="secondary button" id="modalBack" data-i18n="continue">Continuer à explorer</button>
+          <a id="modalOrder" class="button button-primary" href="#" data-i18n="orderProduct">Commander ce produit</a>
+          <button id="modalContinue" class="button button-secondary" data-i18n="continueBrowsing">Continuer à explorer</button>
         </div>
       </div>
     </div>
   </div>
-  <script src="app.js"></script>
+
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

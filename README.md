@@ -1,26 +1,53 @@
-# NEXUS Research Portal V2
+# NEXUS Hub V4
 
-Version bilingue FR/EN, catalogue dynamique et fond animé.
+Version statique compatible GitHub Pages.
 
-## À modifier avant publication
+## 1. Configurer Telegram
 
-Dans `app.js`, remplacez :
+Ouvrez `js/config.js` et remplacez :
 
 ```js
 telegramUrl: "https://t.me/VOTRE_BOT_TELEGRAM"
 ```
 
-par l'URL réelle de votre bot.
+par l'URL exacte du bot Nexus.
 
-## Mise en ligne
+## 2. Ajouter la future cinématique
 
-Copiez tous les fichiers à la racine du dépôt `Nexus-hub`, puis :
+Déposez la vidéo dans :
+
+```text
+assets/video/nexus-intro.mp4
+```
+
+Format recommandé :
+- MP4 H.264
+- 1920 × 1080
+- 24 fps
+- version web muette
+- idéalement moins de 12 Mo
+
+Tant que la vidéo n'existe pas, le site utilise automatiquement l'image `cinematic-poster.png`.
+
+## 3. Publier
+
+Copiez le contenu de ce dossier directement à la racine du dépôt `Nexus-hub`, puis :
 
 1. Commit to main
 2. Push origin
-3. GitHub Pages se met à jour automatiquement
+3. Attendre la coche verte dans GitHub Actions / Pages
+4. Recharger le site avec Cmd + Shift + R
 
-## Source des données
+## 4. Données produits
 
-Les prix et disponibilités de cette version ont été importés depuis `produits(1).xlsx`.
-Pour les prochaines mises à jour, il faudra régénérer `products.json` ou mettre en place une synchronisation automatisée.
+Le catalogue se trouve dans :
+
+```text
+data/products.json
+```
+
+Les prix et disponibilités sont issus du fichier Excel fourni lors de la création de cette version.
+
+## Important
+
+Les visuels produits actuels proviennent des planches fournies. Certains pourront encore nécessiter une régénération individuelle pour obtenir un cadrage produit parfaitement homogène.
