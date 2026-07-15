@@ -207,22 +207,40 @@
 
   <div class="modal" id="productModal" aria-hidden="true">
     <button class="modal-close" id="modalClose" aria-label="Fermer">×</button>
-    <div class="modal-panel">
-      <div class="modal-visual">
+
+    <div class="modal-panel product-document">
+      <aside class="modal-visual">
+        <div class="research-badge">RESEARCH USE ONLY</div>
         <img id="modalImage" alt="">
-      </div>
-      <div class="modal-content">
-        <p class="eyebrow" id="modalCategory"></p>
-        <h2 id="modalName"></h2>
         <span id="modalAvailability" class="availability"></span>
         <strong id="modalPrice" class="modal-price"></strong>
-        <p id="modalDescription"></p>
+      </aside>
+
+      <article class="modal-content">
+        <header class="product-document__header">
+          <p class="eyebrow" id="modalCategory"></p>
+          <h2 id="modalName"></h2>
+        </header>
+
+        <div class="product-document__body" id="modalDocument">
+          <p class="document-loading" data-i18n="documentLoading">Chargement de la fiche…</p>
+        </div>
+
+        <section class="coa-section" id="coaSection" hidden>
+          <div>
+            <small>COA</small>
+            <h3 data-i18n="coaTitle">Certificate of Analysis</h3>
+          </div>
+          <a id="modalCoa" class="button button-secondary" href="#" target="_blank" rel="noopener" data-i18n="viewCoa">Consulter le COA</a>
+        </section>
+
         <div class="modal-actions">
           <a id="modalOrder" class="button button-primary" href="#" data-i18n="orderProduct">Commander ce produit</a>
           <button id="modalContinue" class="button button-secondary" data-i18n="continueBrowsing">Continuer à explorer</button>
         </div>
-      </div>
+      </article>
     </div>
+  </div>
   </div>
 
   <script src="js/config.js"></script>

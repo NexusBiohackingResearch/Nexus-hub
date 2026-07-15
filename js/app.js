@@ -18,7 +18,7 @@ const translations = {
     deliveryEyebrow:"EXPÉDITION",deliveryTitle:"Rapide en France. Étendue à l’Europe.",deliveryLead:"Livraison généralement estimée entre 2 et 3 jours ouvrés en France métropolitaine. Les délais européens varient selon la destination.",
     contactEyebrow:"ORDER ACCESS",contactTitle:"Préparez votre commande en quelques instants.",contactLead:"Ouvrez le bot Nexus sur Telegram et transmettez votre sélection.",openTelegram:"Ouvrir Telegram",
     footerLegal:"Exclusivement destiné à la recherche scientifique. Non destiné à la consommation humaine ou animale.",
-    orderProduct:"Commander ce produit",continueBrowsing:"Continuer à explorer",footerAbout:"Peptides de recherche premium destinés exclusivement à l’étude en laboratoire et in vitro. Fondés sur la pureté, la documentation et la traçabilité.",footerCatalogueTitle:"CATALOGUE",footerAllProducts:"Toutes les références",footerDomains:"Domaines",footerQuality:"Qualité",footerSupportTitle:"SUPPORT",footerTelegram:"Telegram",footerShipping:"Livraison",footerLegalTitle:"LÉGAL",footerCgvSoon:"CGV bientôt disponibles",footerPrivacySoon:"Confidentialité bientôt disponible",footerResearchPolicy:"Politique d’usage recherche",footerWarningTitle:"AVERTISSEMENT :",footerWarningText:"Tous les produits présentés sur ce site sont destinés uniquement à la recherche et à l’usage en laboratoire. Ils ne sont pas destinés à la consommation humaine ou animale, ni à un usage diagnostique ou thérapeutique. Aucun élément de ce site ne constitue une allégation médicale."
+    orderProduct:"Commander ce produit",continueBrowsing:"Continuer à explorer",footerAbout:"Peptides de recherche premium destinés exclusivement à l’étude en laboratoire et in vitro. Fondés sur la pureté, la documentation et la traçabilité.",footerCatalogueTitle:"CATALOGUE",footerAllProducts:"Toutes les références",footerDomains:"Domaines",footerQuality:"Qualité",footerSupportTitle:"SUPPORT",footerTelegram:"Telegram",footerShipping:"Livraison",footerLegalTitle:"LÉGAL",footerCgvSoon:"CGV bientôt disponibles",footerPrivacySoon:"Confidentialité bientôt disponible",footerResearchPolicy:"Politique d’usage recherche",documentLoading:"Chargement de la fiche…",documentUnavailable:"Fiche détaillée bientôt disponible.",researchFields:"Domaines de recherche",technicalData:"Données techniques",coaTitle:"Certificate of Analysis",viewCoa:"Consulter le COA",footerWarningTitle:"AVERTISSEMENT :",footerWarningText:"Tous les produits présentés sur ce site sont destinés uniquement à la recherche et à l’usage en laboratoire. Ils ne sont pas destinés à la consommation humaine ou animale, ni à un usage diagnostique ou thérapeutique. Aucun élément de ce site ne constitue une allégation médicale."
   },
   en: {
     navDomains:"Fields",navCatalogue:"Library",navQuality:"Quality",navDelivery:"Shipping",navContact:"Contact",order:"Order",
@@ -36,7 +36,7 @@ const translations = {
     deliveryEyebrow:"SHIPPING",deliveryTitle:"Fast in France. Extended across Europe.",deliveryLead:"Delivery is generally estimated at 2 to 3 business days in metropolitan France. European transit times vary by destination.",
     contactEyebrow:"ORDER ACCESS",contactTitle:"Prepare your order in moments.",contactLead:"Open the Nexus bot on Telegram and send your selection.",openTelegram:"Open Telegram",
     footerLegal:"Strictly intended for scientific research. Not intended for human or animal consumption.",
-    orderProduct:"Order this compound",continueBrowsing:"Continue exploring",footerAbout:"Premium research peptides intended exclusively for laboratory and in vitro study. Built around purity, documentation and traceability.",footerCatalogueTitle:"CATALOGUE",footerAllProducts:"All compounds",footerDomains:"Research fields",footerQuality:"Quality",footerSupportTitle:"SUPPORT",footerTelegram:"Telegram",footerShipping:"Shipping",footerLegalTitle:"LEGAL",footerCgvSoon:"Terms coming soon",footerPrivacySoon:"Privacy coming soon",footerResearchPolicy:"Research use policy",footerWarningTitle:"WARNING:",footerWarningText:"All products shown on this website are intended exclusively for research and laboratory use. They are not intended for human or animal consumption, diagnosis or therapeutic use. Nothing on this website constitutes a medical claim."
+    orderProduct:"Order this compound",continueBrowsing:"Continue exploring",footerAbout:"Premium research peptides intended exclusively for laboratory and in vitro study. Built around purity, documentation and traceability.",footerCatalogueTitle:"CATALOGUE",footerAllProducts:"All compounds",footerDomains:"Research fields",footerQuality:"Quality",footerSupportTitle:"SUPPORT",footerTelegram:"Telegram",footerShipping:"Shipping",footerLegalTitle:"LEGAL",footerCgvSoon:"Terms coming soon",footerPrivacySoon:"Privacy coming soon",footerResearchPolicy:"Research use policy",documentLoading:"Loading product information…",documentUnavailable:"Detailed information coming soon.",researchFields:"Research fields",technicalData:"Technical data",coaTitle:"Certificate of Analysis",viewCoa:"View COA",footerWarningTitle:"WARNING:",footerWarningText:"All products shown on this website are intended exclusively for research and laboratory use. They are not intended for human or animal consumption, diagnosis or therapeutic use. Nothing on this website constitutes a medical claim."
   }
 };
 
@@ -44,6 +44,9 @@ let lang = localStorage.getItem("nexusLanguage") || "fr";
 let products = [];
 let onlyAvailable = false;
 let activeProduct = null;
+
+const DESCRIPTION_FILES = {"hgh-10u": "01-hgh-somatropine.md", "bac-water-10ml": "36-eau-bacteriostatique-bac-water.md", "hmg-76-iu": "02-hmg-menotropine.md", "hcg-5000-iu": "03-hcg-gonadotrophine-chorionique.md", "retatrutide-10mg": "16-retatrutide.md", "retatrutide-20mg": "16-retatrutide.md", "bpc157-5mg": "11-bpc-157.md", "bpc157-10mg": "11-bpc-157.md", "tb500-10mg": "12-tb-500-thymosine-4.md", "bpc-157-plus-tb-500-5mg-plus-5mg": "13-bpc-157-tb-500.md", "bpc-157-plus-tb-500-10mg-plus-10mg": "13-bpc-157-tb-500.md", "ghk-cu-50mg": "14-ghk-cu-cuivre-ghk.md", "glow-70-70mg": "18-glow-70-blend.md", "mgf-2mg": "04-mgf-mechano-growth-factor.md", "peg-mgf-2mg": "05-peg-mgf.md", "epithalon-10mg": "30-epithalon-epitalon.md", "tesamorelin-12mg-plus-ipamorelin-6mg": "10-tesamoreline-ipamorelin.md", "semax-10mg-plus-selank-10mg": "28-semax-selank.md", "cjc-1295-w-o-dac-plus-ipamorelin-5mg-plus-5mg": "09-cjc-1295-no-dac-ipamorelin.md", "nad-plus-1000mg": "22-nad.md", "ghrp-2-2mg": "07-ghrp-2.md", "ghrp-6-5mg": "08-ghrp-6.md", "igf-lr3-1mg": "06-igf-1-lr3.md", "mots-c-10mg": "20-mots-c.md", "dsip-10mg": "29-dsip.md", "oxytocin-5mg": "31-ocytocine.md", "aod-9604-5mg": "19-aod-9604.md", "pt141-10mg": "27-pt-141-bremelanotide.md", "mt-i-10mg": "24-melanotan-i-mt-i.md", "mt-ii-melanotan-2-acetate-10mg": "25-melanotan-ii-mt-ii.md", "kisspeptin-5mg": "32-kisspeptine-10.md", "ss-31-10mg": "23-ss-31-elamipretide.md", "kpv": "15-kpv.md", "glutathione": "26-glutathion-gsh.md", "5-amino-1mq-5mg": "21-5-amino-1mq.md", "bronchogen-20mg": "33-bronchogen.md", "livagen-20mg": "34-livagen.md", "pancragen-20mg": "35-pancragen.md"};
+
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
@@ -120,13 +123,159 @@ function renderProducts() {
   });
 }
 
+
+function escapeHtml(value = ""){
+  return value.replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[char]);
+}
+
+function inlineMarkdown(value = ""){
+  return escapeHtml(value)
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/`(.*?)`/g, "<code>$1</code>");
+}
+
+function extractLanguageSection(markdown, language){
+  const marker = language === "fr" ? "## 🇫🇷 Description (FR)" : "## 🇬🇧 Description (EN)";
+  const start = markdown.indexOf(marker);
+  if(start === -1) return "";
+
+  const remaining = markdown.slice(start + marker.length);
+  const nextLanguage = remaining.search(/\n## 🇫🇷 Description \(FR\)|\n## 🇬🇧 Description \(EN\)/);
+  return (nextLanguage === -1 ? remaining : remaining.slice(0, nextLanguage)).trim();
+}
+
+function markdownSectionToHtml(markdown, language){
+  if(!markdown) return "";
+
+  const lines = markdown.split(/\r?\n/);
+  let html = "";
+  let listOpen = false;
+  let tableOpen = false;
+  let tableHeaderSkipped = false;
+
+  const closeList = () => {
+    if(listOpen){ html += "</ul>"; listOpen = false; }
+  };
+  const closeTable = () => {
+    if(tableOpen){ html += "</tbody></table></div>"; tableOpen = false; tableHeaderSkipped = false; }
+  };
+
+  for(const rawLine of lines){
+    const line = rawLine.trim();
+
+    if(!line){
+      closeList();
+      closeTable();
+      continue;
+    }
+
+    if(line.startsWith(">")){
+      closeList(); closeTable();
+      continue;
+    }
+
+    if(line.startsWith("**Domaines de recherche") || line.startsWith("**Research areas")){
+      closeList(); closeTable();
+      html += `<h3>${translations[language].researchFields}</h3>`;
+      continue;
+    }
+
+    if(line.startsWith("**Données techniques") || line.startsWith("**Technical data")){
+      closeList(); closeTable();
+      html += `<h3>${translations[language].technicalData}</h3>`;
+      continue;
+    }
+
+    if(line.startsWith("- ")){
+      closeTable();
+      if(!listOpen){ html += '<ul class="research-list">'; listOpen = true; }
+      html += `<li>${inlineMarkdown(line.slice(2))}</li>`;
+      continue;
+    }
+
+    if(line.startsWith("|")){
+      closeList();
+      const cells = line.split("|").slice(1,-1).map(cell => cell.trim());
+      if(cells.every(cell => /^:?-{3,}:?$/.test(cell))){
+        tableHeaderSkipped = true;
+        continue
+      }
+      if(!tableOpen){
+        html += '<div class="technical-table-wrap"><table class="technical-table"><tbody>';
+        tableOpen = true;
+      }
+      if(cells.length >= 2){
+        html += `<tr><th>${inlineMarkdown(cells[0])}</th><td>${inlineMarkdown(cells.slice(1).join(" | "))}</td></tr>`;
+      }
+      continue;
+    }
+
+    closeList(); closeTable();
+
+    if(line.startsWith("### ")){
+      html += `<h3>${inlineMarkdown(line.slice(4))}</h3>`;
+    }else if(line.startsWith("## ")){
+      html += `<h3>${inlineMarkdown(line.slice(3))}</h3>`;
+    }else if(!line.startsWith("#") && line !== "---"){
+      html += `<p>${inlineMarkdown(line)}</p>`;
+    }
+  }
+
+  closeList();
+  closeTable();
+  return html;
+}
+
+async function loadProductDocument(product){
+  const container = $("#modalDocument");
+  container.innerHTML = `<p class="document-loading">${translations[lang].documentLoading}</p>`;
+
+  const filename = DESCRIPTION_FILES[product.id];
+  if(!filename){
+    container.innerHTML = `<p>${translations[lang].documentUnavailable}</p>`;
+    return;
+  }
+
+  try{
+    const response = await fetch(`content/descriptions/${filename}`);
+    if(!response.ok) throw new Error(`HTTP ${response.status}`);
+    const markdown = await response.text();
+    const section = extractLanguageSection(markdown, lang);
+    const html = markdownSectionToHtml(section, lang);
+    container.innerHTML = html || `<p>${translations[lang].documentUnavailable}</p>`;
+  }catch(error){
+    console.warn("Description indisponible :", filename, error);
+    container.innerHTML = `<p>${translations[lang].documentUnavailable}</p>`;
+  }
+}
+
+async function updateCoa(product){
+  const section = $("#coaSection");
+  const link = $("#modalCoa");
+  section.hidden = true;
+
+  const coaUrl = `assets/coa/${product.id}.pdf`;
+
+  try{
+    const response = await fetch(coaUrl, {method:"HEAD", cache:"no-store"});
+    const isPdf = response.ok && (response.headers.get("content-type") || "").includes("pdf");
+    if(isPdf){
+      link.href = coaUrl;
+      section.hidden = false;
+    }
+  }catch(error){
+    section.hidden = true;
+  }
+}
+
 function fillModal(product) {
   $("#modalImage").src = product.image;
   $("#modalImage").alt = product.name;
   $("#modalCategory").textContent = lang === "fr" ? product.categoryFr : product.categoryEn;
   $("#modalName").textContent = product.name;
   $("#modalPrice").textContent = `${Number(product.price).toFixed(2)} €`;
-  $("#modalDescription").textContent = lang === "fr" ? product.descriptionFr : product.descriptionEn;
 
   const availability = $("#modalAvailability");
   availability.textContent = product.available ? translations[lang].available : translations[lang].unavailable;
@@ -135,9 +284,13 @@ function fillModal(product) {
   const text = lang === "fr"
     ? `Bonjour, je souhaite commander : ${product.name}`
     : `Hello, I would like to order: ${product.name}`;
+
   $("#modalOrder").href = `${CONFIG.telegramUrl}?text=${encodeURIComponent(text)}`;
   $("#modalOrder").style.opacity = product.available ? "1" : ".45";
   $("#modalOrder").style.pointerEvents = product.available ? "auto" : "none";
+
+  loadProductDocument(product);
+  updateCoa(product);
 }
 
 function openModal(product) {
