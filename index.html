@@ -13,14 +13,14 @@
 </head>
 <body>
   <section class="video-intro" id="videoIntro" aria-label="Introduction Nexus">
-    <div class="video-intro__backdrop"></div>
-    <video id="introVideo" class="video-intro__media" playsinline muted preload="auto">
+    <video class="video-intro__blur" id="introBlur" muted playsinline preload="auto" aria-hidden="true">
       <source src="assets/video/nexus-intro.mp4" type="video/mp4">
     </video>
-    <div class="video-intro__loading" id="introLoading">
-      <span></span>
-      <small>NEXUS BIOHACKING RESEARCH</small>
-    </div>
+    <div class="video-intro__shade"></div>
+    <video id="introVideo" class="video-intro__media" muted playsinline autoplay preload="auto">
+      <source src="assets/video/nexus-intro.mp4" type="video/mp4">
+    </video>
+    <button class="video-intro__start" id="introStart" type="button">Lancer la cinématique</button>
     <button class="video-intro__sound" id="introSound" type="button">Activer le son</button>
     <button class="video-intro__skip" id="introSkip" type="button">Passer</button>
   </section>
@@ -52,9 +52,7 @@
   <main>
     <section class="hero" id="home">
       <div class="hero-media" aria-hidden="true">
-        <video id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="assets/images/cinematic-poster.png">
-          <source src="assets/video/nexus-intro.mp4" type="video/mp4">
-        </video>
+        <img class="hero-poster" src="assets/images/cinematic-poster.png" alt="">
         <div class="hero-media-shade"></div>
       </div>
 

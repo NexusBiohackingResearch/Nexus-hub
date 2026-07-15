@@ -219,8 +219,7 @@ const observer = new IntersectionObserver(entries => {
 },{threshold:.12});
 $$(".reveal").forEach(element => observer.observe(element));
 
-const video = $("#heroVideo");
-video.addEventListener("error", () => video.style.display = "none");
+
 
 // Ambient background
 const canvas = $("#ambientCanvas");
@@ -253,37 +252,67 @@ addEventListener("resize",resizeCanvas);
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(animate);
 
 
+
+
 // Cinematic intro
 const videoIntro = document.querySelector("#videoIntro");
 const introVideo = document.querySelector("#introVideo");
+const introBlur = document.querySelector("#introBlur");
+const introStart = document.querySelector("#introStart");
 const introSound = document.querySelector("#introSound");
 const introSkip = document.querySelector("#introSkip");
-const introLoading = document.querySelector("#introLoading");
 let introClosed = false;
+
+function syncIntroVideos(){
+  if(!introVideo || !introBlur) return;
+  if(Math.abs(introBlur.currentTime - introVideo.currentTime) > 0.12){
+    introBlur.currentTime = introVideo.currentTime;
+  }
+}
 
 function closeVideoIntro(){
   if(!videoIntro || introClosed) return;
   introClosed = true;
   videoIntro.classList.add("is-finished");
-  window.setTimeout(() => videoIntro.remove(), 950);
+  window.setTimeout(() => {
+    introVideo?.pause();
+    introBlur?.pause();
+    videoIntro.remove();
+  }, 900);
+}
+
+async function startIntro(){
+  if(!introVideo || introClosed) return;
+  videoIntro?.classList.remove("needs-interaction");
+  introVideo.muted = true;
+  introBlur.muted = true;
+  try{
+    if(introVideo.currentTime >= introVideo.duration - .2) introVideo.currentTime = 0;
+    if(introBlur.currentTime >= introBlur.duration - .2) introBlur.currentTime = 0;
+    await Promise.all([introVideo.play(), introBlur.play()]);
+  }catch(error){
+    videoIntro?.classList.add("needs-interaction");
+    console.warn("Lecture automatique bloquée :", error);
+  }
 }
 
 if(introVideo){
-  introVideo.addEventListener("loadeddata", () => introLoading?.classList.add("hidden"));
+  introVideo.addEventListener("timeupdate", syncIntroVideos);
   introVideo.addEventListener("ended", closeVideoIntro);
-  introVideo.addEventListener("error", () => {
-    console.warn("Cinématique Nexus introuvable ou illisible.");
-    closeVideoIntro();
-  });
-  introVideo.play().catch(() => introLoading?.classList.add("hidden"));
-  window.setTimeout(closeVideoIntro, 9000);
+  introVideo.addEventListener("error", closeVideoIntro);
+  introVideo.addEventListener("canplay", startIntro, {once:true});
+  window.setTimeout(() => {
+    if(!introClosed && introVideo.paused) startIntro();
+  }, 500);
 }
+
+introStart?.addEventListener("click", startIntro);
 
 introSound?.addEventListener("click", async () => {
   if(!introVideo) return;
   introVideo.muted = !introVideo.muted;
   introSound.textContent = introVideo.muted ? "Activer le son" : "Couper le son";
-  if(!introVideo.muted){
+  if(introVideo.paused){
     try{ await introVideo.play(); }catch(error){ console.warn(error); }
   }
 });
