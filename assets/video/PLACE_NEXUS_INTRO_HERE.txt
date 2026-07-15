@@ -1,2 +1,0 @@
-Place the final video here and name it exactly: nexus-intro.mp4
-Recommended: H.264 MP4, 1920x1080, 24 fps, muted web version under 12 MB.

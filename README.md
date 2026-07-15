@@ -1,31 +1,93 @@
-# NEXUS Hub V5
+# NEXUS Hub V6
 
-## Structure à conserver
-- index.html
-- css/main.css
-- js/app.js
-- js/config.js
-- data/products.json
-- assets/images/products/
-- assets/video/nexus-intro.mp4
+Cette version devient la base définitive du site.
 
-Ne déplacez aucun fichier hors de son dossier.
+## Structure obligatoire
+
+```text
+Nexus-hub/
+├── index.html
+├── README.md
+├── PRODUCT_IMAGE_NAMES.txt
+├── CLEANUP_CHECKLIST.txt
+├── css/
+│   └── main.css
+├── js/
+│   ├── app.js
+│   └── config.js
+├── data/
+│   └── products.json
+└── assets/
+    ├── images/
+    │   ├── nexus-logo.webp
+    │   ├── cinematic-poster.png
+    │   └── products/
+    │       └── *.webp
+    └── video/
+        └── nexus-intro.mp4
+```
 
 ## Telegram
-Modifiez uniquement js/config.js.
+
+Modifier uniquement :
+
+```text
+js/config.js
+```
+
+Exemple :
+
+```js
+window.NEXUS_CONFIG = {
+  telegramUrl: "https://t.me/NOM_EXACT_DU_BOT",
+  cataloguePdfUrl: "#",
+  certificatesUrl: "#"
+};
+```
 
 ## Vidéo
-Votre vidéo doit s'appeler exactement nexus-intro.mp4 et rester dans assets/video/.
+
+La vidéo doit être nommée exactement :
+
+```text
+assets/video/nexus-intro.mp4
+```
 
 ## Images produit
-Les images PNG restent dans assets/images/products/.
-Le fichier PRODUCT_IMAGE_NAMES.txt indique le nom exact attendu pour chaque produit.
 
-## Nettoyage
-Supprimez les anciens fichiers V1 placés directement à la racine :
-- app.js
-- styles.css
-- products.json
+Toutes les images restent en WebP.
+
+Elles doivent être placées dans :
+
+```text
+assets/images/products/
+```
+
+Le nom exact attendu de chaque fichier est indiqué dans :
+
+```text
+PRODUCT_IMAGE_NAMES.txt
+```
+
+## Nettoyage avant publication
+
+Supprimer les anciens fichiers V1 placés directement à la racine :
+
+```text
+app.js
+styles.css
+products.json
+```
+
+Ne pas supprimer les fichiers situés dans `js/`, `css/` et `data/`.
 
 ## Publication
-Copiez le contenu du ZIP à la racine du dépôt, acceptez les remplacements, puis Commit et Push.
+
+1. Copier le contenu du ZIP à la racine du dépôt.
+2. Accepter tous les remplacements.
+3. Vérifier `js/config.js`.
+4. Conserver `assets/video/nexus-intro.mp4`.
+5. Commit to main.
+6. Push origin.
+7. Attendre GitHub Pages.
+8. Recharger avec Cmd + Shift + R.

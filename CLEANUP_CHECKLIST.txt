@@ -1,0 +1,23 @@
+FICHIERS À CONSERVER À LA RACINE
+- index.html
+- README.md
+- PRODUCT_IMAGE_NAMES.txt
+- css/
+- js/
+- data/
+- assets/
+
+ANCIENS FICHIERS À SUPPRIMER S'ILS EXISTENT ENCORE À LA RACINE
+- app.js
+- styles.css
+- products.json
+- nexus_hub_v1/
+- nexus_hub_v2/
+- nexus_hub_v3/
+- nexus_hub_v4/
+- nexus_hub_v5/
+
+IMPORTANT
+Ne déplacez pas main.css hors de css/.
+Ne déplacez pas app.js ou config.js hors de js/.
+Ne déplacez pas products.json hors de data/.
