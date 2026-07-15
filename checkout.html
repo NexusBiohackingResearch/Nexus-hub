@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#03070b">
+  <title>Commande — NEXUS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="Nexus accueil">
+      <span class="brand-mark"></span><span>NEXUS</span><small>Biohacking Research</small>
+    </a>
+    <div class="header-actions">
+      <a class="button button-secondary" href="index.html" style="min-height:auto;padding:10px 14px;font-size:11px">← Boutique</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1>Finaliser la commande</h1>
+    <p class="lead" id="leadText">Renseigne tes informations. Le paiement se fait en crypto après validation.</p>
+
+    <div id="checkoutView" class="checkout-grid">
+      <!-- Formulaire -->
+      <div class="panel">
+        <div id="authHint" style="margin-bottom:18px;font-size:13px;color:var(--muted)"></div>
+        <div class="field"><label>Email *</label><input type="email" id="c_email" placeholder="labo@exemple.com"></div>
+        <div class="field"><label>Nom complet</label><input id="c_name"></div>
+        <div class="field"><label>Adresse de livraison</label><textarea id="c_address" rows="2"></textarea></div>
+        <div class="field-row">
+          <div class="field"><label>Pays</label><input id="c_country" value="France"></div>
+          <div class="field"><label>Téléphone</label><input id="c_phone"></div>
+        </div>
+        <div class="field"><label>Note (optionnel)</label><input id="c_note" placeholder="Précision de commande…"></div>
+
+        <label style="font-size:11px;color:var(--muted);letter-spacing:.03em">Moyen de paiement</label>
+        <div class="pay-choice">
+          <div class="pc active" data-pay="crypto">Crypto (BTC / USDT)</div>
+          <div class="pc soon" title="Bientôt">Carte / Virement — bientôt</div>
+        </div>
+
+        <p class="form-msg" id="c_msg"></p>
+        <button class="button button-primary" style="width:100%;margin-top:8px" id="placeBtn">Valider la commande →</button>
+        <p class="cart-note" style="margin-top:14px">Aucun débit automatique. Tu recevras par email les instructions de paiement crypto et ta référence de commande.</p>
+      </div>
+
+      <!-- Récap -->
+      <div class="panel">
+        <h3 style="font-family:'Space Grotesk';font-size:18px;margin-bottom:16px">Récapitulatif</h3>
+        <div id="sumLines"></div>
+        <div class="sum-total"><span>Total</span><span id="sumTotal">0 €</span></div>
+        <p style="font-size:11px;color:#66757f;margin-top:14px">Produits destinés exclusivement à la recherche en laboratoire.</p>
+      </div>
+    </div>
+
+    <!-- Succès -->
+    <div id="successView" class="panel" style="display:none;max-width:560px;margin:0 auto">
+      <div class="success-box">
+        <div class="chk"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#04120c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h2 style="font-family:'Space Grotesk';font-size:26px;margin-bottom:8px">Commande enregistrée ✓</h2>
+        <p style="color:var(--muted)">Ta référence : <b id="okRef" style="color:#fff"></b></p>
+        <p style="color:var(--muted);margin-top:6px">Un email de confirmation vient de t'être envoyé avec les instructions de paiement.</p>
+      </div>
+      <div class="crypto-box" id="cryptoBox">
+        <div class="lbl">PAIEMENT — CRYPTO</div>
+        <div style="font-size:13px;color:var(--muted);margin-bottom:10px">Montant : <b style="color:#fff" id="okTotal"></b> (équivalent crypto)</div>
+        <div id="btcWrap"><small style="color:var(--muted)">Bitcoin (BTC)</small><code id="okBtc"></code></div>
+        <div id="usdtWrap"><small style="color:var(--muted)">USDT (TRC20)</small><code id="okUsdt"></code></div>
+        <p style="font-size:12px;color:#66757f;margin-top:6px">Indique ta référence <b id="okRef2" style="color:#fff"></b> et réponds à l'email avec ta preuve de transaction.</p>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
+        <a class="button button-primary" href="compte.html" style="flex:1">Suivre ma commande</a>
+        <a class="button button-secondary" href="index.html" style="flex:1">Retour boutique</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script>
+    let payMethod = "crypto";
+    function renderSummary(){
+      const items = Object.values(NEXUS.cart);
+      const box = document.getElementById("sumLines");
+      if(!items.length){
+        box.innerHTML = '<p style="color:var(--muted)">Panier vide. <a href="index.html" style="color:var(--cyan)">Retour boutique</a></p>';
+        document.getElementById("placeBtn").disabled = true;
+        document.getElementById("placeBtn").style.opacity = ".5";
+      }
+      box.innerHTML = items.map(i=>`<div class="sum-line"><span>${i.name} <b style="color:var(--cyan)">× ${i.qty}</b></span><b>${(i.price*i.qty).toFixed(2)} €</b></div>`).join("");
+      document.getElementById("sumTotal").textContent = NEXUS.total().toFixed(2)+" €";
+    }
+    document.querySelectorAll(".pay-choice .pc").forEach(pc=>{
+      if(pc.classList.contains("soon"))return;
+      pc.addEventListener("click",()=>{document.querySelectorAll(".pay-choice .pc").forEach(x=>x.classList.remove("active"));pc.classList.add("active");payMethod=pc.dataset.pay;});
+    });
+    document.getElementById("placeBtn").addEventListener("click", async ()=>{
+      const msg = document.getElementById("c_msg"); msg.textContent="";
+      const email = document.getElementById("c_email").value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){msg.className="form-msg err";msg.textContent="Email invalide.";return;}
+      if(!NEXUS.count()){msg.className="form-msg err";msg.textContent="Ton panier est vide.";return;}
+      const payload = {
+        email, fullName:document.getElementById("c_name").value.trim(),
+        address:document.getElementById("c_address").value.trim(),
+        country:document.getElementById("c_country").value.trim(),
+        phone:document.getElementById("c_phone").value.trim(),
+        note:document.getElementById("c_note").value.trim(),
+        paymentMethod:payMethod,
+        items:Object.values(NEXUS.cart).map(i=>({id:i.id,quantity:i.qty}))
+      };
+      document.getElementById("placeBtn").textContent="Traitement…";
+      try{
+        const res = await NEXUS.api("/api/orders",{method:"POST",body:payload});
+        // succès
+        document.getElementById("checkoutView").style.display="none";
+        document.getElementById("leadText").style.display="none";
+        document.getElementById("successView").style.display="block";
+        document.getElementById("okRef").textContent=res.reference;
+        document.getElementById("okRef2").textContent=res.reference;
+        document.getElementById("okTotal").textContent=res.total.toFixed(2)+" €";
+        const cfg = NEXUS.config;
+        document.getElementById("okBtc").textContent = cfg.cryptoBtc || "(adresse BTC à configurer par l'admin)";
+        if(cfg.cryptoUsdt) document.getElementById("okUsdt").textContent = cfg.cryptoUsdt;
+        else document.getElementById("usdtWrap").style.display="none";
+        NEXUS.clear();
+        window.scrollTo({top:0,behavior:"smooth"});
+      }catch(e){
+        msg.className="form-msg err"; msg.textContent=e.message;
+        document.getElementById("placeBtn").textContent="Valider la commande →";
+      }
+    });
+    document.addEventListener("DOMContentLoaded", ()=>{
+      renderSummary();
+      setTimeout(()=>{ // après loadUser dans store.js
+        const u = NEXUS.user;
+        const hint = document.getElementById("authHint");
+        if(u){
+          document.getElementById("c_email").value = u.email;
+          document.getElementById("c_name").value = u.fullName || "";
+          hint.innerHTML = `Connecté en tant que <b style="color:#fff">${u.email}</b>.`;
+        }else{
+          hint.innerHTML = `Tu as un compte ? <a style="color:var(--cyan);cursor:pointer" id="loginLink">Se connecter</a> — ou commande en invité ci-dessous.`;
+          document.getElementById("loginLink")?.addEventListener("click",()=>NEXUS.openAuth());
+          window.__afterAuth = ()=>location.reload();
+        }
+      }, 600);
+    });
+    document.addEventListener("nexus:cart", renderSummary);
+  </script>
+</body>
+</html>

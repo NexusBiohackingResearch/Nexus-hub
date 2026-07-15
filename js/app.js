@@ -12,7 +12,7 @@ const translations = {
     domainsEyebrow:"DOMAINES DE RECHERCHE",domainsTitle:"Explorez selon votre<br><span>axe de recherche</span>",domainsLead:"Choisissez un domaine pour filtrer instantanément le catalogue.",
     domainGrowth:"Croissance & performance",domainRecovery:"Régénération & réparation",domainLongevity:"Longévité & recherche cellulaire",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Métabolisme",domainReproductive:"Recherche reproductive",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"Le catalogue <span>Nexus</span>",catalogueLead:"Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.",
-    allCategories:"Toutes les catégories",availableOnly:"Disponibles uniquement",resetFilters:"Réinitialiser",available:"Disponible",unavailable:"Indisponible",references:"références",viewDetails:"Voir la fiche",
+    allCategories:"Toutes les catégories",availableOnly:"Disponibles uniquement",resetFilters:"Réinitialiser",available:"Disponible",unavailable:"Indisponible",references:"références",viewDetails:"Voir la fiche",addToCart:"Ajouter au panier",addToCartShort:"+ Panier",
     qualityEyebrow:"NEXUS QUALITY STANDARD",qualityTitle:"L’exigence à chaque<br><span>étape du parcours</span>",qualityLead:"Informations claires, conservation maîtrisée et accès rapide aux références disponibles.",
     quality1Title:"Pureté & traçabilité",quality1Text:"Documentation de recherche et informations de lot selon disponibilité.",quality2Title:"Conservation maîtrisée",quality2Text:"Indications de stockage clairement présentées pour chaque référence.",quality3Title:"Commande simplifiée",quality3Text:"Sélection rapide puis transmission directe vers le bot Nexus.",
     deliveryEyebrow:"EXPÉDITION",deliveryTitle:"Rapide en France. Étendue à l’Europe.",deliveryLead:"Livraison généralement estimée entre 2 et 3 jours ouvrés en France métropolitaine. Les délais européens varient selon la destination.",
@@ -30,7 +30,7 @@ const translations = {
     domainsEyebrow:"RESEARCH FIELDS",domainsTitle:"Explore by your<br><span>research focus</span>",domainsLead:"Choose a field to filter the catalogue instantly.",
     domainGrowth:"Growth & performance",domainRecovery:"Recovery & tissue research",domainLongevity:"Longevity & cellular research",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Metabolic research",domainReproductive:"Reproductive research",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"The <span>Nexus</span> catalogue",catalogueLead:"Search a compound, filter by field and review its current availability.",
-    allCategories:"All categories",availableOnly:"Available only",resetFilters:"Reset",available:"Available",unavailable:"Unavailable",references:"references",viewDetails:"View details",
+    allCategories:"All categories",availableOnly:"Available only",resetFilters:"Reset",available:"Available",unavailable:"Unavailable",references:"references",viewDetails:"View details",addToCart:"Add to cart",addToCartShort:"+ Cart",
     qualityEyebrow:"NEXUS QUALITY STANDARD",qualityTitle:"Standards at every<br><span>stage of the journey</span>",qualityLead:"Clear information, controlled storage guidance and fast access to available compounds.",
     quality1Title:"Purity & traceability",quality1Text:"Research documentation and batch information when available.",quality2Title:"Controlled storage",quality2Text:"Clear storage guidance for every compound.",quality3Title:"Simplified ordering",quality3Text:"Fast selection followed by direct transfer to the Nexus bot.",
     deliveryEyebrow:"SHIPPING",deliveryTitle:"Fast in France. Extended across Europe.",deliveryLead:"Delivery is generally estimated at 2 to 3 business days in metropolitan France. European transit times vary by destination.",
@@ -100,7 +100,7 @@ function renderProducts() {
 
   $("#productCount").textContent = `${filtered.length} ${translations[lang].references}`;
   $("#productGrid").innerHTML = filtered.map((product,index) => `
-    <article class="product-card" data-id="${product.id}" style="animation-delay:${Math.min(index,12)*35}ms">
+    <article class="product-card" data-id="${product.id}" data-available="${product.available}" style="animation-delay:${Math.min(index,12)*35}ms">
       <div class="product-image">
         <span class="availability ${product.available ? "available" : "unavailable"}">
           ${product.available ? translations[lang].available : translations[lang].unavailable}
@@ -114,6 +114,7 @@ function renderProducts() {
           <span class="price">${Number(product.price).toFixed(2)} €</span>
           <span class="details">${translations[lang].viewDetails} ↗</span>
         </div>
+        ${product.available ? `<button class="add-cart" data-add data-id="${product.id}" data-name="${product.name.replace(/"/g,'&quot;')}" data-price="${product.price}" data-image="${product.image}" data-cat="${lang === "fr" ? product.categoryFr : product.categoryEn}">${translations[lang].addToCart}</button>` : `<button class="add-cart" disabled>${translations[lang].unavailable}</button>`}
       </div>
     </article>
   `).join("");
@@ -281,13 +282,25 @@ function fillModal(product) {
   availability.textContent = product.available ? translations[lang].available : translations[lang].unavailable;
   availability.className = `availability ${product.available ? "available" : "unavailable"}`;
 
-  const text = lang === "fr"
-    ? `Bonjour, je souhaite commander : ${product.name}`
-    : `Hello, I would like to order: ${product.name}`;
-
-  $("#modalOrder").href = `${CONFIG.telegramUrl}?text=${encodeURIComponent(text)}`;
-  $("#modalOrder").style.opacity = product.available ? "1" : ".45";
-  $("#modalOrder").style.pointerEvents = product.available ? "auto" : "none";
+  // Bouton "Ajouter au panier" (géré par store.js via data-add)
+  const orderBtn = $("#modalOrder");
+  orderBtn.href = "#";
+  if (product.available) {
+    orderBtn.setAttribute("data-add", "");
+    orderBtn.dataset.id = product.id;
+    orderBtn.dataset.name = product.name;
+    orderBtn.dataset.price = product.price;
+    orderBtn.dataset.image = product.image;
+    orderBtn.dataset.cat = lang === "fr" ? product.categoryFr : product.categoryEn;
+    orderBtn.textContent = translations[lang].addToCart;
+    orderBtn.style.opacity = "1";
+    orderBtn.style.pointerEvents = "auto";
+  } else {
+    orderBtn.removeAttribute("data-add");
+    orderBtn.textContent = translations[lang].unavailable;
+    orderBtn.style.opacity = ".45";
+    orderBtn.style.pointerEvents = "none";
+  }
 
   loadProductDocument(product);
   updateCoa(product);

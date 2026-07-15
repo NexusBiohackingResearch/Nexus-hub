@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#03070b">
+  <title>Mon compte — NEXUS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+  <header class="header">
+    <a class="brand" href="index.html"><span class="brand-mark"></span><span>NEXUS</span><small>Biohacking Research</small></a>
+    <div class="header-actions">
+      <a class="button button-secondary" href="index.html" style="min-height:auto;padding:10px 14px;font-size:11px">← Boutique</a>
+      <button class="button button-secondary" id="logoutBtn" style="min-height:auto;padding:10px 14px;font-size:11px;display:none">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="page">
+    <div id="guestView" style="display:none">
+      <h1>Mon compte</h1>
+      <p class="lead">Connecte-toi pour voir ton historique de commandes, ou suis une commande avec ta référence.</p>
+      <div class="panel" style="max-width:460px">
+        <button class="button button-primary" id="openAuthBtn" style="width:100%">Se connecter / Créer un compte</button>
+        <div style="margin:22px 0 10px;text-align:center;color:#66757f;font-size:12px">— ou suivre une commande invité —</div>
+        <div class="field"><label>Référence (NX-XXXXXX)</label><input id="t_ref"></div>
+        <div class="field"><label>Email de la commande</label><input id="t_email" type="email"></div>
+        <p class="form-msg" id="t_msg"></p>
+        <button class="button button-secondary" id="trackBtn" style="width:100%">Suivre ma commande</button>
+        <div id="trackResult" style="margin-top:18px"></div>
+      </div>
+    </div>
+
+    <div id="userView" style="display:none">
+      <h1 id="hello">Mon compte</h1>
+      <p class="lead" id="userSub"></p>
+      <h3 style="font-family:'Space Grotesk';font-size:20px;margin:10px 0 18px">Mes commandes</h3>
+      <div id="ordersList"></div>
+    </div>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+  <script>
+    const STATUS_LABEL = {
+      awaiting_payment:"En attente de paiement", payment_received:"Paiement reçu",
+      shipped:"Expédiée", cancelled:"Annulée"
+    };
+    function orderCard(o){
+      const items = (o.items||[]).map(i=>`${i.name} × ${i.quantity}`).join(" · ");
+      return `<div class="order-card">
+        <div class="oc-head">
+          <span class="ref">${o.reference}</span>
+          <span class="status-pill status-${o.status}">${STATUS_LABEL[o.status]||o.status}</span>
+        </div>
+        <div class="oc-items">${items}</div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:13px">
+          <span style="color:var(--muted)">${new Date(o.created_at).toLocaleDateString("fr-FR")}</span>
+          <b style="font-family:'Space Grotesk'">${Number(o.total).toFixed(2)} €</b>
+        </div>
+        ${o.tracking?`<div style="margin-top:8px;font-size:12px;color:var(--cyan)">Suivi : ${o.tracking}</div>`:""}
+      </div>`;
+    }
+    async function boot(){
+      await NEXUS.loadUser();
+      const u = NEXUS.user;
+      if(u){
+        document.getElementById("userView").style.display="block";
+        document.getElementById("logoutBtn").style.display="inline-flex";
+        document.getElementById("hello").textContent = u.fullName?`Bonjour, ${u.fullName}`:"Mon compte";
+        document.getElementById("userSub").textContent = u.email;
+        try{
+          const {orders} = await NEXUS.api("/api/orders/mine");
+          document.getElementById("ordersList").innerHTML = orders.length
+            ? orders.map(orderCard).join("")
+            : '<p style="color:var(--muted)">Aucune commande pour le moment.</p>';
+        }catch(e){ document.getElementById("ordersList").innerHTML = '<p style="color:#ed8585">'+e.message+'</p>'; }
+      }else{
+        document.getElementById("guestView").style.display="block";
+        document.getElementById("openAuthBtn").addEventListener("click",()=>NEXUS.openAuth());
+        window.__afterAuth = ()=>location.reload();
+      }
+    }
+    document.getElementById("logoutBtn").addEventListener("click", async ()=>{
+      await NEXUS.api("/api/auth/logout",{method:"POST"}); location.reload();
+    });
+    document.getElementById("trackBtn").addEventListener("click", async ()=>{
+      const msg=document.getElementById("t_msg"); msg.textContent="";
+      const ref=document.getElementById("t_ref").value.trim();
+      const email=document.getElementById("t_email").value.trim();
+      try{
+        const {order}=await NEXUS.api(`/api/orders/${encodeURIComponent(ref)}?email=${encodeURIComponent(email)}`);
+        document.getElementById("trackResult").innerHTML = orderCard(order);
+      }catch(e){ msg.className="form-msg err"; msg.textContent=e.message; }
+    });
+    document.addEventListener("DOMContentLoaded", boot);
+  </script>
+</body>
+</html>
