@@ -6,9 +6,10 @@
     "available": false,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/hgh-10u.webp",
+    "image": "assets/images/products/hgh-10u.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "bac-water-10ml",
@@ -17,9 +18,10 @@
     "available": true,
     "categoryFr": "Compléments & supports",
     "categoryEn": "Laboratory support",
-    "image": "assets/images/products/bac-water-10ml.webp",
+    "image": "assets/images/products/bac-water-10ml.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "hmg-76-iu",
@@ -28,9 +30,10 @@
     "available": false,
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
-    "image": "assets/images/products/hmg-76-iu.webp",
+    "image": "assets/images/products/hmg-76-iu.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "hcg-5000-iu",
@@ -39,9 +42,10 @@
     "available": true,
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
-    "image": "assets/images/products/hcg-5000-iu.webp",
+    "image": "assets/images/products/hcg-5000-iu.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "retatrutide-10mg",
@@ -50,9 +54,10 @@
     "available": true,
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
-    "image": "assets/images/products/retatrutide-10mg.webp",
+    "image": "assets/images/products/retatrutide-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "retatrutide-20mg",
@@ -61,9 +66,10 @@
     "available": false,
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
-    "image": "assets/images/products/retatrutide-20mg.webp",
+    "image": "assets/images/products/retatrutide-20mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "bpc157-5mg",
@@ -72,9 +78,10 @@
     "available": false,
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
-    "image": "assets/images/products/bpc157-5mg.webp",
+    "image": "assets/images/products/bpc157-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "bpc157-10mg",
@@ -83,9 +90,10 @@
     "available": false,
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
-    "image": "assets/images/products/bpc157-10mg.webp",
+    "image": "assets/images/products/bpc157-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "tb500-10mg",
@@ -94,9 +102,10 @@
     "available": false,
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
-    "image": "assets/images/products/tb500-10mg.webp",
+    "image": "assets/images/products/tb500-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "bpc-157-plus-tb-500-5mg-plus-5mg",
@@ -105,9 +114,10 @@
     "available": true,
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
-    "image": "assets/images/products/bpc-157-plus-tb-500-5mg-plus-5mg.webp",
+    "image": "assets/images/products/bpc-157-plus-tb-500-5mg-plus-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "bpc-157-plus-tb-500-10mg-plus-10mg",
@@ -116,9 +126,10 @@
     "available": false,
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
-    "image": "assets/images/products/bpc-157-plus-tb-500-10mg-plus-10mg.webp",
+    "image": "assets/images/products/bpc-157-plus-tb-500-10mg-plus-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "ghk-cu-50mg",
@@ -127,9 +138,10 @@
     "available": true,
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
-    "image": "assets/images/products/ghk-cu-50mg.webp",
+    "image": "assets/images/products/ghk-cu-50mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "glow-70-70mg",
@@ -138,9 +150,10 @@
     "available": true,
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
-    "image": "assets/images/products/glow-70-70mg.webp",
+    "image": "assets/images/products/glow-70-70mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "mgf-2mg",
@@ -149,9 +162,10 @@
     "available": false,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/mgf-2mg.webp",
+    "image": "assets/images/products/mgf-2mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "peg-mgf-2mg",
@@ -160,9 +174,10 @@
     "available": true,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/peg-mgf-2mg.webp",
+    "image": "assets/images/products/peg-mgf-2mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "epithalon-10mg",
@@ -171,9 +186,10 @@
     "available": true,
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
-    "image": "assets/images/products/epithalon-10mg.webp",
+    "image": "assets/images/products/epithalon-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "tesamorelin-12mg-plus-ipamorelin-6mg",
@@ -182,9 +198,10 @@
     "available": true,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/tesamorelin-12mg-plus-ipamorelin-6mg.webp",
+    "image": "assets/images/products/tesamorelin-12mg-plus-ipamorelin-6mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "semax-10mg-plus-selank-10mg",
@@ -193,9 +210,10 @@
     "available": true,
     "categoryFr": "Cognition & neuroprotection",
     "categoryEn": "Cognition & neuroprotection",
-    "image": "assets/images/products/semax-10mg-plus-selank-10mg.webp",
+    "image": "assets/images/products/semax-10mg-plus-selank-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "cjc-1295-w-o-dac-plus-ipamorelin-5mg-plus-5mg",
@@ -204,9 +222,10 @@
     "available": true,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/cjc-1295-w-o-dac-plus-ipamorelin-5mg-plus-5mg.webp",
+    "image": "assets/images/products/cjc-1295-w-o-dac-plus-ipamorelin-5mg-plus-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "nad-plus-1000mg",
@@ -215,9 +234,10 @@
     "available": true,
     "categoryFr": "Cognition & longévité",
     "categoryEn": "Cognition & longévité",
-    "image": "assets/images/products/nad-plus-1000mg.webp",
+    "image": "assets/images/products/nad-plus-1000mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "ghrp-2-2mg",
@@ -226,9 +246,10 @@
     "available": false,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/ghrp-2-2mg.webp",
+    "image": "assets/images/products/ghrp-2-2mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "ghrp-6-5mg",
@@ -237,9 +258,10 @@
     "available": false,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/ghrp-6-5mg.webp",
+    "image": "assets/images/products/ghrp-6-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "igf-lr3-1mg",
@@ -248,9 +270,10 @@
     "available": true,
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
-    "image": "assets/images/products/igf-lr3-1mg.webp",
+    "image": "assets/images/products/igf-lr3-1mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "mots-c-10mg",
@@ -259,9 +282,10 @@
     "available": true,
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
-    "image": "assets/images/products/mots-c-10mg.webp",
+    "image": "assets/images/products/mots-c-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "dsip-10mg",
@@ -270,9 +294,10 @@
     "available": false,
     "categoryFr": "Cognition & neuroprotection",
     "categoryEn": "Cognition & neuroprotection",
-    "image": "assets/images/products/dsip-10mg.webp",
+    "image": "assets/images/products/dsip-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "oxytocin-5mg",
@@ -281,9 +306,10 @@
     "available": true,
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
-    "image": "assets/images/products/oxytocin-5mg.webp",
+    "image": "assets/images/products/oxytocin-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "aod-9604-5mg",
@@ -292,9 +318,10 @@
     "available": false,
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
-    "image": "assets/images/products/aod-9604-5mg.webp",
+    "image": "assets/images/products/aod-9604-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "pt141-10mg",
@@ -303,9 +330,10 @@
     "available": false,
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
-    "image": "assets/images/products/pt141-10mg.webp",
+    "image": "assets/images/products/pt141-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "mt-i-10mg",
@@ -314,9 +342,10 @@
     "available": false,
     "categoryFr": "Mélanocortines",
     "categoryEn": "Melanocortin research",
-    "image": "assets/images/products/mt-i-10mg.webp",
+    "image": "assets/images/products/mt-i-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "mt-ii-melanotan-2-acetate-10mg",
@@ -325,9 +354,10 @@
     "available": false,
     "categoryFr": "Mélanocortines",
     "categoryEn": "Melanocortin research",
-    "image": "assets/images/products/mt-ii-melanotan-2-acetate-10mg.webp",
+    "image": "assets/images/products/mt-ii-melanotan-2-acetate-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "kisspeptin-5mg",
@@ -336,9 +366,10 @@
     "available": true,
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
-    "image": "assets/images/products/kisspeptin-5mg.webp",
+    "image": "assets/images/products/kisspeptin-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "ss-31-10mg",
@@ -347,9 +378,10 @@
     "available": false,
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
-    "image": "assets/images/products/ss-31-10mg.webp",
+    "image": "assets/images/products/ss-31-10mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "kpv",
@@ -358,9 +390,10 @@
     "available": false,
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
-    "image": "assets/images/products/kpv.webp",
+    "image": "assets/images/products/kpv.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "glutathione",
@@ -369,9 +402,10 @@
     "available": false,
     "categoryFr": "Compléments & supports",
     "categoryEn": "Laboratory support",
-    "image": "assets/images/products/glutathione.webp",
+    "image": "assets/images/products/glutathione.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "5-amino-1mq-5mg",
@@ -380,9 +414,10 @@
     "available": false,
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
-    "image": "assets/images/products/5-amino-1mq-5mg.webp",
+    "image": "assets/images/products/5-amino-1mq-5mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "bronchogen-20mg",
@@ -391,9 +426,10 @@
     "available": false,
     "categoryFr": "Bioregulators",
     "categoryEn": "Bioregulators",
-    "image": "assets/images/products/bronchogen-20mg.webp",
+    "image": "assets/images/products/bronchogen-20mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "livagen-20mg",
@@ -402,9 +438,10 @@
     "available": false,
     "categoryFr": "Bioregulators",
     "categoryEn": "Bioregulators",
-    "image": "assets/images/products/livagen-20mg.webp",
+    "image": "assets/images/products/livagen-20mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
     "id": "pancragen-20mg",
@@ -413,8 +450,9 @@
     "available": false,
     "categoryFr": "Bioregulators",
     "categoryEn": "Bioregulators",
-    "image": "assets/images/products/pancragen-20mg.webp",
+    "image": "assets/images/products/pancragen-20mg.png",
     "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request."
+    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
   }
 ]

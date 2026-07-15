@@ -12,6 +12,18 @@
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+  <section class="video-intro" id="videoIntro" aria-label="Introduction Nexus">
+    <div class="video-intro__backdrop"></div>
+    <video id="introVideo" class="video-intro__media" playsinline muted preload="auto">
+      <source src="assets/video/nexus-intro.mp4" type="video/mp4">
+    </video>
+    <div class="video-intro__loading" id="introLoading">
+      <span></span>
+      <small>NEXUS BIOHACKING RESEARCH</small>
+    </div>
+    <button class="video-intro__sound" id="introSound" type="button">Activer le son</button>
+    <button class="video-intro__skip" id="introSkip" type="button">Passer</button>
+  </section>
   <canvas id="ambientCanvas" aria-hidden="true"></canvas>
 
   <header class="header">

@@ -1,5 +1,5 @@
 
-const CONFIG = window.NEXUS_CONFIG || { telegramUrl: "https://t.me/NexusCommande_bot" };
+const CONFIG = window.NEXUS_CONFIG || { telegramUrl: "#" };
 
 const translations = {
   fr: {
@@ -102,7 +102,7 @@ function renderProducts() {
         <span class="availability ${product.available ? "available" : "unavailable"}">
           ${product.available ? translations[lang].available : translations[lang].unavailable}
         </span>
-        <img src="${product.image}" alt="${product.name}" loading="lazy">
+        <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='${product.fallbackImage || "assets/images/nexus-logo.webp"}';">
       </div>
       <div class="product-info">
         <small>${lang === "fr" ? product.categoryFr : product.categoryEn}</small>
@@ -251,6 +251,44 @@ function animate(){
 resizeCanvas();
 addEventListener("resize",resizeCanvas);
 if(!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(animate);
+
+
+// Cinematic intro
+const videoIntro = document.querySelector("#videoIntro");
+const introVideo = document.querySelector("#introVideo");
+const introSound = document.querySelector("#introSound");
+const introSkip = document.querySelector("#introSkip");
+const introLoading = document.querySelector("#introLoading");
+let introClosed = false;
+
+function closeVideoIntro(){
+  if(!videoIntro || introClosed) return;
+  introClosed = true;
+  videoIntro.classList.add("is-finished");
+  window.setTimeout(() => videoIntro.remove(), 950);
+}
+
+if(introVideo){
+  introVideo.addEventListener("loadeddata", () => introLoading?.classList.add("hidden"));
+  introVideo.addEventListener("ended", closeVideoIntro);
+  introVideo.addEventListener("error", () => {
+    console.warn("Cinématique Nexus introuvable ou illisible.");
+    closeVideoIntro();
+  });
+  introVideo.play().catch(() => introLoading?.classList.add("hidden"));
+  window.setTimeout(closeVideoIntro, 9000);
+}
+
+introSound?.addEventListener("click", async () => {
+  if(!introVideo) return;
+  introVideo.muted = !introVideo.muted;
+  introSound.textContent = introVideo.muted ? "Activer le son" : "Couper le son";
+  if(!introVideo.muted){
+    try{ await introVideo.play(); }catch(error){ console.warn(error); }
+  }
+});
+
+introSkip?.addEventListener("click", closeVideoIntro);
 
 applyTelegramLinks();
 translatePage();

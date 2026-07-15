@@ -1,53 +1,31 @@
-# NEXUS Hub V4
+# NEXUS Hub V5
 
-Version statique compatible GitHub Pages.
+## Structure à conserver
+- index.html
+- css/main.css
+- js/app.js
+- js/config.js
+- data/products.json
+- assets/images/products/
+- assets/video/nexus-intro.mp4
 
-## 1. Configurer Telegram
+Ne déplacez aucun fichier hors de son dossier.
 
-Ouvrez `js/config.js` et remplacez :
+## Telegram
+Modifiez uniquement js/config.js.
 
-```js
-telegramUrl: "https://t.me/VOTRE_BOT_TELEGRAM"
-```
+## Vidéo
+Votre vidéo doit s'appeler exactement nexus-intro.mp4 et rester dans assets/video/.
 
-par l'URL exacte du bot Nexus.
+## Images produit
+Les images PNG restent dans assets/images/products/.
+Le fichier PRODUCT_IMAGE_NAMES.txt indique le nom exact attendu pour chaque produit.
 
-## 2. Ajouter la future cinématique
+## Nettoyage
+Supprimez les anciens fichiers V1 placés directement à la racine :
+- app.js
+- styles.css
+- products.json
 
-Déposez la vidéo dans :
-
-```text
-assets/video/nexus-intro.mp4
-```
-
-Format recommandé :
-- MP4 H.264
-- 1920 × 1080
-- 24 fps
-- version web muette
-- idéalement moins de 12 Mo
-
-Tant que la vidéo n'existe pas, le site utilise automatiquement l'image `cinematic-poster.png`.
-
-## 3. Publier
-
-Copiez le contenu de ce dossier directement à la racine du dépôt `Nexus-hub`, puis :
-
-1. Commit to main
-2. Push origin
-3. Attendre la coche verte dans GitHub Actions / Pages
-4. Recharger le site avec Cmd + Shift + R
-
-## 4. Données produits
-
-Le catalogue se trouve dans :
-
-```text
-data/products.json
-```
-
-Les prix et disponibilités sont issus du fichier Excel fourni lors de la création de cette version.
-
-## Important
-
-Les visuels produits actuels proviennent des planches fournies. Certains pourront encore nécessiter une régénération individuelle pour obtenir un cadrage produit parfaitement homogène.
+## Publication
+Copiez le contenu du ZIP à la racine du dépôt, acceptez les remplacements, puis Commit et Push.
