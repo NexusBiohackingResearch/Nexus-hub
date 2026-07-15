@@ -81,8 +81,26 @@ export async function initSchema() {
     );
   `);
 
+  // Colonnes ajoutées pour BTCPay / promo / crypto (idempotent)
+  const extraCols = [
+    ["city", "TEXT"],
+    ["zip", "TEXT"],
+    ["promo_code", "TEXT"],
+    ["discount", "NUMERIC(10,2) NOT NULL DEFAULT 0"],
+    ["btc_amount", "NUMERIC(16,8)"],
+    ["btc_rate", "NUMERIC(14,2)"],
+    ["btcpay_invoice_id", "TEXT"],
+    ["btcpay_checkout_link", "TEXT"],
+    ["paid_at", "TIMESTAMPTZ"],
+    ["sheet_synced", "BOOLEAN NOT NULL DEFAULT FALSE"],
+  ];
+  for (const [name, type] of extraCols) {
+    await query(`ALTER TABLE orders ADD COLUMN IF NOT EXISTS ${name} ${type};`);
+  }
+
   await query(`CREATE INDEX IF NOT EXISTS idx_orders_email ON orders(email);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);`);
+  await query(`CREATE INDEX IF NOT EXISTS idx_orders_invoice ON orders(btcpay_invoice_id);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_items_order ON order_items(order_id);`);
 
   console.log("[db] schéma prêt");

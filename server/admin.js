@@ -4,6 +4,18 @@
 // ============================================================
 import { query } from "./db.js";
 import { sendPaymentConfirmed, sendShipped } from "./email.js";
+import { updateOrderStatus } from "./sheets.js";
+
+const SHEET_LABEL = {
+  awaiting_payment: "En attente", payment_received: "Payé",
+  shipped: "Expédiée", cancelled: "Annulée",
+};
+function frNow() {
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit", timeZone: "Europe/Paris",
+  }).format(new Date()).replace(",", "");
+}
 
 const VALID = ["awaiting_payment", "payment_received", "shipped", "cancelled"];
 
@@ -62,9 +74,12 @@ export async function updateStatus(req, res) {
   // Emails automatiques selon le nouveau statut (seulement si transition réelle)
   if (status === "payment_received" && order.status !== "payment_received") {
     sendPaymentConfirmed(updated).catch((e) => console.error("email paid:", e));
-  }
-  if (status === "shipped" && order.status !== "shipped") {
+    updateOrderStatus(updated.reference, "Payé", frNow()).catch((e) => console.error("sheet:", e));
+  } else if (status === "shipped" && order.status !== "shipped") {
     sendShipped(updated).catch((e) => console.error("email shipped:", e));
+    updateOrderStatus(updated.reference, "Expédiée").catch((e) => console.error("sheet:", e));
+  } else {
+    updateOrderStatus(updated.reference, SHEET_LABEL[status] || status).catch(() => {});
   }
 
   res.json({ ok: true, order: updated });

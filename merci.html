@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#03070b">
+  <title>Merci — NEXUS</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/store.css">
+</head>
+<body>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+  <header class="header">
+    <a class="brand" href="index.html"><span class="brand-mark"></span><span>NEXUS</span><small>Biohacking Research</small></a>
+    <div class="header-actions">
+      <a class="button button-secondary" href="index.html" style="min-height:auto;padding:10px 14px;font-size:11px">← Boutique</a>
+    </div>
+  </header>
+
+  <main class="page" style="max-width:620px">
+    <div class="panel">
+      <div class="success-box">
+        <div class="chk"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#04120c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h2 style="font-family:'Space Grotesk';font-size:28px;margin-bottom:8px">Merci pour ta commande !</h2>
+        <p style="color:var(--muted)">Référence : <b id="ref" style="color:#fff">—</b></p>
+      </div>
+      <div id="statusBox" style="text-align:center;margin:8px 0 20px;color:var(--muted);font-size:14px">
+        Nous vérifions ton paiement Bitcoin…
+      </div>
+      <p style="color:var(--muted);font-size:14px;text-align:center;line-height:1.7">
+        Dès que le paiement est confirmé sur le réseau, tu reçois un <b style="color:#fff">email de confirmation</b> automatique et nous préparons ton envoi.
+      </p>
+      <div style="display:flex;gap:10px;margin-top:22px;flex-wrap:wrap">
+        <a class="button button-primary" href="compte.html" style="flex:1">Suivre ma commande</a>
+        <a class="button button-secondary" href="index.html" style="flex:1">Retour boutique</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/store.js"></script>
+  <script>
+    const ref = new URLSearchParams(location.search).get("ref") || localStorage.getItem("nexus_last_ref") || "—";
+    document.getElementById("ref").textContent = ref;
+    const STATUS = {
+      awaiting_payment:{t:"En attente du paiement Bitcoin…",c:"#f5c451"},
+      payment_received:{t:"✓ Paiement confirmé ! Nous préparons ton envoi.",c:"#83ef68"},
+      shipped:{t:"📦 Commande expédiée.",c:"#18d7e8"},
+      cancelled:{t:"Commande annulée.",c:"#ed8585"}
+    };
+    async function poll(){
+      if(ref==="—") return;
+      try{
+        // si l'utilisateur est connecté, /mine ; sinon on tente le suivi public (email requis côté serveur)
+        const me = await NEXUS.api("/api/auth/me").catch(()=>({user:null}));
+        let order=null;
+        if(me.user){
+          const {orders}=await NEXUS.api("/api/orders/mine");
+          order=orders.find(o=>o.reference===ref);
+        }
+        if(order){
+          const s=STATUS[order.status]||{t:order.status,c:"#98a9b4"};
+          const box=document.getElementById("statusBox");
+          box.textContent=s.t; box.style.color=s.c;
+          if(order.status==="awaiting_payment") setTimeout(poll,8000);
+        }
+      }catch(e){}
+    }
+    document.addEventListener("DOMContentLoaded", ()=>setTimeout(poll,1200));
+  </script>
+</body>
+</html>
