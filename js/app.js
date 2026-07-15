@@ -18,7 +18,7 @@ const translations = {
     deliveryEyebrow:"EXPÉDITION",deliveryTitle:"Rapide en France. Étendue à l’Europe.",deliveryLead:"Livraison généralement estimée entre 2 et 3 jours ouvrés en France métropolitaine. Les délais européens varient selon la destination.",
     contactEyebrow:"ORDER ACCESS",contactTitle:"Préparez votre commande en quelques instants.",contactLead:"Ouvrez le bot Nexus sur Telegram et transmettez votre sélection.",openTelegram:"Ouvrir Telegram",
     footerLegal:"Exclusivement destiné à la recherche scientifique. Non destiné à la consommation humaine ou animale.",
-    orderProduct:"Commander ce produit",continueBrowsing:"Continuer à explorer"
+    orderProduct:"Commander ce produit",continueBrowsing:"Continuer à explorer",footerAbout:"Peptides de recherche premium destinés exclusivement à l’étude en laboratoire et in vitro. Fondés sur la pureté, la documentation et la traçabilité.",footerCatalogueTitle:"CATALOGUE",footerAllProducts:"Toutes les références",footerDomains:"Domaines",footerQuality:"Qualité",footerSupportTitle:"SUPPORT",footerTelegram:"Telegram",footerShipping:"Livraison",footerLegalTitle:"LÉGAL",footerCgvSoon:"CGV bientôt disponibles",footerPrivacySoon:"Confidentialité bientôt disponible",footerResearchPolicy:"Politique d’usage recherche",footerWarningTitle:"AVERTISSEMENT :",footerWarningText:"Tous les produits présentés sur ce site sont destinés uniquement à la recherche et à l’usage en laboratoire. Ils ne sont pas destinés à la consommation humaine ou animale, ni à un usage diagnostique ou thérapeutique. Aucun élément de ce site ne constitue une allégation médicale."
   },
   en: {
     navDomains:"Fields",navCatalogue:"Library",navQuality:"Quality",navDelivery:"Shipping",navContact:"Contact",order:"Order",
@@ -36,7 +36,7 @@ const translations = {
     deliveryEyebrow:"SHIPPING",deliveryTitle:"Fast in France. Extended across Europe.",deliveryLead:"Delivery is generally estimated at 2 to 3 business days in metropolitan France. European transit times vary by destination.",
     contactEyebrow:"ORDER ACCESS",contactTitle:"Prepare your order in moments.",contactLead:"Open the Nexus bot on Telegram and send your selection.",openTelegram:"Open Telegram",
     footerLegal:"Strictly intended for scientific research. Not intended for human or animal consumption.",
-    orderProduct:"Order this compound",continueBrowsing:"Continue exploring"
+    orderProduct:"Order this compound",continueBrowsing:"Continue exploring",footerAbout:"Premium research peptides intended exclusively for laboratory and in vitro study. Built around purity, documentation and traceability.",footerCatalogueTitle:"CATALOGUE",footerAllProducts:"All compounds",footerDomains:"Research fields",footerQuality:"Quality",footerSupportTitle:"SUPPORT",footerTelegram:"Telegram",footerShipping:"Shipping",footerLegalTitle:"LEGAL",footerCgvSoon:"Terms coming soon",footerPrivacySoon:"Privacy coming soon",footerResearchPolicy:"Research use policy",footerWarningTitle:"WARNING:",footerWarningText:"All products shown on this website are intended exclusively for research and laboratory use. They are not intended for human or animal consumption, diagnosis or therapeutic use. Nothing on this website constitutes a medical claim."
   }
 };
 
