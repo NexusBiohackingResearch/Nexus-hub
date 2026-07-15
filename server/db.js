@@ -9,15 +9,21 @@ const { Pool } = pg;
 
 const connectionString = process.env.DATABASE_URL;
 
+// SSL : requis pour une base publique/externe, mais PAS pour le réseau
+// interne de Railway (*.railway.internal) ni en local.
+function needsSSL(cs) {
+  if (process.env.PGSSL === "disable") return false;
+  if (process.env.PGSSL === "require") return true;
+  if (!cs) return false;
+  if (/localhost|127\.0\.0\.1|::1|\.railway\.internal/.test(cs)) return false;
+  return true;
+}
+
 export const pool = new Pool(
   connectionString
     ? {
         connectionString,
-        // Railway/Heroku exigent souvent SSL. On l'active dès qu'on n'est pas en local.
-        ssl:
-          process.env.PGSSL === "disable" || /localhost|127\.0\.0\.1/.test(connectionString)
-            ? false
-            : { rejectUnauthorized: false },
+        ssl: needsSSL(connectionString) ? { rejectUnauthorized: false } : false,
       }
     : {
         host: process.env.PGHOST || "localhost",
