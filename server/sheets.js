@@ -6,12 +6,13 @@
 // ============================================================
 import { google } from "googleapis";
 
-const SPREADSHEET_ID = process.env.SPREADSHEET_ID || "1pGnRnnQEmpnuwJiB6mkbFHaEmhh4wPFhCd4wtehAmKc";
+export const SPREADSHEET_ID = process.env.SPREADSHEET_ID || "1pGnRnnQEmpnuwJiB6mkbFHaEmhh4wPFhCd4wtehAmKc";
 const SHEET_NAME = process.env.SHEET_NAME || "Commande NEXUS";
 
 let sheetsClient = null;
 
-function getClient() {
+// Client Google Sheets partagé (réutilisé par catalog.js)
+export function getClient() {
   if (sheetsClient) return sheetsClient;
   const raw = process.env.GOOGLE_CREDENTIALS;
   if (!raw) return null;

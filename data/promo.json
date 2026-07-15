@@ -1,3 +1,5 @@
 [
-  { "code": "EXEMPLE10", "influenceur": "Exemple", "reduction": 10, "actif": false }
+  { "code": "NEXUS2026", "influenceur": "Code ouverture société", "reduction": 20, "actif": true },
+  { "code": "INFLUENCER1", "influenceur": "Influenceur 1", "reduction": 15, "actif": true },
+  { "code": "INFLUENCER2", "influenceur": "Influenceur 2", "reduction": 10, "actif": false }
 ]

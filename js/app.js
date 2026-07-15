@@ -322,6 +322,22 @@ function closeModal() {
 }
 
 async function loadProducts() {
+  // 1) On tente l'API (catalogue piloté par Google Sheets, temps réel)
+  try {
+    const response = await fetch("/api/products");
+    if (response.ok) {
+      const data = await response.json();
+      if (Array.isArray(data.products) && data.products.length) {
+        products = data.products;
+        renderCategories();
+        renderProducts();
+        return;
+      }
+    }
+  } catch (error) {
+    console.warn("API catalogue indisponible, repli sur le fichier local.", error);
+  }
+  // 2) Repli : fichier statique (ex. ouverture en local sans serveur)
   try {
     const response = await fetch("data/products.json");
     if (!response.ok) throw new Error(`HTTP ${response.status}`);

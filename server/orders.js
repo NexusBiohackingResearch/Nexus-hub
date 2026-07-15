@@ -2,9 +2,6 @@
 // NEXUS — Routes commandes
 // Flux : panier → promo/frais → facture BTCPay → Google Sheet → email
 // ============================================================
-import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
 import { query } from "./db.js";
 import { findOrCreateGuest } from "./auth.js";
 import { sendOrderReceived } from "./email.js";
@@ -12,15 +9,7 @@ import { computeTotals } from "./promo.js";
 import { getBtcEurRate } from "./rate.js";
 import { createInvoice, btcpayConfigured } from "./btcpay.js";
 import { appendOrderRow, sheetsConfigured } from "./sheets.js";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PRODUCTS_PATH = path.join(__dirname, "..", "data", "products.json");
-
-let productCache = null;
-async function getProducts() {
-  if (!productCache) productCache = JSON.parse(await readFile(PRODUCTS_PATH, "utf8"));
-  return productCache;
-}
+import { getProducts } from "./catalog.js";
 
 function makeRef() {
   const s = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";

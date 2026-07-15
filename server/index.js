@@ -21,6 +21,7 @@ import { btcpayWebhook } from "./webhook.js";
 import { btcpayConfigured } from "./btcpay.js";
 import { sheetsConfigured } from "./sheets.js";
 import { FRAIS_PORT, SEUIL_GRATUIT } from "./promo.js";
+import { getProducts, ensureCatalogTabs } from "./catalog.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -50,6 +51,11 @@ app.post("/api/auth/register", authLimiter, async (req, res, next) => {
 app.post("/api/auth/login", authLimiter, (req, res, next) => login(req, res).catch(next));
 app.post("/api/auth/logout", logout);
 app.get("/api/auth/me", (req, res, next) => me(req, res).catch(next));
+
+// ---- Catalogue (lu depuis Google Sheets, cache 60s) ----
+app.get("/api/products", async (_req, res, next) => {
+  try { res.json({ products: await getProducts() }); } catch (e) { next(e); }
+});
 
 // ---- Commandes ----
 app.post("/api/quote", (req, res, next) => quote(req, res).catch(next));
@@ -89,6 +95,8 @@ initSchema()
   .then(async () => {
     if (process.env.ADMIN_EMAIL)
       await query("UPDATE users SET is_admin=TRUE WHERE email=$1", [process.env.ADMIN_EMAIL]).catch(() => {});
+    // Crée + remplit les onglets "Produits" et "Codes Promo" si absents
+    await ensureCatalogTabs().catch((e) => console.error("catalog init:", e));
     app.listen(PORT, () => console.log(`[nexus] en ligne sur :${PORT}`));
   })
   .catch((e) => { console.error("Échec init DB:", e); process.exit(1); });
