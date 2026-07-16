@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#03070b">
+  <title>Comment payer — NEXUS</title>
+  <meta name="description" content="Comment régler votre commande NEXUS : paiement par carte bancaire ou en cryptomonnaie (Bitcoin, USDT, Ethereum), étape par étape.">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/store.css">
+  <style>
+    .pay-cards{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:30px}
+    @media(max-width:820px){.pay-cards{grid-template-columns:1fr}}
+    .pay-card{border:1px solid var(--line);border-radius:20px;background:linear-gradient(160deg,rgba(9,20,30,.9),rgba(3,9,14,.8));padding:28px;position:relative;overflow:hidden}
+    .pay-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--cyan),var(--violet))}
+    .pay-card .ico{width:52px;height:52px;border-radius:14px;background:rgba(24,215,232,.08);border:1px solid var(--line);display:grid;place-items:center;margin-bottom:16px}
+    .pay-card h2{font-size:22px;margin-bottom:6px}
+    .pay-card .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+    ol.steps{list-style:none;counter-reset:s;padding:0;margin:0}
+    ol.steps li{counter-increment:s;position:relative;padding:0 0 18px 46px;color:#c3d0da;font-size:14px;line-height:1.6}
+    ol.steps li::before{content:counter(s);position:absolute;left:0;top:-2px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--green),var(--cyan),var(--violet));color:#04120c;font-weight:800;display:grid;place-items:center;font-size:14px}
+    ol.steps li::after{content:"";position:absolute;left:14px;top:30px;bottom:6px;width:1px;background:rgba(120,150,190,.2)}
+    ol.steps li:last-child{padding-bottom:0}
+    ol.steps li:last-child::after{display:none}
+    ol.steps b{color:#fff}
+    .note-box{border:1px solid rgba(55,245,169,.25);background:rgba(55,245,169,.05);border-radius:14px;padding:16px 18px;margin-top:10px;font-size:13px;color:var(--muted)}
+    .note-box b{color:var(--green)}
+    .faq{border-top:1px solid var(--line);margin-top:14px;padding-top:22px}
+    .faq h3{font-size:15px;margin:18px 0 6px;color:#fff}
+    .faq p{color:var(--muted);font-size:13.5px;line-height:1.7;margin:0}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+    .badges span{font-size:11px;font-weight:700;letter-spacing:.06em;color:var(--cyan);border:1px solid var(--line);border-radius:999px;padding:7px 13px}
+  </style>
+</head>
+<body>
+  <canvas id="ambientCanvas" aria-hidden="true"></canvas>
+  <header class="header">
+    <a class="brand" href="index.html"><span class="brand-mark"></span><span>NEXUS</span><small>Biohacking Research</small></a>
+    <div class="header-actions">
+      <a class="button button-secondary" href="index.html" style="min-height:auto;padding:10px 14px;font-size:11px">← Boutique</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1>Comment payer votre commande</h1>
+    <p class="lead">Le règlement se fait sur une page de paiement <b style="color:#fff">100 % sécurisée</b>. Deux options : par <b style="color:#fff">carte bancaire</b> ou en <b style="color:#fff">cryptomonnaie</b>. Dans les deux cas, ta commande est confirmée <b style="color:#fff">automatiquement</b> dès réception du paiement.</p>
+
+    <div class="pay-cards">
+      <!-- CARTE -->
+      <div class="pay-card">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><defs><linearGradient id="g1" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#37f5a9"/><stop offset="1" stop-color="#a67cff"/></linearGradient></defs><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+        <h2>Payer par carte bancaire</h2>
+        <p class="sub">Le plus simple si tu n'as pas de cryptomonnaie.</p>
+        <ol class="steps">
+          <li>Ajoute tes produits au panier (<b>minimum 30 €</b>) et clique sur <b>« Passer la commande »</b>.</li>
+          <li>Renseigne ton email et ton adresse de livraison, puis valide.</li>
+          <li>Sur la page de paiement sécurisée, choisis l'option <b>« Carte bancaire »</b>.</li>
+          <li>Entre les infos de ta carte. Une <b>vérification d'identité</b> peut être demandée au premier achat (photo de ta pièce d'identité) — c'est standard et sécurisé.</li>
+          <li>C'est réglé ✅ — tu reçois un <b>email de confirmation</b> automatiquement.</li>
+        </ol>
+        <div class="note-box">💳 <b>En coulisses :</b> ta carte est convertie en cryptomonnaie par un prestataire de paiement agréé. Tu paies en euros, simplement.</div>
+      </div>
+
+      <!-- CRYPTO -->
+      <div class="pay-card">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="url(#g2)" stroke-width="2"><defs><linearGradient id="g2" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#37f5a9"/><stop offset="1" stop-color="#3d7bff"/></linearGradient></defs><circle cx="12" cy="12" r="9"/><path d="M9.5 8.5h4a2 2 0 0 1 0 4h-4zm0 4h4.5a2 2 0 0 1 0 4H9.5zm0-4v8M11 6.5v2M11 15.5v2"/></svg></div>
+        <h2>Payer en cryptomonnaie</h2>
+        <p class="sub">Bitcoin (BTC), USDT ou Ethereum (ETH).</p>
+        <ol class="steps">
+          <li>Ajoute tes produits au panier et clique sur <b>« Passer la commande »</b>.</li>
+          <li>Sur la page de paiement, choisis ta crypto : <b>Bitcoin</b>, <b>USDT</b> ou <b>Ethereum</b>.</li>
+          <li>Une <b>adresse</b> et un <b>QR code</b> s'affichent, avec le montant exact au cours du moment.</li>
+          <li>Depuis ton portefeuille (ou ton compte Coinbase / Binance…), <b>envoie le montant</b> à cette adresse — ou scanne le QR code.</li>
+          <li>Le paiement est <b>détecté automatiquement</b> sur la blockchain → tu reçois ton <b>email de confirmation</b>. ✅</li>
+        </ol>
+        <div class="note-box">🪙 <b>Pas encore de crypto ?</b> Utilise simplement l'option <b>carte bancaire</b> ci-contre — elle achète la crypto pour toi. Ou procure-t'en en quelques minutes sur un service comme Coinbase.</div>
+      </div>
+    </div>
+
+    <!-- Bon à savoir -->
+    <div class="panel">
+      <h2 style="font-family:'Space Grotesk';font-size:22px;margin-bottom:6px">Bon à savoir</h2>
+      <div class="faq">
+        <h3>Quand ma commande est-elle confirmée ?</h3>
+        <p>Automatiquement, dès que le paiement est reçu — par carte comme en crypto. Tu reçois un email de confirmation, et tu peux suivre ta commande depuis ton compte.</p>
+        <h3>Est-ce sécurisé ?</h3>
+        <p>Oui. Le paiement se fait sur une page dédiée et chiffrée (cadenas 🔒). Tes coordonnées de carte ne transitent jamais par notre site.</p>
+        <h3>Quel est le montant minimum de commande ?</h3>
+        <p>30 €. En dessous, la validation de commande n'est pas possible.</p>
+        <h3>Combien de temps pour l'expédition ?</h3>
+        <p>Livraison généralement estimée à 2–3 jours ouvrés en France, variable en Europe. Tu reçois un email dès l'expédition.</p>
+      </div>
+      <div class="badges">
+        <span>Paiement sécurisé</span><span>Confirmation automatique</span><span>Carte &amp; Crypto</span><span>Suivi de commande</span>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:30px">
+      <a class="button button-primary" href="index.html#catalogue">Voir le catalogue →</a>
+    </div>
+
+    <p style="text-align:center;font-size:11px;color:#5a6472;margin-top:26px;line-height:1.7">
+      Produits destinés exclusivement à la recherche en laboratoire. Ni pour consommation humaine ou animale, ni usage thérapeutique.
+    </p>
+  </main>
+
+  <script src="js/config.js"></script>
+  <script src="js/store.js"></script>
+</body>
+</html>

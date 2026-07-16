@@ -3,7 +3,7 @@ const CONFIG = window.NEXUS_CONFIG || { telegramUrl: "#" };
 
 const translations = {
   fr: {
-    navDomains:"Domaines",navCatalogue:"Catalogue",navCalc:"Calculateur",navQuality:"Qualité",navDelivery:"Livraison",navContact:"Contact",order:"Commander",
+    navDomains:"Domaines",navCatalogue:"Catalogue",navCalc:"Calculateur",navPay:"Paiement",navQuality:"Qualité",navDelivery:"Livraison",navContact:"Contact",order:"Commander",
     heroEyebrow:"PEPTIDES DE RECHERCHE HAUTE PURETÉ",heroTitle:"Pureté. Précision.<br><span>Recherche sans compromis.</span>",
     heroLead:"Sélection rigoureuse, paiement sécurisé en cryptomonnaie et livraison rapide en France et en Europe.",
     exploreCatalogue:"Explorer le catalogue",fastOrder:"Commander sur Telegram",metricFrance:"jours en France",metricCrypto:"paiement sécurisé",metricEurope:"expédition suivie",
@@ -21,7 +21,7 @@ const translations = {
     orderProduct:"Commander ce produit",continueBrowsing:"Continuer à explorer",footerAbout:"Peptides de recherche premium destinés exclusivement à l’étude en laboratoire et in vitro. Fondés sur la pureté, la documentation et la traçabilité.",footerCatalogueTitle:"CATALOGUE",footerAllProducts:"Toutes les références",footerDomains:"Domaines",footerQuality:"Qualité",footerSupportTitle:"SUPPORT",footerTelegram:"Telegram",footerShipping:"Livraison",footerLegalTitle:"LÉGAL",footerCgvSoon:"CGV bientôt disponibles",footerPrivacySoon:"Confidentialité bientôt disponible",footerResearchPolicy:"Politique d’usage recherche",documentLoading:"Chargement de la fiche…",documentUnavailable:"Fiche détaillée bientôt disponible.",researchFields:"Domaines de recherche",technicalData:"Données techniques",coaTitle:"Certificate of Analysis",viewCoa:"Consulter le COA",footerWarningTitle:"AVERTISSEMENT :",footerWarningText:"Tous les produits présentés sur ce site sont destinés uniquement à la recherche et à l’usage en laboratoire. Ils ne sont pas destinés à la consommation humaine ou animale, ni à un usage diagnostique ou thérapeutique. Aucun élément de ce site ne constitue une allégation médicale."
   },
   en: {
-    navDomains:"Fields",navCatalogue:"Library",navCalc:"Calculator",navQuality:"Quality",navDelivery:"Shipping",navContact:"Contact",order:"Order",
+    navDomains:"Fields",navCatalogue:"Library",navCalc:"Calculator",navPay:"Payment",navQuality:"Quality",navDelivery:"Shipping",navContact:"Contact",order:"Order",
     heroEyebrow:"HIGH-PURITY RESEARCH PEPTIDES",heroTitle:"Purity. Precision.<br><span>Research without compromise.</span>",
     heroLead:"Rigorous selection, secure cryptocurrency payments and fast shipping across France and Europe.",
     exploreCatalogue:"Explore the catalogue",fastOrder:"Order via Telegram",metricFrance:"days in France",metricCrypto:"secure payment",metricEurope:"tracked shipping",
