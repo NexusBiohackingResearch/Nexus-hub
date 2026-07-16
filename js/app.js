@@ -10,7 +10,7 @@ const translations = {
     signature:"Un portail pensé pour accéder rapidement aux références, disponibilités et informations de recherche.",
     ticker1:"Exclusivement pour la recherche",ticker2:"Livraison France 2–3 jours",ticker3:"Paiement Bitcoin",ticker4:"Expédition européenne",
     domainsEyebrow:"DOMAINES DE RECHERCHE",domainsTitle:"Explorez selon votre<br><span>axe de recherche</span>",domainsLead:"Choisissez un domaine pour filtrer instantanément le catalogue.",
-    domainGrowth:"Croissance & performance",domainRecovery:"Régénération & réparation",domainLongevity:"Longévité & recherche cellulaire",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Métabolisme",domainReproductive:"Recherche reproductive",
+    domainGrowth:"Performance & Récupération",domainRecovery:"Régénération & réparation",domainLongevity:"Longévité & recherche cellulaire",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Métabolisme & Longévité",domainReproductive:"Reproductive & Hormonal",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"Le catalogue <span>Nexus</span>",catalogueLead:"Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.",
     allCategories:"Toutes les catégories",availableOnly:"Disponibles uniquement",resetFilters:"Réinitialiser",available:"Disponible",unavailable:"Indisponible",references:"références",viewDetails:"Voir la fiche",addToCart:"Ajouter au panier",addToCartShort:"+ Panier",
     qualityEyebrow:"NEXUS QUALITY STANDARD",qualityTitle:"L’exigence à chaque<br><span>étape du parcours</span>",qualityLead:"Informations claires, conservation maîtrisée et accès rapide aux références disponibles.",
@@ -28,7 +28,7 @@ const translations = {
     signature:"A portal designed for fast access to compounds, availability and research information.",
     ticker1:"Research use only",ticker2:"France delivery in 2–3 days",ticker3:"Bitcoin payments",ticker4:"European shipping",
     domainsEyebrow:"RESEARCH FIELDS",domainsTitle:"Explore by your<br><span>research focus</span>",domainsLead:"Choose a field to filter the catalogue instantly.",
-    domainGrowth:"Growth & performance",domainRecovery:"Recovery & tissue research",domainLongevity:"Longevity & cellular research",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Metabolic research",domainReproductive:"Reproductive research",
+    domainGrowth:"Performance & Recovery",domainRecovery:"Recovery & tissue research",domainLongevity:"Longevity & cellular research",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Metabolism & Longevity",domainReproductive:"Reproductive & Hormonal",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"The <span>Nexus</span> catalogue",catalogueLead:"Search a compound, filter by field and review its current availability.",
     allCategories:"All categories",availableOnly:"Available only",resetFilters:"Reset",available:"Available",unavailable:"Unavailable",references:"references",viewDetails:"View details",addToCart:"Add to cart",addToCartShort:"+ Cart",
     qualityEyebrow:"NEXUS QUALITY STANDARD",qualityTitle:"Standards at every<br><span>stage of the journey</span>",qualityLead:"Clear information, controlled storage guidance and fast access to available compounds.",
@@ -507,7 +507,7 @@ loadProducts();
 
 // ---- Vidéos de catégories : survol = avant, sortie = retour arrière ----
 (function () {
-  var KEYS = ["growth", "recovery", "longevity", "cognition", "metabolism", "reproductive"];
+  var KEYS = ["growth", "metabolism", "cognition", "reproductive"];
   var cards = document.querySelectorAll(".domain-card");
   cards.forEach(function (card, i) {
     if (i >= KEYS.length) return;

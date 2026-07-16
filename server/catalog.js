@@ -24,6 +24,33 @@ const isYes = (v) =>
     String(v ?? "").trim().toLowerCase()
   );
 
+// ---------- Regroupement des catégories (10 anciennes -> 4 + supports) ----------
+// La Google Sheet garde ses catégories fines ; le site les fusionne à l'affichage.
+// Clé = ancienne catégorie (insensible casse/accents). Valeur = {fr, en} consolidés.
+const CATEGORY_MAP = {
+  "croissance & performance":    { fr: "Performance & Récupération",   en: "Performance & Recovery" },
+  "régénération & réparation":   { fr: "Performance & Récupération",   en: "Performance & Recovery" },
+  "métabolisme":                 { fr: "Métabolisme & Longévité",      en: "Metabolism & Longevity" },
+  "longévité & anti-âge":        { fr: "Métabolisme & Longévité",      en: "Metabolism & Longevity" },
+  "longévité & recherche cellulaire": { fr: "Métabolisme & Longévité", en: "Metabolism & Longevity" },
+  "bioregulators":               { fr: "Métabolisme & Longévité",      en: "Metabolism & Longevity" },
+  "cognition & neuroprotection": { fr: "Cognition & neuroprotection",  en: "Cognition & neuroprotection" },
+  "cognition & longévité":       { fr: "Cognition & neuroprotection",  en: "Cognition & neuroprotection" },
+  "santé reproductive":          { fr: "Reproductive & Hormonal",      en: "Reproductive & Hormonal" },
+  "mélanocortines":              { fr: "Reproductive & Hormonal",      en: "Reproductive & Hormonal" },
+  "compléments & supports":      { fr: "Supports & divers",            en: "Lab supports" },
+};
+const noAccent = (s) => String(s ?? "").normalize("NFD").replace(/[̀-ͯ]/g, "").trim().toLowerCase();
+const CATEGORY_MAP_NA = Object.fromEntries(Object.entries(CATEGORY_MAP).map(([k, v]) => [noAccent(k), v]));
+function applyCategoryMap(list) {
+  if (!Array.isArray(list)) return list;
+  for (const p of list) {
+    const m = CATEGORY_MAP_NA[noAccent(p.categoryFr)];
+    if (m) { p.categoryFr = m.fr; p.categoryEn = m.en; }
+  }
+  return list;
+}
+
 // ---------- Repli fichiers ----------
 async function fileProducts() {
   try { return JSON.parse(await readFile(PRODUCTS_JSON, "utf8")); } catch { return []; }
@@ -53,7 +80,7 @@ export async function getProducts() {
   if (pCache.data && now - pCache.ts < TTL) return pCache.data;
 
   const client = sheetsConfigured() ? getClient() : null;
-  if (!client) { const f = await fileProducts(); pCache = { data: f, ts: now }; return f; }
+  if (!client) { const f = applyCategoryMap(await fileProducts()); pCache = { data: f, ts: now }; return f; }
 
   try {
     const res = await client.spreadsheets.values.get({
@@ -78,11 +105,11 @@ export async function getProducts() {
           fallbackImage: "assets/images/nexus-logo.webp",
         };
       });
-    if (products.length) { pCache = { data: products, ts: now }; return products; }
+    if (products.length) { applyCategoryMap(products); pCache = { data: products, ts: now }; return products; }
   } catch (e) {
     console.error("[catalog] lecture Produits:", e?.message || e);
   }
-  const f = await fileProducts();
+  const f = applyCategoryMap(await fileProducts());
   pCache = { data: f, ts: now };
   return f;
 }

@@ -130,3 +130,19 @@
 .domain-card small,.domain-card h3{position:relative;z-index:2}
 .domain-card.clip-on h3{text-shadow:0 2px 18px rgba(0,0,0,.8)}
 .domain-card.clip-on::after{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,transparent 40%,rgba(2,6,10,.72));border-radius:inherit;pointer-events:none}
+
+/* Repos vivant : les visuels de catégorie flottent & s'étirent en continu, même sans survol */
+.domain-card{overflow:hidden}
+@keyframes nexusIdle{
+  0%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-7px) scale(1.045)}
+  100%{transform:translateY(0) scale(1)}
+}
+.domain-visual,.domain-clip{animation:nexusIdle 7s ease-in-out infinite;will-change:transform;transform-origin:center}
+/* décalage par carte pour un mouvement organique (pas tous synchro) */
+.domain-card:nth-of-type(2) .domain-visual,.domain-card:nth-of-type(2) .domain-clip{animation-delay:-1.2s;animation-duration:7.6s}
+.domain-card:nth-of-type(3) .domain-visual,.domain-card:nth-of-type(3) .domain-clip{animation-delay:-2.6s;animation-duration:6.6s}
+.domain-card:nth-of-type(4) .domain-visual,.domain-card:nth-of-type(4) .domain-clip{animation-delay:-3.8s;animation-duration:7.9s}
+.domain-card:nth-of-type(5) .domain-visual,.domain-card:nth-of-type(5) .domain-clip{animation-delay:-5.1s;animation-duration:6.9s}
+.domain-card:nth-of-type(6) .domain-visual,.domain-card:nth-of-type(6) .domain-clip{animation-delay:-1.9s;animation-duration:7.3s}
+@media(prefers-reduced-motion:reduce){.domain-visual,.domain-clip{animation:none}}
