@@ -21,7 +21,7 @@ import { btcpayWebhook, nowpaymentsIpn } from "./webhook.js";
 import { btcpayConfigured } from "./btcpay.js";
 import { nowpaymentsConfigured } from "./nowpayments.js";
 import { sheetsConfigured } from "./sheets.js";
-import { FRAIS_PORT, SEUIL_GRATUIT } from "./promo.js";
+import { FRAIS_PORT, SEUIL_GRATUIT, MIN_ORDER } from "./promo.js";
 import { getProducts, ensureCatalogTabs } from "./catalog.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -76,6 +76,7 @@ app.get("/api/config", (_req, res) => {
     currency: "EUR",
     fraisPort: FRAIS_PORT,
     seuilGratuit: SEUIL_GRATUIT,
+    minOrder: MIN_ORDER,
     btcpay: btcpayConfigured(),
     nowpayments: nowpaymentsConfigured(),
     sheets: sheetsConfigured(),

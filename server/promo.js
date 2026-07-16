@@ -6,6 +6,7 @@ import { getPromos } from "./catalog.js";
 
 export const FRAIS_PORT = Number(process.env.FRAIS_PORT || 12);
 export const SEUIL_GRATUIT = Number(process.env.SEUIL_GRATUIT || 150);
+export const MIN_ORDER = Number(process.env.MIN_ORDER || 30);
 
 // Valide un code et renvoie { valid, reduction, influenceur, code } | { valid:false }
 export async function checkPromo(code) {

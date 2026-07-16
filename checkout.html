@@ -64,6 +64,7 @@
           <span>≈ en Bitcoin</span><span id="sumBtc">—</span>
         </div>
         <p id="freeShipHint" style="font-size:11px;color:#66757f;margin-top:12px"></p>
+        <p id="minMsg" style="font-size:12.5px;color:#ffb454;margin-top:8px;display:none"></p>
       </div>
     </div>
   </main>
@@ -100,6 +101,18 @@
           const reste = (cfg.seuilGratuit - (quoteData.subtotal - quoteData.discount));
           document.getElementById("freeShipHint").textContent = reste>0 ? `Plus que ${reste.toFixed(2)} € pour la livraison gratuite (dès ${cfg.seuilGratuit} €).` : "";
         }else document.getElementById("freeShipHint").textContent = "";
+
+        // Minimum de commande
+        const minMsg = document.getElementById("minMsg");
+        const placeBtn = document.getElementById("placeBtn");
+        if(quoteData.belowMin){
+          minMsg.style.display="block";
+          minMsg.textContent=`Commande minimum ${quoteData.minOrder} € — il manque ${(quoteData.minOrder - quoteData.subtotal).toFixed(2)} €.`;
+          placeBtn.disabled=true; placeBtn.style.opacity=".5"; placeBtn.style.pointerEvents="none";
+        }else{
+          minMsg.style.display="none";
+          placeBtn.disabled=false; placeBtn.style.opacity=""; placeBtn.style.pointerEvents="";
+        }
       }catch(e){ console.warn(e); }
     }
 

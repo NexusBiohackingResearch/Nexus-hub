@@ -5,7 +5,7 @@
 import { query } from "./db.js";
 import { findOrCreateGuest } from "./auth.js";
 import { sendOrderReceived } from "./email.js";
-import { computeTotals } from "./promo.js";
+import { computeTotals, MIN_ORDER } from "./promo.js";
 import { getBtcEurRate } from "./rate.js";
 import { createInvoice as btcpayCreateInvoice, btcpayConfigured } from "./btcpay.js";
 import { createInvoice as npCreateInvoice, nowpaymentsConfigured } from "./nowpayments.js";
@@ -36,7 +36,7 @@ export async function quote(req, res) {
   const totals = await computeTotals(subtotal, b.promoCode);
   let btc = null, rate = null;
   try { rate = await getBtcEurRate(); btc = totals.total / rate; } catch {}
-  res.json({ ...totals, btcRate: rate, btcAmount: btc });
+  res.json({ ...totals, btcRate: rate, btcAmount: btc, minOrder: MIN_ORDER, belowMin: subtotal < MIN_ORDER });
 }
 
 // POST /api/orders
@@ -62,6 +62,13 @@ export async function createOrder(req, res) {
   }
   if (items.length === 0)
     return res.status(400).json({ error: "Aucun produit disponible dans le panier." });
+
+  // Minimum de commande (sur la valeur produits, avant livraison)
+  if (subtotal < MIN_ORDER)
+    return res.status(400).json({
+      error: `Commande minimum ${MIN_ORDER} €. Il manque ${(MIN_ORDER - subtotal).toFixed(2)} €.`,
+      minOrder: MIN_ORDER,
+    });
 
   // Totaux (promo + frais de port), recalculés côté serveur
   const totals = await computeTotals(subtotal, b.promoCode);

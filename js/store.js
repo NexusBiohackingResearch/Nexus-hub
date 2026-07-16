@@ -108,8 +108,9 @@
         <div class="cart-foot" id="cartFoot" style="display:none">
           <div class="row"><span>${T("Sous-total", "Subtotal")}</span><span id="cartSub">0 €</span></div>
           <div class="row total"><span>Total</span><span id="cartTotal">0 €</span></div>
-          <a class="button button-primary" href="checkout.html">${T("Passer la commande", "Checkout")} →</a>
-          <p class="cart-note">${T("Paiement crypto — instructions envoyées par email après validation.", "Crypto payment — instructions emailed after checkout.")}</p>
+          <p id="cartMinMsg" style="display:none;font-size:12px;color:#ffb454;margin:0 0 10px;text-align:center"></p>
+          <a class="button button-primary" id="cartCheckout" href="checkout.html">${T("Passer la commande", "Checkout")} →</a>
+          <p class="cart-note">${T("Paiement carte ou crypto — confirmation automatique après paiement.", "Card or crypto payment — automatic confirmation after payment.")}</p>
         </div>`;
       document.body.appendChild(d);
       d.querySelector("#cartClose").addEventListener("click", closeAll);
@@ -157,6 +158,25 @@
     foot.style.display = "block";
     document.getElementById("cartSub").textContent = total().toFixed(2) + " €";
     document.getElementById("cartTotal").textContent = total().toFixed(2) + " €";
+
+    // Minimum de commande
+    const minOrder = Number(state.config.minOrder || 0);
+    const below = minOrder > 0 && total() < minOrder;
+    const co = document.getElementById("cartCheckout");
+    const mm = document.getElementById("cartMinMsg");
+    if (co && mm) {
+      if (below) {
+        mm.style.display = "block";
+        mm.textContent = T(
+          `Commande minimum ${minOrder} € — il manque ${(minOrder - total()).toFixed(2)} €.`,
+          `Minimum order ${minOrder} € — add ${(minOrder - total()).toFixed(2)} € more.`
+        );
+        co.style.opacity = ".5"; co.style.pointerEvents = "none";
+      } else {
+        mm.style.display = "none";
+        co.style.opacity = ""; co.style.pointerEvents = "";
+      }
+    }
 
     body.querySelectorAll("[data-q]").forEach((b) =>
       b.addEventListener("click", () => setQty(b.dataset.id, state.cart[b.dataset.id].qty + Number(b.dataset.q))));
