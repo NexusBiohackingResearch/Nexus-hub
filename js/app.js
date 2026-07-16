@@ -504,3 +504,53 @@ introSkip?.addEventListener("click", closeVideoIntro);
 applyTelegramLinks();
 translatePage();
 loadProducts();
+
+// ---- Vidéos de catégories : survol = avant, sortie = retour arrière ----
+(function () {
+  var KEYS = ["growth", "recovery", "longevity", "cognition", "metabolism", "reproductive"];
+  var cards = document.querySelectorAll(".domain-card");
+  cards.forEach(function (card, i) {
+    if (i >= KEYS.length) return;
+    var v = document.createElement("video");
+    v.className = "domain-clip";
+    v.muted = true;
+    v.loop = false;
+    v.setAttribute("playsinline", "");
+    v.setAttribute("muted", "");
+    v.preload = "metadata";
+    v.src = "assets/video/categories/cat-" + KEYS[i] + ".mp4";
+    var ok = true;
+    v.addEventListener("error", function () { ok = false; v.remove(); }); // repli SVG
+    card.insertBefore(v, card.firstChild);
+
+    var raf = null;
+    function stopRaf() { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+    function forward() {
+      if (!ok) return;
+      stopRaf();
+      card.classList.add("clip-on");
+      v.playbackRate = 1;
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+    }
+    function reverse() {
+      if (!ok) return;
+      stopRaf();
+      v.pause();
+      var last = null;
+      function step(ts) {
+        if (last === null) last = ts;
+        var dt = (ts - last) / 1000; last = ts;
+        var nt = v.currentTime - dt; // ~1x en arrière
+        if (nt <= 0 || isNaN(nt)) { try { v.currentTime = 0; } catch (e) {} card.classList.remove("clip-on"); stopRaf(); return; }
+        try { v.currentTime = nt; } catch (e) {}
+        raf = requestAnimationFrame(step);
+      }
+      raf = requestAnimationFrame(step);
+    }
+    card.addEventListener("mouseenter", forward);
+    card.addEventListener("mouseleave", reverse);
+    card.addEventListener("touchstart", forward, { passive: true });
+  });
+})();
