@@ -7,7 +7,8 @@ import { findOrCreateGuest } from "./auth.js";
 import { sendOrderReceived } from "./email.js";
 import { computeTotals } from "./promo.js";
 import { getBtcEurRate } from "./rate.js";
-import { createInvoice, btcpayConfigured } from "./btcpay.js";
+import { createInvoice as btcpayCreateInvoice, btcpayConfigured } from "./btcpay.js";
+import { createInvoice as npCreateInvoice, nowpaymentsConfigured } from "./nowpayments.js";
 import { appendOrderRow, sheetsConfigured } from "./sheets.js";
 import { getProducts } from "./catalog.js";
 
@@ -96,28 +97,40 @@ export async function createOrder(req, res) {
   }
   order.items = items;
 
-  // --- Facture BTCPay ---
+  // --- Facture de paiement (NOWPayments en priorité, sinon BTCPay) ---
   let checkoutLink = null;
-  if (btcpayConfigured()) {
-    try {
-      const site = process.env.SITE_URL || `${req.protocol}://${req.get("host")}`;
-      const invoice = await createInvoice({
+  const site = process.env.SITE_URL || `${req.protocol}://${req.get("host")}`;
+  try {
+    let invoice = null;
+    if (nowpaymentsConfigured()) {
+      const inv = await npCreateInvoice({
+        orderRef: reference,
+        amountEur: totals.total,
+        description: `Commande NEXUS ${reference}`,
+        ipnUrl: `${site}/api/nowpayments/ipn`,
+        successUrl: `${site}/merci.html?ref=${reference}`,
+        cancelUrl: `${site}/checkout.html`,
+      });
+      if (inv) invoice = { id: inv.id, link: inv.url };
+    } else if (btcpayConfigured()) {
+      const inv = await btcpayCreateInvoice({
         orderRef: reference,
         amountEur: totals.total,
         email,
         redirectUrl: `${site}/merci.html?ref=${reference}`,
       });
-      if (invoice) {
-        checkoutLink = invoice.checkoutLink;
-        await query(
-          "UPDATE orders SET btcpay_invoice_id=$1, btcpay_checkout_link=$2 WHERE id=$3",
-          [invoice.id, invoice.checkoutLink, order.id]
-        );
-        order.btcpay_checkout_link = invoice.checkoutLink;
-      }
-    } catch (e) {
-      console.error("[btcpay] création facture:", e?.message || e);
+      if (inv) invoice = { id: inv.id, link: inv.checkoutLink };
     }
+    if (invoice) {
+      checkoutLink = invoice.link;
+      await query(
+        "UPDATE orders SET btcpay_invoice_id=$1, btcpay_checkout_link=$2 WHERE id=$3",
+        [invoice.id, invoice.link, order.id]
+      );
+      order.btcpay_checkout_link = invoice.link;
+    }
+  } catch (e) {
+    console.error("[paiement] création facture:", e?.message || e);
   }
 
   // --- Google Sheet (même feuille que le bot) ---

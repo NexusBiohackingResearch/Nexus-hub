@@ -17,8 +17,9 @@ import {
 import { createOrder, myOrders, trackOrder, quote } from "./orders.js";
 import { listOrders, updateStatus, stats } from "./admin.js";
 import { sendWelcome } from "./email.js";
-import { btcpayWebhook } from "./webhook.js";
+import { btcpayWebhook, nowpaymentsIpn } from "./webhook.js";
 import { btcpayConfigured } from "./btcpay.js";
+import { nowpaymentsConfigured } from "./nowpayments.js";
 import { sheetsConfigured } from "./sheets.js";
 import { FRAIS_PORT, SEUIL_GRATUIT } from "./promo.js";
 import { getProducts, ensureCatalogTabs } from "./catalog.js";
@@ -28,8 +29,9 @@ const ROOT = path.join(__dirname, "..");
 const app = express();
 app.set("trust proxy", 1);
 
-// ---- Webhook BTCPay : corps BRUT (avant express.json) pour vérifier la signature ----
+// ---- Webhooks paiement : corps BRUT (avant express.json) pour vérifier la signature ----
 app.post("/api/btcpay/webhook", express.raw({ type: "*/*" }), btcpayWebhook);
+app.post("/api/nowpayments/ipn", express.raw({ type: "*/*" }), nowpaymentsIpn);
 
 // ---- Reste de l'API en JSON ----
 app.use(express.json({ limit: "200kb" }));
@@ -75,6 +77,7 @@ app.get("/api/config", (_req, res) => {
     fraisPort: FRAIS_PORT,
     seuilGratuit: SEUIL_GRATUIT,
     btcpay: btcpayConfigured(),
+    nowpayments: nowpaymentsConfigured(),
     sheets: sheetsConfigured(),
     telegramUrl: process.env.TELEGRAM_URL || "",
   });

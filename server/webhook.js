@@ -7,8 +7,61 @@
 // ============================================================
 import { query } from "./db.js";
 import { verifyWebhook, getInvoicePaymentInfo } from "./btcpay.js";
+import { verifyIpn } from "./nowpayments.js";
 import { sendPaymentConfirmed } from "./email.js";
 import { updateOrderStatus } from "./sheets.js";
+
+function frNow() {
+  return new Intl.DateTimeFormat("fr-FR", {
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit", timeZone: "Europe/Paris",
+  }).format(new Date()).replace(",", "");
+}
+
+// ---------- IPN NOWPayments ----------
+const NP_PAID = new Set(["finished"]);            // paiement complet + réglé
+const NP_PARTIAL = new Set(["partially_paid"]);   // sous-payé (à surveiller)
+
+export async function nowpaymentsIpn(req, res) {
+  const raw = req.body; // Buffer (express.raw)
+  const sig = req.get("x-nowpayments-sig");
+  if (!verifyIpn(raw, sig)) {
+    console.warn("[np-ipn] signature invalide");
+    return res.status(400).send("bad signature");
+  }
+  let evt;
+  try { evt = JSON.parse(raw.toString("utf8")); } catch { return res.status(400).send("bad json"); }
+
+  res.status(200).send("ok"); // on répond vite à NOWPayments
+
+  try {
+    const status = evt.payment_status;
+    const ref = evt.order_id;
+    if (!ref) return;
+    if (NP_PARTIAL.has(status)) { console.warn(`[np-ipn] ${ref} sous-payé`); return; }
+    if (!NP_PAID.has(status)) return;
+
+    const r = await query("SELECT * FROM orders WHERE reference=$1", [ref]);
+    const order = r.rows[0];
+    if (!order) { console.warn("[np-ipn] commande introuvable:", ref); return; }
+    if (order.status === "payment_received" || order.status === "shipped") return; // déjà traité
+
+    const upd = await query(
+      `UPDATE orders SET status='payment_received', paid_at=now(),
+        btc_amount=COALESCE($1,btc_amount)
+       WHERE id=$2 RETURNING *`,
+      [evt.pay_amount ? Number(evt.pay_amount) : null, order.id]
+    );
+    const updated = upd.rows[0];
+    updated.items = (await query("SELECT * FROM order_items WHERE order_id=$1", [order.id])).rows;
+
+    sendPaymentConfirmed(updated).catch((e) => console.error("email paid:", e));
+    updateOrderStatus(ref, "Payé", frNow()).catch((e) => console.error("sheet:", e));
+    console.log(`[np-ipn] commande ${ref} payée ✓ (${status})`);
+  } catch (e) {
+    console.error("[np-ipn] traitement:", e?.message || e);
+  }
+}
 
 const PAID_EVENTS = new Set(["InvoiceSettled", "InvoicePaymentSettled", "InvoiceProcessing"]);
 
