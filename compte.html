@@ -51,17 +51,21 @@
     };
     function orderCard(o){
       const items = (o.items||[]).map(i=>`${i.name} × ${i.quantity}`).join(" · ");
+      const statusTxt = o.statusLabel || STATUS_LABEL[o.status] || o.status;
+      const track = o.trackingUrl
+        ? `<a class="button button-secondary" href="${o.trackingUrl}" target="_blank" rel="noopener" style="display:flex;margin-top:12px;width:100%;min-height:auto;padding:9px 12px;font-size:12px;justify-content:center">📦 Suivre mon colis${o.carrier?` — ${o.carrier}`:""} →</a>`
+        : (o.tracking?`<div style="margin-top:8px;font-size:12px;color:var(--cyan)">Suivi : ${o.tracking}${o.carrier?` (${o.carrier})`:""}</div>`:"");
       return `<div class="order-card">
         <div class="oc-head">
           <span class="ref">${o.reference}</span>
-          <span class="status-pill status-${o.status}">${STATUS_LABEL[o.status]||o.status}</span>
+          <span class="status-pill status-${o.status}">${statusTxt}</span>
         </div>
         <div class="oc-items">${items}</div>
         <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:13px">
           <span style="color:var(--muted)">${new Date(o.created_at).toLocaleDateString("fr-FR")}</span>
           <b style="font-family:'Space Grotesk'">${Number(o.total).toFixed(2)} €</b>
         </div>
-        ${o.tracking?`<div style="margin-top:8px;font-size:12px;color:var(--cyan)">Suivi : ${o.tracking}</div>`:""}
+        ${track}
       </div>`;
     }
     async function boot(){

@@ -110,3 +110,49 @@ export async function updateOrderStatus(reference, statusLabel, paidDate) {
     console.error("[sheets] échec update:", e?.message || e);
   }
 }
+
+// ---------- Suivi de commande (lu depuis la feuille en temps réel) ----------
+// Colonnes attendues : Q = Statut, T = Transporteur, U = N° de suivi.
+// Construit le lien de suivi selon le transporteur (ou lien universel en repli).
+export function trackingUrl(carrier, number, zip) {
+  const num = String(number || "").trim();
+  if (!num) return "";
+  if (/^https?:\/\//i.test(num)) return num; // si un lien complet est collé dans "N° de suivi"
+  const n = encodeURIComponent(num);
+  const c = String(carrier || "").toLowerCase();
+  if (/colissimo|la\s*poste|laposte/.test(c)) return `https://www.laposte.fr/outils/suivre-vos-envois?code=${n}`;
+  if (/mondial/.test(c)) return `https://www.mondialrelay.fr/suivi-de-colis?numeroExpedition=${n}${zip ? `&codePostal=${encodeURIComponent(zip)}` : ""}`;
+  if (/chrono/.test(c)) return `https://www.chronopost.fr/tracking-no-cms/suivi-page?listeNumerosLT=${n}`;
+  if (/dhl/.test(c)) return `https://www.dhl.com/fr-fr/home/tracking.html?tracking-id=${n}`;
+  if (/\bups\b/.test(c)) return `https://www.ups.com/track?tracknum=${n}`;
+  if (/gls/.test(c)) return `https://gls-group.com/FR/fr/suivi-colis?match=${n}`;
+  if (/colis\s*priv/.test(c)) return `https://www.colisprive.fr/moncolis/pages/detailColis.aspx?numColis=${n}`;
+  return `https://parcelsapp.com/fr/tracking/${n}`; // repli universel (tous transporteurs)
+}
+
+// Lit toute la feuille (A:U) → map référence -> { statusLabel, carrier, tracking }.
+export async function getOrdersTrackingMap() {
+  const client = getClient();
+  if (!client) return new Map();
+  try {
+    const res = await client.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${SHEET_NAME}!A:U`,
+    });
+    const rows = res.data.values || [];
+    const map = new Map();
+    for (const r of rows) {
+      const ref = (r[0] || "").trim();
+      if (!ref || !/^NX-/i.test(ref)) continue;
+      map.set(ref, {
+        statusLabel: (r[16] || "").trim(), // Q - Statut
+        carrier: (r[19] || "").trim(),     // T - Transporteur
+        tracking: (r[20] || "").trim(),    // U - N° de suivi
+      });
+    }
+    return map;
+  } catch (e) {
+    console.error("[sheets] lecture suivi:", e?.message || e);
+    return new Map();
+  }
+}

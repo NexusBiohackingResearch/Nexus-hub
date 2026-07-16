@@ -9,7 +9,7 @@ import { computeTotals, MIN_ORDER } from "./promo.js";
 import { getBtcEurRate } from "./rate.js";
 import { createInvoice as btcpayCreateInvoice, btcpayConfigured } from "./btcpay.js";
 import { createInvoice as npCreateInvoice, nowpaymentsConfigured } from "./nowpayments.js";
-import { appendOrderRow, sheetsConfigured } from "./sheets.js";
+import { appendOrderRow, sheetsConfigured, getOrdersTrackingMap, trackingUrl } from "./sheets.js";
 import { getProducts } from "./catalog.js";
 
 function makeRef() {
@@ -157,6 +157,27 @@ export async function createOrder(req, res) {
   });
 }
 
+// Enrichit les commandes avec le suivi lu en direct dans la Google Sheet
+// (Statut, Transporteur, N° de suivi → lien de suivi cliquable).
+async function enrichTracking(orders) {
+  if (!sheetsConfigured() || !orders.length) return;
+  try {
+    const map = await getOrdersTrackingMap();
+    for (const o of orders) {
+      const t = map.get(o.reference);
+      if (!t) continue;
+      if (t.statusLabel) o.statusLabel = t.statusLabel;
+      if (t.carrier) o.carrier = t.carrier;
+      if (t.tracking) {
+        o.tracking = t.tracking;
+        o.trackingUrl = trackingUrl(t.carrier, t.tracking, o.zip);
+      }
+    }
+  } catch (e) {
+    console.error("[orders] enrichissement suivi:", e?.message || e);
+  }
+}
+
 // GET /api/orders/mine
 export async function myOrders(req, res) {
   const r = await query("SELECT * FROM orders WHERE user_id=$1 ORDER BY created_at DESC", [req.user.id]);
@@ -164,6 +185,7 @@ export async function myOrders(req, res) {
   for (const o of orders) {
     o.items = (await query("SELECT * FROM order_items WHERE order_id=$1", [o.id])).rows;
   }
+  await enrichTracking(orders);
   res.json({ orders });
 }
 
@@ -177,5 +199,6 @@ export async function trackOrder(req, res) {
   if (!req.user && (!email || email.toLowerCase() !== order.email.toLowerCase()))
     return res.status(403).json({ error: "Email requis pour consulter cette commande." });
   order.items = (await query("SELECT * FROM order_items WHERE order_id=$1", [order.id])).rows;
+  await enrichTracking([order]);
   res.json({ order });
 }
