@@ -29,6 +29,24 @@ const ROOT = path.join(__dirname, "..");
 const app = express();
 app.set("trust proxy", 1);
 
+// ---- Force HTTPS + www (derrière le proxy Railway) ----
+app.use((req, res, next) => {
+  const host = (req.headers.host || "").toLowerCase();
+  const proto = (req.headers["x-forwarded-proto"] || req.protocol || "").toLowerCase();
+  const skip =
+    !host ||
+    /localhost|127\.0\.0\.1|::1|\.railway\.internal|\.up\.railway\.app/.test(host) ||
+    req.path === "/api/health";
+  if (!skip) {
+    const isApex = host === "nexus-research-shop.com";
+    if (proto !== "https" || isApex) {
+      const target = isApex ? "www.nexus-research-shop.com" : host;
+      return res.redirect(301, "https://" + target + req.originalUrl);
+    }
+  }
+  next();
+});
+
 // ---- Webhooks paiement : corps BRUT (avant express.json) pour vérifier la signature ----
 app.post("/api/btcpay/webhook", express.raw({ type: "*/*" }), btcpayWebhook);
 app.post("/api/nowpayments/ipn", express.raw({ type: "*/*" }), nowpaymentsIpn);
