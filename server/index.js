@@ -22,7 +22,7 @@ import { btcpayConfigured } from "./btcpay.js";
 import { nowpaymentsConfigured } from "./nowpayments.js";
 import { sheetsConfigured } from "./sheets.js";
 import { FRAIS_PORT, SEUIL_GRATUIT, MIN_ORDER } from "./promo.js";
-import { getProducts, ensureCatalogTabs } from "./catalog.js";
+import { getProducts, getArticles, getAnnouncement, ensureCatalogTabs } from "./catalog.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -57,6 +57,16 @@ app.get("/api/auth/me", (req, res, next) => me(req, res).catch(next));
 // ---- Catalogue (lu depuis Google Sheets, cache 60s) ----
 app.get("/api/products", async (_req, res, next) => {
   try { res.json({ products: await getProducts() }); } catch (e) { next(e); }
+});
+
+// ---- Articles (lu depuis Google Sheets, cache 60s) ----
+app.get("/api/articles", async (_req, res, next) => {
+  try { res.json({ articles: await getArticles() }); } catch (e) { next(e); }
+});
+
+// ---- Annonce / bandeau (lu depuis Google Sheets, cache 60s) ----
+app.get("/api/announce", async (_req, res, next) => {
+  try { res.json({ announce: await getAnnouncement() }); } catch (e) { next(e); }
 });
 
 // ---- Commandes ----

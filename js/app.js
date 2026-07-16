@@ -9,6 +9,7 @@ const translations = {
     exploreCatalogue:"Explorer le catalogue",fastOrder:"Comment payer",metricFrance:"jours en France",metricCrypto:"paiement sécurisé",metricEurope:"expédition suivie",
     signature:"Fiabilité · Pureté 99% · Livraison rapide 2 à 3 jours en France.",
     ticker1:"Exclusivement pour la recherche",ticker2:"Livraison France 2–3 jours",ticker3:"Paiement Bitcoin",ticker4:"Expédition européenne",
+    articlesEyebrow:"LE LABORATOIRE",articlesTitle:"Recherche & <span>articles</span>",articlesLead:"Nos publications sur les peptides de recherche et leurs axes d'étude, mises à jour régulièrement.",articlesRead:"Lire",articlesEmpty:"Articles à venir.",announceTag:"Annonce importante",
     domainsEyebrow:"DOMAINES DE RECHERCHE",domainsTitle:"Explorez selon votre<br><span>axe de recherche</span>",domainsLead:"Choisissez un domaine pour filtrer instantanément le catalogue.",
     domainGrowth:"Performance & Récupération",domainRecovery:"Régénération & réparation",domainLongevity:"Longévité & recherche cellulaire",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Métabolisme & Longévité",domainReproductive:"Reproductive & Hormonal",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"Le catalogue <span>Nexus</span>",catalogueLead:"Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.",
@@ -27,6 +28,7 @@ const translations = {
     exploreCatalogue:"Explore the catalogue",fastOrder:"How to pay",metricFrance:"days in France",metricCrypto:"secure payment",metricEurope:"tracked shipping",
     signature:"Reliability · 99% purity · Fast delivery 2–3 days in France.",
     ticker1:"Research use only",ticker2:"France delivery in 2–3 days",ticker3:"Bitcoin payments",ticker4:"European shipping",
+    articlesEyebrow:"THE LAB",articlesTitle:"Research & <span>articles</span>",articlesLead:"Our publications on research peptides and their areas of study, updated regularly.",articlesRead:"Read",articlesEmpty:"Articles coming soon.",announceTag:"Important notice",
     domainsEyebrow:"RESEARCH FIELDS",domainsTitle:"Explore by your<br><span>research focus</span>",domainsLead:"Choose a field to filter the catalogue instantly.",
     domainGrowth:"Performance & Recovery",domainRecovery:"Recovery & tissue research",domainLongevity:"Longevity & cellular research",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Metabolism & Longevity",domainReproductive:"Reproductive & Hormonal",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"The <span>Nexus</span> catalogue",catalogueLead:"Search a compound, filter by field and review its current availability.",
@@ -553,4 +555,83 @@ loadProducts();
     card.addEventListener("mouseleave", reverse);
     card.addEventListener("touchstart", forward, { passive: true });
   });
+})();
+
+// ---- Articles : carrousel horizontal + lecture en modale ----
+(function () {
+  var track = document.getElementById("articlesTrack");
+  if (!track) return;
+  function escArt(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"})[c];}); }
+
+  function openArticle(a){
+    var ov = document.getElementById("artModal");
+    if(!ov){
+      ov = document.createElement("div");
+      ov.id = "artModal"; ov.className = "art-modal";
+      ov.innerHTML = '<div class="art-modal-box"><button class="art-modal-x" type="button" aria-label="Fermer">✕</button><div class="art-modal-content"></div></div>';
+      document.body.appendChild(ov);
+      ov.addEventListener("click", function(e){ if(e.target===ov || e.target.classList.contains("art-modal-x")) ov.classList.remove("show"); });
+      document.addEventListener("keydown", function(e){ if(e.key==="Escape") ov.classList.remove("show"); });
+    }
+    var img = a.image ? '<div class="art-modal-img" style="background-image:url(\''+String(a.image).replace(/'/g,"%27")+'\')"></div>' : "";
+    var body = String(a.content||"").split(/\n+/).filter(Boolean).map(function(p){return "<p>"+escArt(p)+"</p>";}).join("");
+    ov.querySelector(".art-modal-content").innerHTML = img + (a.date?'<span class="art-date">'+escArt(a.date)+'</span>':"") + "<h2>"+escArt(a.title||"")+"</h2>" + body;
+    ov.querySelector(".art-modal-box").scrollTop = 0;
+    ov.classList.add("show");
+  }
+
+  function render(articles){
+    var tr = (translations[lang]||translations.fr);
+    if(!articles.length){ track.innerHTML = '<p style="color:var(--muted);padding:10px 4px">'+(tr.articlesEmpty||"")+'</p>'; return; }
+    track.innerHTML = articles.map(function(a,i){
+      var thumb = a.image ? "background-image:url('"+String(a.image).replace(/'/g,"%27")+"')" : "";
+      return '<article class="art-card" data-idx="'+i+'">'
+        + '<div class="art-thumb'+(a.image?"":" art-thumb-ph")+'" style="'+thumb+'"></div>'
+        + '<div class="art-body">'
+        + (a.date?'<span class="art-date">'+escArt(a.date)+'</span>':"")
+        + '<h3>'+escArt(a.title||"")+'</h3>'
+        + '<p>'+escArt(a.excerpt||"")+'</p>'
+        + '<span class="art-more">'+(tr.articlesRead||"Lire")+' →</span>'
+        + '</div></article>';
+    }).join("");
+    Array.prototype.forEach.call(track.querySelectorAll(".art-card"), function(c){
+      c.addEventListener("click", function(){
+        var a = articles[+c.dataset.idx];
+        if(a && a.link){ window.open(a.link, "_blank", "noopener"); }
+        else if(a){ openArticle(a); }
+      });
+    });
+  }
+
+  // Flèches + glisser pour défiler
+  var prev = document.getElementById("artPrev"), next = document.getElementById("artNext");
+  function step(){ return Math.max(280, track.clientWidth * 0.8); }
+  if(prev) prev.addEventListener("click", function(){ track.scrollBy({left:-step(), behavior:"smooth"}); });
+  if(next) next.addEventListener("click", function(){ track.scrollBy({left:step(), behavior:"smooth"}); });
+  var down=false, sx=0, sl=0;
+  track.addEventListener("pointerdown", function(e){ down=true; sx=e.pageX; sl=track.scrollLeft; });
+  track.addEventListener("pointermove", function(e){ if(down){ track.scrollLeft = sl-(e.pageX-sx); } });
+  window.addEventListener("pointerup", function(){ down=false; });
+
+  fetch("/api/articles").then(function(r){return r.json();})
+    .then(function(d){ render((d && d.articles) || []); })
+    .catch(function(){ fetch("data/articles.json").then(function(r){return r.json();}).then(render).catch(function(){ render([]); }); });
+})();
+
+// ---- Bandeau « Annonce importante » ----
+(function () {
+  var bar = document.getElementById("announceBar");
+  if (!bar) return;
+  function show(a) {
+    if (a && a.active && a.message) {
+      var msg = bar.querySelector("#announceMsg");
+      if (msg) msg.textContent = a.message;
+      bar.hidden = false;
+    } else {
+      bar.hidden = true;
+    }
+  }
+  fetch("/api/announce").then(function (r) { return r.json(); })
+    .then(function (d) { show(d && d.announce); })
+    .catch(function () { fetch("data/announce.json").then(function (r) { return r.json(); }).then(show).catch(function () {}); });
 })();

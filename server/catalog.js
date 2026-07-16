@@ -14,9 +14,13 @@ import { getClient, SPREADSHEET_ID, sheetsConfigured } from "./sheets.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PRODUCTS_JSON = path.join(__dirname, "..", "data", "products.json");
 const PROMO_JSON = path.join(__dirname, "..", "data", "promo.json");
+const ARTICLES_JSON = path.join(__dirname, "..", "data", "articles.json");
+const ANNOUNCE_JSON = path.join(__dirname, "..", "data", "announce.json");
 
 export const PRODUCTS_TAB = "Produits";
 export const PROMO_TAB = "Codes Promo";
+export const ARTICLES_TAB = "Articles";
+export const ANNOUNCE_TAB = "Annonce";
 const TTL = 60 * 1000;
 
 const isYes = (v) =>
@@ -54,6 +58,12 @@ function applyCategoryMap(list) {
 // ---------- Repli fichiers ----------
 async function fileProducts() {
   try { return JSON.parse(await readFile(PRODUCTS_JSON, "utf8")); } catch { return []; }
+}
+async function fileArticles() {
+  try { return JSON.parse(await readFile(ARTICLES_JSON, "utf8")); } catch { return []; }
+}
+async function fileAnnounce() {
+  try { return JSON.parse(await readFile(ANNOUNCE_JSON, "utf8")); } catch { return { message: "", active: false }; }
 }
 async function filePromos() {
   try {
@@ -146,7 +156,68 @@ export async function getPromos() {
   return f;
 }
 
-export function invalidateCache() { pCache = { data: null, ts: 0 }; cCache = { data: null, ts: 0 }; }
+// ---------- Lecture Articles ----------
+let aCache = { data: null, ts: 0 };
+export async function getArticles() {
+  const now = Date.now();
+  if (aCache.data && now - aCache.ts < TTL) return aCache.data;
+
+  const client = sheetsConfigured() ? getClient() : null;
+  if (!client) { const f = await fileArticles(); aCache = { data: f, ts: now }; return f; }
+
+  try {
+    const res = await client.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${ARTICLES_TAB}!A3:F`,
+    });
+    const rows = res.data.values || [];
+    const articles = rows
+      .filter((r) => (r[0] || "").trim())
+      .map((r) => ({
+        title: (r[0] || "").trim(),
+        excerpt: (r[1] || "").trim(),
+        content: (r[2] || "").trim(),
+        image: (r[3] || "").trim(),
+        date: (r[4] || "").trim(),
+        link: (r[5] || "").trim(),
+      }));
+    aCache = { data: articles, ts: now };
+    return articles;
+  } catch (e) {
+    console.error("[catalog] lecture Articles:", e?.message || e);
+  }
+  const f = await fileArticles();
+  aCache = { data: f, ts: now };
+  return f;
+}
+
+// ---------- Lecture Annonce (bandeau) ----------
+let nCache = { data: null, ts: 0 };
+export async function getAnnouncement() {
+  const now = Date.now();
+  if (nCache.data && now - nCache.ts < TTL) return nCache.data;
+
+  const client = sheetsConfigured() ? getClient() : null;
+  if (!client) { const f = await fileAnnounce(); nCache = { data: f, ts: now }; return f; }
+
+  try {
+    const res = await client.spreadsheets.values.get({
+      spreadsheetId: SPREADSHEET_ID,
+      range: `${ANNOUNCE_TAB}!A3:B3`,
+    });
+    const r = (res.data.values || [])[0] || [];
+    const data = { message: (r[0] || "").trim(), active: isYes(r[1]) };
+    nCache = { data, ts: now };
+    return data;
+  } catch (e) {
+    console.error("[catalog] lecture Annonce:", e?.message || e);
+  }
+  const f = await fileAnnounce();
+  nCache = { data: f, ts: now };
+  return f;
+}
+
+export function invalidateCache() { pCache = { data: null, ts: 0 }; cCache = { data: null, ts: 0 }; aCache = { data: null, ts: 0 }; nCache = { data: null, ts: 0 }; }
 
 // ---------- Amorçage automatique des onglets ----------
 async function tabExists(client, title) {
@@ -199,6 +270,28 @@ export async function ensureCatalogTabs() {
       const data = arr.map((p) => [p.code, p.influenceur || "", p.reduction ?? 0, p.actif === false ? "Non" : "Oui", ""]);
       await writeValues(client, `${PROMO_TAB}!A1`, [header1, header2, ...data]);
       console.log(`[catalog] onglet "${PROMO_TAB}" créé et rempli (${data.length} codes)`);
+    }
+    // Onglet Articles
+    if (!(await tabExists(client, ARTICLES_TAB))) {
+      await addTab(client, ARTICLES_TAB);
+      let arts = [];
+      try { arts = JSON.parse(await readFile(ARTICLES_JSON, "utf8")); } catch {}
+      const header1 = ["📰 ARTICLES — NEXUS (modifiable en temps réel · une ligne = un article, à partir de la ligne 3)"];
+      const header2 = ["Titre", "Résumé (carte)", "Contenu (article complet)", "Image (URL, optionnel)", "Date", "Lien externe (optionnel)"];
+      const data = arts.map((a) => [a.title || "", a.excerpt || "", a.content || "", a.image || "", a.date || "", a.link || ""]);
+      await writeValues(client, `${ARTICLES_TAB}!A1`, [header1, header2, ...data]);
+      console.log(`[catalog] onglet "${ARTICLES_TAB}" créé et rempli (${data.length} articles)`);
+    }
+    // Onglet Annonce
+    if (!(await tabExists(client, ANNOUNCE_TAB))) {
+      await addTab(client, ANNOUNCE_TAB);
+      let ann = { message: "", active: false };
+      try { ann = JSON.parse(await readFile(ANNOUNCE_JSON, "utf8")); } catch {}
+      const header1 = ["📢 ANNONCE — NEXUS (bandeau du site · modifie la ligne 3 en temps réel)"];
+      const header2 = ["Message", "Actif (Oui/Non)"];
+      const data = [[ann.message || "", ann.active ? "Oui" : "Non"]];
+      await writeValues(client, `${ANNOUNCE_TAB}!A1`, [header1, header2, ...data]);
+      console.log(`[catalog] onglet "${ANNOUNCE_TAB}" créé`);
     }
   } catch (e) {
     console.error("[catalog] amorçage onglets:", e?.message || e);
