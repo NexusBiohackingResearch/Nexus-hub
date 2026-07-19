@@ -7,8 +7,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/01_HGH_10_IU.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Hormone de croissance humaine (somatropine). Étudiée en recherche pour la croissance cellulaire, le métabolisme et la régénération tissulaire.",
+    "descriptionEn": "Human growth hormone (somatropin). Studied in research for cell growth, metabolism and tissue regeneration.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -19,8 +19,8 @@
     "categoryFr": "Compléments & supports",
     "categoryEn": "Laboratory support",
     "image": "assets/images/products/02_BAC_WATER_10_ML.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Eau bactériostatique (alcool benzylique 0,9 %). Utilisée en laboratoire pour reconstituer et diluer les peptides lyophilisés.",
+    "descriptionEn": "Bacteriostatic water (0.9% benzyl alcohol). Used in the lab to reconstitute and dilute lyophilised peptides.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -31,8 +31,8 @@
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
     "image": "assets/images/products/03_HMG_76_IU.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Gonadotrophine ménopausique humaine (ménotropine). Étudiée pour la signalisation de l'axe reproducteur (activités FSH/LH).",
+    "descriptionEn": "Human menopausal gonadotropin (menotropin). Studied for reproductive-axis signalling (FSH/LH).",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -43,8 +43,8 @@
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
     "image": "assets/images/products/04_HCG_5000_IU.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Gonadotrophine chorionique humaine. Étudiée pour la signalisation gonadotrope et la stéroïdogenèse.",
+    "descriptionEn": "Human chorionic gonadotropin. Studied for gonadotropic signalling and steroidogenesis.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -55,8 +55,8 @@
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
     "image": "assets/images/products/05_RETATRUTIDE_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Triple agoniste des récepteurs GLP-1 / GIP / Glucagon. Étudié en recherche sur le métabolisme énergétique et la régulation du poids.",
+    "descriptionEn": "Triple GLP-1 / GIP / Glucagon receptor agonist. Studied for energy metabolism and weight regulation.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -67,8 +67,8 @@
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
     "image": "assets/images/products/06_RETATRUTIDE_20_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Triple agoniste des récepteurs GLP-1 / GIP / Glucagon. Étudié en recherche sur le métabolisme énergétique et la régulation du poids.",
+    "descriptionEn": "Triple GLP-1 / GIP / Glucagon receptor agonist. Studied for energy metabolism and weight regulation.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -79,8 +79,8 @@
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
     "image": "assets/images/products/07_BPC_157_5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Peptide de protection corporelle (Body Protection Compound-157). Étudié pour la réparation tissulaire, le tube digestif et l'angiogenèse.",
+    "descriptionEn": "Body Protection Compound-157. Studied for tissue repair, the gastrointestinal tract and angiogenesis.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -91,8 +91,8 @@
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
     "image": "assets/images/products/08_BPC_157_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Peptide de protection corporelle (Body Protection Compound-157). Étudié pour la réparation tissulaire, le tube digestif et l'angiogenèse.",
+    "descriptionEn": "Body Protection Compound-157. Studied for tissue repair, the gastrointestinal tract and angiogenesis.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -103,8 +103,8 @@
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
     "image": "assets/images/products/09_TB_500_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Fragment de la Thymosine Bêta-4. Étudié pour la migration cellulaire et la réparation tissulaire.",
+    "descriptionEn": "Thymosin Beta-4 fragment. Studied for cell migration and tissue repair.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -115,8 +115,8 @@
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
     "image": "assets/images/products/10_BPC_157_plus_TB_500_5plus5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Association BPC-157 + Thymosine Bêta-4 (TB-500). Étudiée en recherche pour la récupération et la réparation tissulaire.",
+    "descriptionEn": "BPC-157 + Thymosin Beta-4 (TB-500) combination. Studied for recovery and tissue repair.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -127,8 +127,8 @@
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
     "image": "assets/images/products/11_BPC_157_plus_TB_500_10plus10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Association BPC-157 + Thymosine Bêta-4 (TB-500). Étudiée en recherche pour la récupération et la réparation tissulaire.",
+    "descriptionEn": "BPC-157 + Thymosin Beta-4 (TB-500) combination. Studied for recovery and tissue repair.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -139,8 +139,8 @@
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
     "image": "assets/images/products/12_GHK_CU_50_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Tripeptide de cuivre-1 (Gly-His-Lys). Étudié pour le remodelage de la matrice extracellulaire et la régénération cutanée.",
+    "descriptionEn": "Copper tripeptide-1 (Gly-His-Lys). Studied for extracellular-matrix remodelling and skin regeneration.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -151,8 +151,8 @@
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
     "image": "assets/images/products/13_GLOW_70_70_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Blend GHK-Cu · BPC-157 · TB-500. Étudié en recherche pour la peau, la récupération et la réparation.",
+    "descriptionEn": "GHK-Cu · BPC-157 · TB-500 blend. Studied for skin, recovery and repair.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -163,8 +163,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/14_MGF_2_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Mechano Growth Factor (variant IGF-1Ec). Étudié pour la réponse musculaire à la contrainte mécanique.",
+    "descriptionEn": "Mechano Growth Factor (IGF-1Ec variant). Studied for the muscle response to mechanical load.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -175,8 +175,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/15_PEG_MGF_2_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "MGF pégylé (demi-vie prolongée). Étudié pour l'activation des cellules satellites musculaires.",
+    "descriptionEn": "PEGylated MGF (extended half-life). Studied for muscle satellite-cell activation.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -187,8 +187,8 @@
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
     "image": "assets/images/products/16_EPITHALON_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Tétrapeptide Epitalon (Ala-Glu-Asp-Gly). Étudié pour la régulation de la télomérase et les rythmes biologiques.",
+    "descriptionEn": "Epitalon tetrapeptide (Ala-Glu-Asp-Gly). Studied for telomerase regulation and biological rhythms.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -199,8 +199,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/17_TESAMORELIN_plus_IPAMORELIN_12plus6_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Analogue de la GHRH + sécrétagogue de GH. Étudié pour la stimulation de l'axe somatotrope.",
+    "descriptionEn": "GHRH analog + GH secretagogue. Studied for somatotropic-axis stimulation.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -211,8 +211,8 @@
     "categoryFr": "Cognition & neuroprotection",
     "categoryEn": "Cognition & neuroprotection",
     "image": "assets/images/products/18_SEMAX_plus_SELANK_10plus10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Analogue ACTH(4-10) + analogue de la tuftsine. Étudiés pour la neuromodulation, la cognition et le stress.",
+    "descriptionEn": "ACTH(4-10) analog + tuftsin analog. Studied for neuromodulation, cognition and stress.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -223,8 +223,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/19_CJC_1295_NO_DAC_plus_IPAMORELIN_5plus5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Mod-GRF(1-29) + sécrétagogue de GH. Étudié pour la libération pulsatile de l'hormone de croissance.",
+    "descriptionEn": "Mod-GRF(1-29) + GH secretagogue. Studied for pulsatile growth-hormone release.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -235,8 +235,8 @@
     "categoryFr": "Cognition & longévité",
     "categoryEn": "Cognition & longévité",
     "image": "assets/images/products/20_NADplus_1000_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Nicotinamide adénine dinucléotide. Coenzyme étudié pour le métabolisme énergétique et la fonction mitochondriale.",
+    "descriptionEn": "Nicotinamide adenine dinucleotide. Coenzyme studied for energy metabolism and mitochondrial function.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -247,8 +247,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/21_GHRP_2_2_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Peptide libérateur de GH-2. Étudié pour la sécrétion de GH et la voie de la ghréline.",
+    "descriptionEn": "Growth hormone-releasing peptide-2. Studied for GH secretion and the ghrelin pathway.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -259,8 +259,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/22_GHRP_6_5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Peptide libérateur de GH-6. Étudié pour la sécrétion de GH et l'appétit.",
+    "descriptionEn": "Growth hormone-releasing peptide-6. Studied for GH secretion and appetite.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -271,8 +271,8 @@
     "categoryFr": "Croissance & performance",
     "categoryEn": "Growth & performance",
     "image": "assets/images/products/23_IGF_1_LR3_1_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Facteur de croissance analogue à l'insuline-1 Long R3. Étudié pour la croissance et la prolifération cellulaire.",
+    "descriptionEn": "Insulin-like growth factor-1 Long R3. Studied for cell growth and proliferation.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -283,8 +283,8 @@
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
     "image": "assets/images/products/24_MOTS_C_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Peptide dérivé mitochondrial. Étudié pour l'homéostasie métabolique et la fonction mitochondriale.",
+    "descriptionEn": "Mitochondrial-derived peptide. Studied for metabolic homeostasis and mitochondrial function.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -295,8 +295,8 @@
     "categoryFr": "Cognition & neuroprotection",
     "categoryEn": "Cognition & neuroprotection",
     "image": "assets/images/products/25_DSIP_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Peptide induisant le sommeil delta. Étudié pour la régulation du sommeil et la réponse au stress.",
+    "descriptionEn": "Delta sleep-inducing peptide. Studied for sleep regulation and the stress response.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -307,8 +307,8 @@
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
     "image": "assets/images/products/26_OXYTOCIN_5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Oxytocine (nonapeptide). Étudiée pour la signalisation sociale et neuroendocrine.",
+    "descriptionEn": "Oxytocin (nonapeptide). Studied for social and neuroendocrine signalling.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -319,8 +319,8 @@
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
     "image": "assets/images/products/27_AOD_9604_5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Fragment 176-191 de l'hGH. Étudié pour le métabolisme lipidique.",
+    "descriptionEn": "hGH fragment 176-191. Studied for lipid metabolism.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -331,8 +331,8 @@
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
     "image": "assets/images/products/28_PT_141_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Bremelanotide (agoniste mélanocortine). Étudié pour la signalisation mélanocortinergique.",
+    "descriptionEn": "Bremelanotide (melanocortin agonist). Studied for melanocortin signalling.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -343,8 +343,8 @@
     "categoryFr": "Mélanocortines",
     "categoryEn": "Melanocortin research",
     "image": "assets/images/products/29_MT_I_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Melanotan I (analogue α-MSH). Étudié pour la mélanogenèse (pigmentation).",
+    "descriptionEn": "Melanotan I (α-MSH analog). Studied for melanogenesis (pigmentation).",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -355,8 +355,8 @@
     "categoryFr": "Mélanocortines",
     "categoryEn": "Melanocortin research",
     "image": "assets/images/products/30_MT_II_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Melanotan II (agoniste mélanocortine). Étudié pour la mélanogenèse et la signalisation mélanocortine.",
+    "descriptionEn": "Melanotan II (melanocortin agonist). Studied for melanogenesis and melanocortin signalling.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -367,8 +367,8 @@
     "categoryFr": "Santé reproductive",
     "categoryEn": "Reproductive research",
     "image": "assets/images/products/31_KISSPEPTIN_5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Kisspeptine-10 (fragment de la métastine). Étudiée pour la régulation de l'axe reproducteur (GnRH).",
+    "descriptionEn": "Kisspeptin-10 (metastin fragment). Studied for reproductive-axis regulation (GnRH).",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -379,8 +379,8 @@
     "categoryFr": "Longévité & anti-âge",
     "categoryEn": "Longevity & cellular research",
     "image": "assets/images/products/32_SS_31_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Elamipretide (peptide ciblant la mitochondrie). Étudié pour la bioénergétique mitochondriale (cardiolipine).",
+    "descriptionEn": "Elamipretide (mitochondria-targeted peptide). Studied for mitochondrial bioenergetics (cardiolipin).",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -391,8 +391,8 @@
     "categoryFr": "Régénération & réparation",
     "categoryEn": "Recovery & tissue research",
     "image": "assets/images/products/33_KPV_10_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Tripeptide Lys-Pro-Val (fragment C-terminal de l'α-MSH). Étudié pour ses propriétés anti-inflammatoires.",
+    "descriptionEn": "Lys-Pro-Val tripeptide (α-MSH C-terminal fragment). Studied for anti-inflammatory properties.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -403,8 +403,8 @@
     "categoryFr": "Compléments & supports",
     "categoryEn": "Laboratory support",
     "image": "assets/images/products/34_GLUTATHIONE_1500_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "L-Glutathion (forme réduite, GSH). Antioxydant intracellulaire étudié pour le stress oxydatif et la détoxification.",
+    "descriptionEn": "L-Glutathione (reduced, GSH). Intracellular antioxidant studied for oxidative stress and detoxification.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -415,8 +415,8 @@
     "categoryFr": "Métabolisme",
     "categoryEn": "Metabolic research",
     "image": "assets/images/products/35_5_AMINO_1MQ_5_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "5-Amino-1-méthylquinolinium (inhibiteur de NNMT). Étudié pour le métabolisme cellulaire et l'adiposité.",
+    "descriptionEn": "5-Amino-1-methylquinolinium (NNMT inhibitor). Studied for cellular metabolism and adiposity.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -427,8 +427,8 @@
     "categoryFr": "Bioregulators",
     "categoryEn": "Bioregulators",
     "image": "assets/images/products/36_BRONCHOGEN_20_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Biorégulateur peptidique de Khavinson (voies respiratoires). Étudié pour la régulation tissulaire pulmonaire.",
+    "descriptionEn": "Khavinson peptide bioregulator (respiratory). Studied for pulmonary tissue regulation.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -439,8 +439,8 @@
     "categoryFr": "Bioregulators",
     "categoryEn": "Bioregulators",
     "image": "assets/images/products/37_LIVAGEN_20_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Biorégulateur peptidique de Khavinson (foie). Étudié pour la régulation tissulaire hépatique.",
+    "descriptionEn": "Khavinson peptide bioregulator (liver). Studied for hepatic tissue regulation.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   },
   {
@@ -451,8 +451,20 @@
     "categoryFr": "Bioregulators",
     "categoryEn": "Bioregulators",
     "image": "assets/images/products/38_PANCRAGEN_20_MG.png",
-    "descriptionFr": "Composé destiné exclusivement à la recherche scientifique in vitro. Documentation et informations complémentaires disponibles sur demande.",
-    "descriptionEn": "Compound intended exclusively for in vitro scientific research. Documentation and further information are available upon request.",
+    "descriptionFr": "Biorégulateur peptidique de Khavinson (pancréas). Étudié pour la régulation tissulaire pancréatique.",
+    "descriptionEn": "Khavinson peptide bioregulator (pancreas). Studied for pancreatic tissue regulation.",
+    "fallbackImage": "assets/images/nexus-logo.webp"
+  },
+  {
+    "id": "selank-10mg",
+    "name": "Selank 10mg",
+    "price": 40,
+    "available": true,
+    "categoryFr": "Cognition & neuroprotection",
+    "categoryEn": "Cognition & neuroprotection",
+    "image": "",
+    "descriptionFr": "Analogue de la tuftsine. Étudié pour la neuromodulation, l'anxiété et la cognition.",
+    "descriptionEn": "Tuftsin analog. Studied for neuromodulation, anxiety and cognition.",
     "fallbackImage": "assets/images/nexus-logo.webp"
   }
 ]
