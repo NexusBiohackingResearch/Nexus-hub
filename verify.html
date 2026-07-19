@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#02060a">
+  <meta name="robots" content="noindex">
+  <title>Vérification d'authenticité — NEXUS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <style>
+    body{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 18px;text-align:center}
+    .vlogo{display:flex;align-items:center;gap:11px;color:#fff;font-family:"Space Grotesk";font-weight:700;letter-spacing:.16em;font-size:18px;margin-bottom:6px}
+    .vlogo .brand-mark{width:13px;height:13px}
+    .vlogo small{display:block;color:#738693;font-family:Inter;font-size:8px;letter-spacing:.2em;text-transform:uppercase}
+    .vcard{width:min(520px,100%);margin-top:22px;padding:34px 30px;border:1px solid var(--line);border-radius:var(--radius);
+      background:linear-gradient(140deg,rgba(8,19,29,.92),rgba(3,9,14,.82));box-shadow:var(--shadow)}
+    .vcheck{width:66px;height:66px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;font-size:32px;color:#04120c;
+      background:linear-gradient(135deg,var(--green),var(--cyan));box-shadow:0 0 34px rgba(24,215,232,.45)}
+    .vtitle{font-family:"Space Grotesk";font-size:26px;line-height:1.05;margin:6px 0 4px;
+      background:linear-gradient(95deg,var(--green),var(--cyan),var(--violet));color:transparent;background-clip:text;-webkit-background-clip:text}
+    .vsub{color:var(--muted);font-size:13px;margin-bottom:20px}
+    .vprod{border-top:1px solid rgba(255,255,255,.08);padding-top:20px;text-align:left}
+    .vname{font-family:"Space Grotesk";font-size:27px;font-weight:700;line-height:1.1}
+    .vbadge{display:inline-flex;margin-top:12px;padding:6px 11px;border-radius:999px;font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--green);border:1px solid rgba(131,239,104,.35)}
+    .vdesc{color:#c2ced7;line-height:1.7;font-size:14.5px;margin-top:14px}
+    .vbtns{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    .vwarn{color:#7f909c;font-size:9px;text-transform:uppercase;letter-spacing:.13em;margin-top:26px;line-height:1.8}
+    .vcard.bad .vcheck{background:none;border:2px solid #ed8585;color:#ed8585;box-shadow:none}
+    .vcard.bad .vtitle{background:none;color:#ed8585;-webkit-text-fill-color:#ed8585}
+    .vhide{display:none}
+  </style>
+</head>
+<body>
+  <div class="vlogo"><span class="brand-mark"></span><div>NEXUS<small>Biohacking Research</small></div></div>
+
+  <div class="vcard" id="card">
+    <div class="vcheck" id="icon">✓</div>
+    <div class="vtitle" id="title">Vérification…</div>
+    <div class="vsub" id="sub">Chargement du produit…</div>
+    <div class="vprod vhide" id="prod">
+      <div class="vname" id="pname"></div>
+      <span class="vbadge" id="pavail">Produit authentique</span>
+      <div class="vdesc" id="pdesc"></div>
+    </div>
+    <div class="vbtns">
+      <a class="button button-primary" href="/#catalogue">Voir le catalogue →</a>
+    </div>
+  </div>
+
+  <div class="vwarn">Research Use Only — Not for human or animal consumption.<br>© NEXUS Biohacking Research · nexus-research-shop.com</div>
+
+<script>
+(function(){
+  var seg = location.pathname.split('/').filter(Boolean);   // ["verify","<id>"]
+  var id = seg.length > 1 ? decodeURIComponent(seg[seg.length-1]) : "";
+  var $ = function(i){ return document.getElementById(i); };
+  function bad(title, sub){
+    $('card').classList.add('bad'); $('icon').textContent='!';
+    $('title').textContent=title; $('sub').textContent=sub; $('prod').classList.add('vhide');
+  }
+  if(!id){ bad("Aucun code", "Scanne le QR code présent sur ta boîte NEXUS."); return; }
+  fetch('/api/verify/'+encodeURIComponent(id))
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d.found){ bad("Produit non reconnu", "Le code « "+id+" » ne correspond à aucun produit. En cas de doute, contacte-nous — possible contrefaçon."); return; }
+      $('title').textContent="Félicitations, produit authentique";
+      $('sub').textContent="Ce produit est un original NEXUS Biohacking Research.";
+      $('pname').textContent=d.product.name;
+      $('pdesc').textContent=d.product.description || "";
+      $('pavail').textContent = d.product.available ? "Produit authentique" : "Produit authentique · réappro en cours";
+      $('prod').classList.remove('vhide');
+    })
+    .catch(function(){ bad("Erreur", "Réessaie dans un instant."); });
+})();
+</script>
+</body>
+</html>

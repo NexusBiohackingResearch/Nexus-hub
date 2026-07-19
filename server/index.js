@@ -23,6 +23,7 @@ import { nowpaymentsConfigured } from "./nowpayments.js";
 import { sheetsConfigured } from "./sheets.js";
 import { FRAIS_PORT, SEUIL_GRATUIT, MIN_ORDER } from "./promo.js";
 import { getProducts, getArticles, getAnnouncement, ensureCatalogTabs } from "./catalog.js";
+import { verifyRouter } from "./verify.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -112,6 +113,9 @@ app.get("/api/config", (_req, res) => {
   });
 });
 app.get("/api/health", (_req, res) => res.json({ ok: true }));
+
+// ---- Vérification d'authenticité (QR) — avant le statique/catch-all ----
+app.use(verifyRouter);
 
 // ---- Fichiers statiques (le site) ----
 app.use(express.static(ROOT, { extensions: ["html"] }));
