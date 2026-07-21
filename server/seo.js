@@ -17,7 +17,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 const DESC_DIR = path.join(ROOT, "content", "descriptions");
 
-export const SITE_URL = process.env.SITE_URL || "https://www.nexus-research-shop.com";
+// Domaine canonique du site (toujours le vrai domaine public, jamais l'URL interne Railway).
+// On ignore volontairement toute variable d'env mal réglée : pour le SEO, le host
+// canonique doit impérativement être le domaine public.
+export const SITE_URL = "https://www.nexus-research-shop.com";
 const BRAND = "NEXUS Biohacking Research";
 
 // --- Correspondance produit -> fichier de description (aligné sur js/app.js) ---
