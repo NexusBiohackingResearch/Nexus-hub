@@ -24,6 +24,7 @@ import { sheetsConfigured } from "./sheets.js";
 import { FRAIS_PORT, SEUIL_GRATUIT, MIN_ORDER } from "./promo.js";
 import { getProducts, getArticles, getAnnouncement, ensureCatalogTabs } from "./catalog.js";
 import { verifyRouter } from "./verify.js";
+import { seoRouter } from "./seo.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
@@ -117,9 +118,20 @@ app.get("/api/health", (_req, res) => res.json({ ok: true }));
 // ---- Vérification d'authenticité (QR) — avant le statique/catch-all ----
 app.use(verifyRouter);
 
+// ---- SEO : robots.txt, sitemap.xml, pages produits SSR (/produits, /produits/:id) ----
+//      Monté avant le statique pour que ces routes priment sur l'ancien catch-all.
+app.use(seoRouter);
+
 // ---- Fichiers statiques (le site) ----
 app.use(express.static(ROOT, { extensions: ["html"] }));
-app.get(/^(?!\/api).*/, (_req, res) => res.sendFile(path.join(ROOT, "index.html")));
+
+// ---- 404 propre pour tout chemin inconnu (hors /api) ----
+//      Remplace l'ancien catch-all qui renvoyait index.html (soft 404 néfaste au SEO).
+app.get(/^(?!\/api).*/, (_req, res) => {
+  res.status(404).sendFile(path.join(ROOT, "404.html"), (err) => {
+    if (err && !res.headersSent) res.status(404).type("text/plain").send("404 — Page introuvable");
+  });
+});
 
 app.use((err, _req, res, _next) => {
   console.error("[erreur]", err);
