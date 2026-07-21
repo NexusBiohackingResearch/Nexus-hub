@@ -15,7 +15,7 @@ const translations = {
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"Le catalogue <span>Nexus</span>",catalogueLead:"Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.",
     allCategories:"Toutes les catégories",availableOnly:"Disponibles uniquement",resetFilters:"Réinitialiser",available:"Disponible",unavailable:"Indisponible",references:"références",viewDetails:"Voir la fiche",addToCart:"Ajouter au panier",addToCartShort:"+ Panier",
     qualityEyebrow:"NEXUS QUALITY STANDARD",qualityTitle:"L’exigence à chaque<br><span>étape du parcours</span>",qualityLead:"Informations claires, conservation maîtrisée et accès rapide aux références disponibles.",
-    quality1Title:"Pureté & traçabilité",quality1Text:"Documentation de recherche et informations de lot selon disponibilité.",quality2Title:"Conservation maîtrisée",quality2Text:"Indications de stockage clairement présentées pour chaque référence.",quality3Title:"Panier & paiement",quality3Text:"Ajoutez au panier, réglez par carte ou en cryptomonnaie, confirmation automatique dès réception du paiement.",
+    quality1Title:"Pureté & traçabilité",quality1Text:"Documentation de recherche et informations de lot selon disponibilité. COA (certificats d'analyse) disponibles sur demande.",quality2Title:"Conservation maîtrisée",quality2Text:"Indications de stockage clairement présentées pour chaque référence.",quality3Title:"Panier & paiement",quality3Text:"Ajoutez au panier, réglez par carte ou en cryptomonnaie, confirmation automatique dès réception du paiement.",
     deliveryEyebrow:"EXPÉDITION",deliveryTitle:"Rapide en France. Étendue à l’Europe.",deliveryLead:"Livraison généralement estimée entre 2 et 3 jours ouvrés en France métropolitaine. Les délais européens varient selon la destination.",
     contactEyebrow:"ORDER ACCESS",contactTitle:"Passez commande en quelques clics.",contactLead:"Ajoutez vos références au panier, validez et réglez par carte ou en cryptomonnaie. Confirmation automatique dès réception du paiement.",openTelegram:"Voir le catalogue",
     footerLegal:"Exclusivement destiné à la recherche scientifique. Non destiné à la consommation humaine ou animale.",
@@ -34,7 +34,7 @@ const translations = {
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"The <span>Nexus</span> catalogue",catalogueLead:"Search a compound, filter by field and review its current availability.",
     allCategories:"All categories",availableOnly:"Available only",resetFilters:"Reset",available:"Available",unavailable:"Unavailable",references:"references",viewDetails:"View details",addToCart:"Add to cart",addToCartShort:"+ Cart",
     qualityEyebrow:"NEXUS QUALITY STANDARD",qualityTitle:"Standards at every<br><span>stage of the journey</span>",qualityLead:"Clear information, controlled storage guidance and fast access to available compounds.",
-    quality1Title:"Purity & traceability",quality1Text:"Research documentation and batch information when available.",quality2Title:"Controlled storage",quality2Text:"Clear storage guidance for every compound.",quality3Title:"Cart & payment",quality3Text:"Add to cart, pay by card or cryptocurrency, automatic confirmation once payment is received.",
+    quality1Title:"Purity & traceability",quality1Text:"Research documentation and batch information when available. CoAs (Certificates of Analysis) available on request.",quality2Title:"Controlled storage",quality2Text:"Clear storage guidance for every compound.",quality3Title:"Cart & payment",quality3Text:"Add to cart, pay by card or cryptocurrency, automatic confirmation once payment is received.",
     deliveryEyebrow:"SHIPPING",deliveryTitle:"Fast in France. Extended across Europe.",deliveryLead:"Delivery is generally estimated at 2 to 3 business days in metropolitan France. European transit times vary by destination.",
     contactEyebrow:"ORDER ACCESS",contactTitle:"Order in just a few clicks.",contactLead:"Add your compounds to the cart, check out and pay by card or cryptocurrency. Automatic confirmation as soon as payment is received.",openTelegram:"View the catalogue",
     footerLegal:"Strictly intended for scientific research. Not intended for human or animal consumption.",
@@ -47,7 +47,7 @@ let products = [];
 let onlyAvailable = false;
 let activeProduct = null;
 
-const DESCRIPTION_FILES = {"hgh-10u": "01-hgh-somatropine.md", "bac-water-10ml": "36-eau-bacteriostatique-bac-water.md", "hmg-76-iu": "02-hmg-menotropine.md", "hcg-5000-iu": "03-hcg-gonadotrophine-chorionique.md", "retatrutide-10mg": "16-retatrutide.md", "retatrutide-20mg": "16-retatrutide.md", "bpc157-5mg": "11-bpc-157.md", "bpc157-10mg": "11-bpc-157.md", "tb500-10mg": "12-tb-500-thymosine-4.md", "bpc-157-plus-tb-500-5mg-plus-5mg": "13-bpc-157-tb-500.md", "bpc-157-plus-tb-500-10mg-plus-10mg": "13-bpc-157-tb-500.md", "ghk-cu-50mg": "14-ghk-cu-cuivre-ghk.md", "glow-70-70mg": "18-glow-70-blend.md", "mgf-2mg": "04-mgf-mechano-growth-factor.md", "peg-mgf-2mg": "05-peg-mgf.md", "epithalon-10mg": "30-epithalon-epitalon.md", "tesamorelin-12mg-plus-ipamorelin-6mg": "10-tesamoreline-ipamorelin.md", "semax-10mg-plus-selank-10mg": "28-semax-selank.md", "cjc-1295-w-o-dac-plus-ipamorelin-5mg-plus-5mg": "09-cjc-1295-no-dac-ipamorelin.md", "nad-plus-1000mg": "22-nad.md", "ghrp-2-2mg": "07-ghrp-2.md", "ghrp-6-5mg": "08-ghrp-6.md", "igf-lr3-1mg": "06-igf-1-lr3.md", "mots-c-10mg": "20-mots-c.md", "dsip-10mg": "29-dsip.md", "oxytocin-5mg": "31-ocytocine.md", "aod-9604-5mg": "19-aod-9604.md", "pt141-10mg": "27-pt-141-bremelanotide.md", "mt-i-10mg": "24-melanotan-i-mt-i.md", "mt-ii-melanotan-2-acetate-10mg": "25-melanotan-ii-mt-ii.md", "kisspeptin-5mg": "32-kisspeptine-10.md", "ss-31-10mg": "23-ss-31-elamipretide.md", "kpv": "15-kpv.md", "glutathione": "26-glutathion-gsh.md", "5-amino-1mq-5mg": "21-5-amino-1mq.md", "bronchogen-20mg": "33-bronchogen.md", "livagen-20mg": "34-livagen.md", "pancragen-20mg": "35-pancragen.md"};
+const DESCRIPTION_FILES = {"hgh-10u": "01-hgh-somatropine.md", "bac-water-10ml": "36-eau-bacteriostatique-bac-water.md", "hmg-76-iu": "02-hmg-menotropine.md", "hcg-5000-iu": "03-hcg-gonadotrophine-chorionique.md", "retatrutide-10mg": "16-retatrutide.md", "retatrutide-20mg": "16-retatrutide.md", "bpc157-5mg": "11-bpc-157.md", "bpc157-10mg": "11-bpc-157.md", "tb500-10mg": "12-tb-500-thymosine-4.md", "bpc-157-plus-tb-500-5mg-plus-5mg": "13-bpc-157-tb-500.md", "bpc-157-plus-tb-500-10mg-plus-10mg": "13-bpc-157-tb-500.md", "ghk-cu-50mg": "14-ghk-cu-cuivre-ghk.md", "glow-70-70mg": "18-glow-70-blend.md", "mgf-2mg": "04-mgf-mechano-growth-factor.md", "peg-mgf-2mg": "05-peg-mgf.md", "epithalon-10mg": "30-epithalon-epitalon.md", "tesamorelin-12mg-plus-ipamorelin-6mg": "10-tesamoreline-ipamorelin.md", "semax-10mg-plus-selank-10mg": "28-semax-selank.md", "cjc-1295-w-o-dac-plus-ipamorelin-5mg-plus-5mg": "09-cjc-1295-no-dac-ipamorelin.md", "nad-plus-1000mg": "22-nad.md", "ghrp-2-2mg": "07-ghrp-2.md", "ghrp-6-5mg": "08-ghrp-6.md", "igf-lr3-1mg": "06-igf-1-lr3.md", "mots-c-10mg": "20-mots-c.md", "dsip-10mg": "29-dsip.md", "oxytocin-5mg": "31-ocytocine.md", "aod-9604-5mg": "19-aod-9604.md", "pt141-10mg": "27-pt-141-bremelanotide.md", "mt-i-10mg": "24-melanotan-i-mt-i.md", "mt-ii-melanotan-2-acetate-10mg": "25-melanotan-ii-mt-ii.md", "kisspeptin-5mg": "32-kisspeptine-10.md", "ss-31-10mg": "23-ss-31-elamipretide.md", "kpv": "15-kpv.md", "glutathione": "26-glutathion-gsh.md", "5-amino-1mq-5mg": "21-5-amino-1mq.md", "bronchogen-20mg": "33-bronchogen.md", "livagen-20mg": "34-livagen.md", "pancragen-20mg": "35-pancragen.md", "selank-10mg": "37-selank.md"};
 
 
 const $ = (selector) => document.querySelector(selector);
@@ -72,6 +72,20 @@ function translatePage() {
   renderCategories();
   renderProducts();
   if (activeProduct) fillModal(activeProduct);
+  renderAnnounce();
+}
+
+// Bandeau d'annonce bilingue : dans la Google Sheet, écrire "Texte FR ||| English text".
+function announceText(raw) {
+  if (!raw) return "";
+  const p = String(raw).split("|||");
+  return ((lang === "en" && p[1]) ? p[1] : p[0]).trim();
+}
+function renderAnnounce() {
+  const bar = document.getElementById("announceBar");
+  if (!bar || bar.hidden) return;
+  const msg = bar.querySelector("#announceMsg");
+  if (msg && bar.dataset.raw) msg.textContent = announceText(bar.dataset.raw);
 }
 
 function renderCategories() {
@@ -624,8 +638,9 @@ loadProducts();
   if (!bar) return;
   function show(a) {
     if (a && a.active && a.message) {
+      bar.dataset.raw = a.message;                 // message brut "FR ||| EN"
       var msg = bar.querySelector("#announceMsg");
-      if (msg) msg.textContent = a.message;
+      if (msg) msg.textContent = (typeof announceText === "function") ? announceText(a.message) : a.message;
       bar.hidden = false;
     } else {
       bar.hidden = true;
