@@ -178,6 +178,7 @@ function layout({ title, description, canonical, image, jsonld, bodyClass, main 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/css/store.css">
+  <script src="/js/analytics.js"></script>
   ${jsonld ? `<script type="application/ld+json">${jsonld}</script>` : ""}
   <style>
     .seo-wrap{max-width:1080px;margin:0 auto;padding:120px 24px 80px}
