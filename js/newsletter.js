@@ -4,7 +4,7 @@
 // et seulement après la confirmation d'âge. Capture l'e-mail -> code promo.
 // ============================================================
 (function () {
-  var DELAY = 180000;            // 3 minutes
+  var DELAY = 30000;             // 30 secondes
   var DONE_KEY = "nx_news_done"; // ne pas re-proposer une fois inscrit/fermé
 
   try { if (localStorage.getItem(DONE_KEY) === "1") return; } catch (e) {}
