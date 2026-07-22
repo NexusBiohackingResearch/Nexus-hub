@@ -32,8 +32,9 @@ function shell(title, bodyHtml) {
   return `<!doctype html><html><body style="margin:0;background:#05070a;font-family:Arial,Helvetica,sans-serif;color:#eaf2f8">
   <div style="max-width:560px;margin:0 auto;padding:32px 24px">
     <div style="text-align:center;margin-bottom:28px">
-      <div style="font-size:22px;font-weight:800;letter-spacing:4px;background:linear-gradient(90deg,#37f5a9,#22e0ff,#3d7bff,#a67cff);-webkit-background-clip:text;background-clip:text;color:transparent">NEXUS</div>
-      <div style="font-size:10px;letter-spacing:3px;color:#8a97a6;margin-top:4px">BIOHACKING RESEARCH</div>
+      <img src="${(process.env.SITE_URL || "https://www.nexus-research-shop.com").replace(/\/$/, "")}/assets/images/nexus-logo.png"
+           alt="NEXUS Biohacking Research" width="160"
+           style="max-width:160px;height:auto;display:inline-block;border:0;outline:none;text-decoration:none">
     </div>
     <div style="background:#0a0e16;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px">
       <h1 style="font-size:20px;margin:0 0 16px;color:#fff">${title}</h1>
@@ -66,9 +67,25 @@ const btn = (href, label) =>
 
 // ---------- 1) Commande reçue (auto au checkout) ----------
 export async function sendOrderReceived(order) {
-  const crypto = process.env.CRYPTO_BTC || "(adresse BTC à configurer)";
+  // Bloc de paiement adaptatif :
+  //  1) passerelle active (lien de paiement) -> bouton "Payer maintenant"
+  //  2) sinon, adresse crypto manuelle configurée -> instructions manuelles
+  //  3) sinon -> message neutre (jamais de "adresse à configurer")
+  const crypto = process.env.CRYPTO_BTC || "";
   const usdt = process.env.CRYPTO_USDT || "";
-  const payBlock = `
+  let payBlock;
+  if (order.btcpay_checkout_link) {
+    payBlock = `
+    <div style="background:rgba(34,224,255,.06);border:1px solid rgba(34,224,255,.2);border-radius:12px;padding:16px;margin:16px 0;text-align:center">
+      <div style="font-size:12px;letter-spacing:2px;color:#22e0ff;margin-bottom:10px">PAIEMENT SÉCURISÉ</div>
+      <div style="font-size:13px;color:#eaf2f8;line-height:1.7;margin-bottom:14px">
+        Montant : <b>${Number(order.total).toFixed(2)} €</b>. Finalise ton règlement (carte ou crypto) sur la page sécurisée :
+      </div>
+      ${btn(order.btcpay_checkout_link, "Payer maintenant →")}
+      <div style="font-size:12px;color:#8a97a6;margin-top:12px">Confirmation automatique dès réception du paiement.</div>
+    </div>`;
+  } else if (crypto) {
+    payBlock = `
     <div style="background:rgba(34,224,255,.06);border:1px solid rgba(34,224,255,.2);border-radius:12px;padding:16px;margin:16px 0">
       <div style="font-size:12px;letter-spacing:2px;color:#22e0ff;margin-bottom:10px">INSTRUCTIONS DE PAIEMENT — CRYPTO</div>
       <div style="font-size:13px;color:#eaf2f8;line-height:1.7">
@@ -78,6 +95,15 @@ export async function sendOrderReceived(order) {
       </div>
       <div style="font-size:12px;color:#8a97a6;margin-top:12px">Indique bien ta référence <b style="color:#fff">${order.reference}</b> et réponds à cet email avec la preuve de transaction. Dès réception, tu recevras un email de confirmation.</div>
     </div>`;
+  } else {
+    payBlock = `
+    <div style="background:rgba(34,224,255,.06);border:1px solid rgba(34,224,255,.2);border-radius:12px;padding:16px;margin:16px 0">
+      <div style="font-size:12px;letter-spacing:2px;color:#22e0ff;margin-bottom:10px">PAIEMENT</div>
+      <div style="font-size:13px;color:#eaf2f8;line-height:1.7">
+        Montant : <b>${Number(order.total).toFixed(2)} €</b>. Les instructions de règlement te parviennent séparément — réponds à cet email si tu as la moindre question. Indique bien ta référence <b style="color:#fff">${order.reference}</b>.
+      </div>
+    </div>`;
+  }
   const body = `
     <p style="color:#8a97a6;line-height:1.7">Bonjour${order.full_name ? " " + order.full_name : ""},<br>
     Ta commande <b style="color:#fff">${order.reference}</b> a bien été enregistrée. Voici le récapitulatif :</p>

@@ -24,6 +24,24 @@
     </div>
   </header>
 
+  <style>
+    .profile-card{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:22px}
+    .avatar{width:64px;height:64px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;
+      font-family:'Space Grotesk';font-weight:700;font-size:24px;color:#04120c;
+      background:linear-gradient(135deg,#83ef68,#18d7e8,#9b47ff)}
+    .profile-meta h2{font-family:'Space Grotesk';font-size:22px;margin:0 0 2px}
+    .profile-meta .pm-email{color:var(--muted);font-size:14px}
+    .profile-meta .pm-since{color:#66757f;font-size:12px;margin-top:4px}
+    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 34px}
+    .stat{border:1px solid var(--line);border-radius:16px;padding:16px 18px;background:linear-gradient(150deg,rgba(9,20,30,.6),rgba(3,9,14,.5))}
+    .stat .v{font-family:'Space Grotesk';font-weight:700;font-size:26px;line-height:1}
+    .stat .l{color:var(--muted);font-size:12px;margin-top:6px}
+    .oc-detail{margin-top:10px;border-top:1px solid var(--line);padding-top:10px;font-size:13px;color:var(--muted)}
+    .oc-detail .row{display:flex;justify-content:space-between;padding:3px 0}
+    .oc-pay{display:flex;justify-content:center;width:100%;margin-top:12px;min-height:auto;padding:11px 12px;font-size:13px}
+    .section-title{font-family:'Space Grotesk';font-size:20px;margin:10px 0 18px}
+    @media(max-width:560px){.stats-row{grid-template-columns:1fr 1fr}}
+  </style>
   <main class="page">
     <div id="guestView" style="display:none">
       <h1>Mon compte</h1>
@@ -42,7 +60,24 @@
     <div id="userView" style="display:none">
       <h1 id="hello">Mon compte</h1>
       <p class="lead" id="userSub"></p>
-      <h3 style="font-family:'Space Grotesk';font-size:20px;margin:10px 0 18px">Mes commandes</h3>
+
+      <div class="panel" style="margin-bottom:28px">
+        <div class="profile-card">
+          <div class="avatar" id="pfAvatar">N</div>
+          <div class="profile-meta">
+            <h2 id="pfName">—</h2>
+            <div class="pm-email" id="pfEmail"></div>
+            <div class="pm-since" id="pfSince"></div>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat"><div class="v" id="stOrders">0</div><div class="l">Commandes</div></div>
+          <div class="stat"><div class="v" id="stSpent">0 €</div><div class="l">Total réglé</div></div>
+          <div class="stat"><div class="v" id="stPending">0</div><div class="l">En attente</div></div>
+        </div>
+      </div>
+
+      <h3 class="section-title">Mes commandes</h3>
       <div id="ordersList"></div>
     </div>
   </main>
@@ -54,24 +89,44 @@
       awaiting_payment:"En attente de paiement", payment_received:"Paiement reçu",
       shipped:"Expédiée", cancelled:"Annulée"
     };
+    const euro = (n)=>`${Number(n||0).toFixed(2)} €`;
+    const esc = (s="")=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
     function orderCard(o){
-      const items = (o.items||[]).map(i=>`${i.name} × ${i.quantity}`).join(" · ");
       const statusTxt = o.statusLabel || STATUS_LABEL[o.status] || o.status;
+      // détail des articles avec quantité et prix
+      const lines = (o.items||[]).map(i=>
+        `<div class="row"><span>${esc(i.name)} <span style="color:#66757f">× ${i.quantity}</span></span><span>${euro(i.unit_price*i.quantity)}</span></div>`
+      ).join("");
+      const shipping = Number(o.shipping)>0 ? `<div class="row"><span>Livraison</span><span>${euro(o.shipping)}</span></div>` : "";
+      const discount = Number(o.discount)>0 ? `<div class="row"><span>Remise${o.promo_code?` (${esc(o.promo_code)})`:""}</span><span>−${euro(o.discount)}</span></div>` : "";
+      // bouton payer si en attente + lien de paiement dispo
+      const pay = (o.status==="awaiting_payment" && o.btcpay_checkout_link)
+        ? `<a class="button button-primary oc-pay" href="${o.btcpay_checkout_link}">Payer maintenant →</a>` : "";
+      // suivi colis
       const track = o.trackingUrl
-        ? `<a class="button button-secondary" href="${o.trackingUrl}" target="_blank" rel="noopener" style="display:flex;margin-top:12px;width:100%;min-height:auto;padding:9px 12px;font-size:12px;justify-content:center">📦 Suivre mon colis${o.carrier?` — ${o.carrier}`:""} →</a>`
-        : (o.tracking?`<div style="margin-top:8px;font-size:12px;color:var(--cyan)">Suivi : ${o.tracking}${o.carrier?` (${o.carrier})`:""}</div>`:"");
+        ? `<a class="button button-secondary" href="${o.trackingUrl}" target="_blank" rel="noopener" style="display:flex;margin-top:12px;width:100%;min-height:auto;padding:9px 12px;font-size:12px;justify-content:center">📦 Suivre mon colis${o.carrier?` — ${esc(o.carrier)}`:""} →</a>`
+        : (o.tracking?`<div style="margin-top:8px;font-size:12px;color:var(--cyan)">Suivi : ${esc(o.tracking)}${o.carrier?` (${esc(o.carrier)})`:""}</div>`:"");
       return `<div class="order-card">
         <div class="oc-head">
           <span class="ref">${o.reference}</span>
           <span class="status-pill status-${o.status}">${statusTxt}</span>
         </div>
-        <div class="oc-items">${items}</div>
-        <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:13px">
-          <span style="color:var(--muted)">${new Date(o.created_at).toLocaleDateString("fr-FR")}</span>
-          <b style="font-family:'Space Grotesk'">${Number(o.total).toFixed(2)} €</b>
+        <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--muted)">
+          <span>${new Date(o.created_at).toLocaleDateString("fr-FR",{day:"2-digit",month:"long",year:"numeric"})}</span>
+          <b style="font-family:'Space Grotesk';color:#eafcff;font-size:15px">${euro(o.total)}</b>
         </div>
+        <div class="oc-detail">${lines}${shipping}${discount}</div>
+        ${pay}
         ${track}
       </div>`;
+    }
+    function renderStats(orders){
+      const paid = orders.filter(o=>o.status==="payment_received"||o.status==="shipped");
+      const pending = orders.filter(o=>o.status==="awaiting_payment");
+      const spent = paid.reduce((a,o)=>a+Number(o.total||0),0);
+      document.getElementById("stOrders").textContent = orders.length;
+      document.getElementById("stSpent").textContent = euro(spent);
+      document.getElementById("stPending").textContent = pending.length;
     }
     async function boot(){
       await NEXUS.loadUser();
@@ -79,13 +134,22 @@
       if(u){
         document.getElementById("userView").style.display="block";
         document.getElementById("logoutBtn").style.display="inline-flex";
+        const name = u.fullName || u.email.split("@")[0];
         document.getElementById("hello").textContent = u.fullName?`Bonjour, ${u.fullName}`:"Mon compte";
-        document.getElementById("userSub").textContent = u.email;
+        document.getElementById("userSub").textContent = "Espace personnel — commandes, paiements et suivi.";
+        document.getElementById("pfAvatar").textContent = (name[0]||"N").toUpperCase();
+        document.getElementById("pfName").textContent = name;
+        document.getElementById("pfEmail").textContent = u.email;
+        if(u.createdAt){
+          document.getElementById("pfSince").textContent =
+            "Membre depuis le "+new Date(u.createdAt).toLocaleDateString("fr-FR",{month:"long",year:"numeric"});
+        }
         try{
           const {orders} = await NEXUS.api("/api/orders/mine");
+          renderStats(orders);
           document.getElementById("ordersList").innerHTML = orders.length
             ? orders.map(orderCard).join("")
-            : '<p style="color:var(--muted)">Aucune commande pour le moment.</p>';
+            : '<p style="color:var(--muted)">Aucune commande pour le moment. <a href="/produits" style="color:var(--cyan)">Explorer le catalogue →</a></p>';
         }catch(e){ document.getElementById("ordersList").innerHTML = '<p style="color:#ed8585">'+e.message+'</p>'; }
       }else{
         document.getElementById("guestView").style.display="block";

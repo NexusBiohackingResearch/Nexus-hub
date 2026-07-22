@@ -129,5 +129,5 @@ export async function findOrCreateGuest(email, fullName) {
 }
 
 export function publicUser(u) {
-  return { id: u.id, email: u.email, fullName: u.full_name, isAdmin: u.is_admin };
+  return { id: u.id, email: u.email, fullName: u.full_name, isAdmin: u.is_admin, createdAt: u.created_at };
 }
