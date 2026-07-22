@@ -33,6 +33,16 @@
     else state.cart[id] = { id, name, price: Number(price) || 0, image: image || "", cat: cat || "", qty: 1 };
     save();
     bump();
+    // GA4 : ajout au panier
+    if (window.gtag) {
+      try {
+        window.gtag("event", "add_to_cart", {
+          currency: "EUR",
+          value: Number(price) || 0,
+          items: [{ item_id: id, item_name: name, price: Number(price) || 0, quantity: 1 }],
+        });
+      } catch (e) {}
+    }
     openCart();
   }
   function setQty(id, q) {

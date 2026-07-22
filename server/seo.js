@@ -371,7 +371,8 @@ seoRouter.get("/produits/:id", async (req, res, next) => {
       </div>
     </div>
     <div class="seo-body">${bodyHtml || `<p>${escapeHtml(shortDesc)}</p>`}</div>
-    <p class="seo-disclaimer"><strong>Réservé à la recherche en laboratoire.</strong> ${escapeHtml(p.name)} ne convient pas à la consommation humaine ou animale. Ni médicament, ni aliment, ni cosmétique. À manipuler par du personnel qualifié conformément à la réglementation applicable.</p>`;
+    <p class="seo-disclaimer"><strong>Réservé à la recherche en laboratoire.</strong> ${escapeHtml(p.name)} ne convient pas à la consommation humaine ou animale. Ni médicament, ni aliment, ni cosmétique. À manipuler par du personnel qualifié conformément à la réglementation applicable.</p>
+    <script>window.gtag&&gtag("event","view_item",{currency:"EUR",value:${price || 0},items:[${JSON.stringify({ item_id: p.id, item_name: p.name, price: price || 0, item_category: cat })}]});</script>`;
 
     res.send(layout({
       title: `${p.name}${cat ? " — " + cat : ""} | NEXUS Biohacking Research`,

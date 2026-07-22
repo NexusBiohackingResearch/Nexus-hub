@@ -99,6 +99,7 @@ export async function initSchema() {
     ["btcpay_checkout_link", "TEXT"],
     ["paid_at", "TIMESTAMPTZ"],
     ["sheet_synced", "BOOLEAN NOT NULL DEFAULT FALSE"],
+    ["ga_client_id", "TEXT"],
   ];
   for (const [name, type] of extraCols) {
     await query(`ALTER TABLE orders ADD COLUMN IF NOT EXISTS ${name} ${type};`);

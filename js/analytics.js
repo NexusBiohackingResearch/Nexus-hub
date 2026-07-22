@@ -18,4 +18,14 @@
   window.gtag = gtag;
   gtag("js", new Date());
   gtag("config", GA_ID);
+
+  // Expose l'ID + un helper pour récupérer le client_id GA4 (avec repli si gtag
+  // pas encore prêt) — utilisé au checkout pour rattacher l'achat côté serveur.
+  window.NX_GA_ID = GA_ID;
+  window.nxGaClientId = function (cb) {
+    var done = false;
+    function finish(id) { if (!done) { done = true; cb(id || ""); } }
+    try { gtag("get", GA_ID, "client_id", finish); } catch (e) { finish(""); }
+    setTimeout(function () { finish(""); }, 800); // ne bloque jamais le checkout
+  };
 })();

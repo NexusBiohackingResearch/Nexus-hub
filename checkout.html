@@ -146,6 +146,8 @@
         promoCode:appliedPromo,
         items:Object.values(NEXUS.cart).map(i=>({id:i.id,quantity:i.qty}))
       };
+      // GA4 : rattache l'achat (comptabilisé côté serveur) à la session du visiteur
+      payload.gaClientId = await new Promise(r => (window.nxGaClientId ? window.nxGaClientId(r) : r("")));
       const btn=document.getElementById("placeBtn"); btn.textContent="Création de la facture…"; btn.disabled=true;
       try{
         const res=await NEXUS.api("/api/orders",{method:"POST",body:payload});
@@ -167,6 +169,15 @@
 
     document.addEventListener("DOMContentLoaded", ()=>{
       refreshQuote();
+      // GA4 : début de checkout
+      if(window.gtag && NEXUS.count()){
+        try{
+          window.gtag("event","begin_checkout",{
+            currency:"EUR", value:Number(NEXUS.total())||0,
+            items:Object.values(NEXUS.cart).map(i=>({item_id:i.id,item_name:i.name,price:Number(i.price)||0,quantity:i.qty}))
+          });
+        }catch(e){}
+      }
       setTimeout(()=>{
         const u=NEXUS.user, hint=document.getElementById("authHint");
         if(u){

@@ -11,6 +11,7 @@ import { createInvoice as btcpayCreateInvoice, btcpayConfigured } from "./btcpay
 import { createInvoice as npCreateInvoice, nowpaymentsConfigured } from "./nowpayments.js";
 import { appendOrderRow, sheetsConfigured, getOrdersTrackingMap, trackingUrl } from "./sheets.js";
 import { getProducts } from "./catalog.js";
+import { notifyNewOrder } from "./notify.js";
 
 function makeRef() {
   const s = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -85,14 +86,14 @@ export async function createOrder(req, res) {
   const ins = await query(
     `INSERT INTO orders
       (reference,user_id,email,full_name,shipping_address,city,zip,country,phone,note,
-       payment_method,subtotal,shipping,discount,promo_code,total,btc_amount,btc_rate,status)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'crypto',$11,$12,$13,$14,$15,$16,$17,'awaiting_payment')
+       payment_method,subtotal,shipping,discount,promo_code,total,btc_amount,btc_rate,ga_client_id,status)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,'crypto',$11,$12,$13,$14,$15,$16,$17,$18,'awaiting_payment')
      RETURNING *`,
     [
       reference, userId, email, b.fullName || null, b.address || null, b.city || null,
       b.zip || null, b.country || null, b.phone || null, b.note || null,
       totals.subtotal, totals.shipping, totals.discount, totals.promoCode,
-      totals.total, btcAmount, btcRate,
+      totals.total, btcAmount, btcRate, b.gaClientId || null,
     ]
   );
   const order = ins.rows[0];
@@ -145,6 +146,9 @@ export async function createOrder(req, res) {
 
   // --- Email de confirmation ---
   sendOrderReceived(order).catch((e) => console.error("email order:", e));
+
+  // --- Notification propriétaire (Telegram) : nouvelle commande ---
+  notifyNewOrder(order).catch((e) => console.error("notify order:", e));
 
   res.json({
     ok: true,

@@ -10,6 +10,8 @@ import { verifyWebhook, getInvoicePaymentInfo } from "./btcpay.js";
 import { verifyIpn } from "./nowpayments.js";
 import { sendPaymentConfirmed } from "./email.js";
 import { updateOrderStatus } from "./sheets.js";
+import { sendPurchase } from "./ga.js";
+import { notifyPaid } from "./notify.js";
 
 function frNow() {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -57,6 +59,8 @@ export async function nowpaymentsIpn(req, res) {
 
     sendPaymentConfirmed(updated).catch((e) => console.error("email paid:", e));
     updateOrderStatus(ref, "Payé", frNow()).catch((e) => console.error("sheet:", e));
+    sendPurchase(updated).catch((e) => console.error("ga purchase:", e));        // GA4 e-commerce
+    notifyPaid(updated).catch((e) => console.error("notify paid:", e));          // Telegram
     console.log(`[np-ipn] commande ${ref} payée ✓ (${status})`);
   } catch (e) {
     console.error("[np-ipn] traitement:", e?.message || e);
@@ -110,6 +114,8 @@ export async function btcpayWebhook(req, res) {
       hour: "2-digit", minute: "2-digit", timeZone: "Europe/Paris",
     }).format(new Date()).replace(",", "");
     updateOrderStatus(order.reference, "Payé", paidDate).catch((e) => console.error("sheet:", e));
+    sendPurchase(updated).catch((e) => console.error("ga purchase:", e));        // GA4 e-commerce
+    notifyPaid(updated).catch((e) => console.error("notify paid:", e));          // Telegram
 
     console.log(`[webhook] commande ${order.reference} payée ✓`);
   } catch (e) {
