@@ -45,6 +45,15 @@
     /* Quand le bandeau est visible, on descend le header juste en-dessous */
     .announce-bar:not([hidden]) ~ .header{top:39px}
     @media(max-width:680px){.announce-bar{font-size:11px;min-height:34px}.announce-bar:not([hidden]) ~ .header{top:35px}}
+    /* Best-sellers : badge produit phare */
+    .bestsellers-section{padding-bottom:40px}
+    .best-grid{grid-template-columns:repeat(4,1fr)}
+    .best-card .best-badge{position:absolute;z-index:3;top:16px;left:16px;display:inline-flex;align-items:center;gap:4px;
+      padding:6px 10px;border-radius:999px;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+      color:#04120c;background:linear-gradient(90deg,#83ef68,#18d7e8)}
+    .best-card{border-color:rgba(131,239,104,.28)}
+    @media(max-width:1050px){.best-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:680px){.best-grid{grid-template-columns:1fr 1fr;gap:9px}}
   </style>
   <script src="/js/analytics.js"></script>
   <script src="/js/age-gate.js"></script>
@@ -123,6 +132,15 @@
         <img src="assets/images/nexus-logo.png" alt="NEXUS Biohacking Research" style="mix-blend-mode:normal">
         <p data-i18n="signature">Fiabilité · Pureté 99% · Livraison rapide 2 à 3 jours en France.</p>
       </div>
+    </section>
+
+    <section class="section bestsellers-section" id="bestsellers" hidden>
+      <div class="section-heading reveal">
+        <p class="eyebrow" data-i18n="bestEyebrow">PRODUITS PHARES</p>
+        <h2 data-i18n-html="bestTitle">Nos <span>best-sellers</span> du moment</h2>
+        <p data-i18n="bestLead">Les références les plus demandées par nos chercheurs en ce moment.</p>
+      </div>
+      <div class="product-grid best-grid" id="bestSellersGrid"></div>
     </section>
 
     <section class="section articles-section" id="articles">

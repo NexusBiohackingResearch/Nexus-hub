@@ -9,7 +9,7 @@ const translations = {
     exploreCatalogue:"Explorer le catalogue",fastOrder:"Comment payer",metricFrance:"jours en France",metricCrypto:"paiement sécurisé",metricEurope:"expédition suivie",
     signature:"Fiabilité · Pureté 99% · Livraison rapide 2 à 3 jours en France.",
     ticker1:"Exclusivement pour la recherche",ticker2:"Livraison France 2–3 jours",ticker3:"Paiement Bitcoin",ticker4:"Expédition européenne",
-    articlesEyebrow:"LE LABORATOIRE",articlesTitle:"Recherche & <span>articles</span>",articlesLead:"Nos publications sur les peptides de recherche et leurs axes d'étude, mises à jour régulièrement.",articlesRead:"Lire",articlesEmpty:"Articles à venir.",announceTag:"Annonce importante",
+    articlesEyebrow:"LE LABORATOIRE",articlesTitle:"Recherche & <span>articles</span>",articlesLead:"Nos publications sur les peptides de recherche et leurs axes d'étude, mises à jour régulièrement.",articlesRead:"Lire",articlesEmpty:"Articles à venir.",bestEyebrow:"PRODUITS PHARES",bestTitle:"Nos <span>best-sellers</span> du moment",bestLead:"Les références les plus demandées par nos chercheurs en ce moment.",announceTag:"Annonce importante",
     domainsEyebrow:"DOMAINES DE RECHERCHE",domainsTitle:"Explorez selon votre<br><span>axe de recherche</span>",domainsLead:"Choisissez un domaine pour filtrer instantanément le catalogue.",
     domainGrowth:"Performance & Récupération",domainRecovery:"Régénération & réparation",domainLongevity:"Longévité & recherche cellulaire",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Métabolisme & Longévité",domainReproductive:"Reproductive & Hormonal",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"Le catalogue <span>Nexus</span>",catalogueLead:"Recherchez une référence, filtrez par domaine et consultez sa disponibilité actuelle.",
@@ -28,7 +28,7 @@ const translations = {
     exploreCatalogue:"Explore the catalogue",fastOrder:"How to pay",metricFrance:"days in France",metricCrypto:"secure payment",metricEurope:"tracked shipping",
     signature:"Reliability · 99% purity · Fast delivery 2–3 days in France.",
     ticker1:"Research use only",ticker2:"France delivery in 2–3 days",ticker3:"Bitcoin payments",ticker4:"European shipping",
-    articlesEyebrow:"THE LAB",articlesTitle:"Research & <span>articles</span>",articlesLead:"Our publications on research peptides and their areas of study, updated regularly.",articlesRead:"Read",articlesEmpty:"Articles coming soon.",announceTag:"Important notice",
+    articlesEyebrow:"THE LAB",articlesTitle:"Research & <span>articles</span>",articlesLead:"Our publications on research peptides and their areas of study, updated regularly.",articlesRead:"Read",articlesEmpty:"Articles coming soon.",bestEyebrow:"BEST SELLERS",bestTitle:"Our <span>top picks</span> right now",bestLead:"The references most requested by our researchers right now.",announceTag:"Important notice",
     domainsEyebrow:"RESEARCH FIELDS",domainsTitle:"Explore by your<br><span>research focus</span>",domainsLead:"Choose a field to filter the catalogue instantly.",
     domainGrowth:"Performance & Recovery",domainRecovery:"Recovery & tissue research",domainLongevity:"Longevity & cellular research",domainCognition:"Cognition & neuroprotection",domainMetabolism:"Metabolism & Longevity",domainReproductive:"Reproductive & Hormonal",
     catalogueEyebrow:"RESEARCH LIBRARY",catalogueTitle:"The <span>Nexus</span> catalogue",catalogueLead:"Search a compound, filter by field and review its current availability.",
@@ -71,6 +71,7 @@ function translatePage() {
   $("#searchInput").placeholder = $("#searchInput").dataset[lang === "fr" ? "placeholderFr" : "placeholderEn"];
   renderCategories();
   renderProducts();
+  renderBestSellers();
   if (activeProduct) fillModal(activeProduct);
   renderAnnounce();
 }
@@ -140,6 +141,56 @@ function renderProducts() {
   });
 }
 
+
+// ---- Produits phares / best-sellers (au-dessus des articles) ----
+// Sélection curée : Rétatrutide, Glow, mélange BPC-157 + TB-500, GHK-Cu.
+// On matche sur l'id OU le nom pour tolérer les variantes du catalogue.
+function renderBestSellers() {
+  const grid = document.getElementById("bestSellersGrid");
+  if (!grid || !products.length) return;
+  const specs = [
+    (p) => /retatrutide/i.test(p.id + " " + p.name),
+    (p) => /glow/i.test(p.id + " " + p.name),
+    (p) => { const s = (p.id + " " + p.name).toLowerCase(); return s.includes("bpc") && s.includes("tb"); },
+    (p) => /ghk/i.test(p.id + " " + p.name),
+  ];
+  const picks = [];
+  specs.forEach((test) => {
+    const m = products.find((p) => test(p) && !picks.includes(p));
+    if (m) picks.push(m);
+  });
+  const section = document.getElementById("bestsellers");
+  if (!picks.length) { if (section) section.hidden = true; return; }
+  if (section) section.hidden = false;
+
+  grid.innerHTML = picks.map((product, index) => `
+    <article class="product-card best-card" data-id="${product.id}" data-available="${product.available}" style="animation-delay:${index*45}ms">
+      <div class="product-image">
+        <span class="best-badge">★ Best-seller</span>
+        <span class="availability ${product.available ? "available" : "unavailable"}">
+          ${product.available ? translations[lang].available : translations[lang].unavailable}
+        </span>
+        <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='${product.fallbackImage || "assets/images/nexus-logo.webp"}';">
+      </div>
+      <div class="product-info">
+        <small>${lang === "fr" ? product.categoryFr : product.categoryEn}</small>
+        <h3>${product.name}</h3>
+        <div class="product-footer">
+          <span class="price">${Number(product.price).toFixed(2)} €</span>
+          <span class="details">${translations[lang].viewDetails} ↗</span>
+        </div>
+        ${product.available ? `<button class="add-cart" data-add data-id="${product.id}" data-name="${product.name.replace(/"/g,'&quot;')}" data-price="${product.price}" data-image="${product.image}" data-cat="${lang === "fr" ? product.categoryFr : product.categoryEn}">${translations[lang].addToCart}</button>` : `<button class="add-cart" disabled>${translations[lang].unavailable}</button>`}
+      </div>
+    </article>
+  `).join("");
+
+  grid.querySelectorAll(".product-card").forEach((card) => {
+    card.addEventListener("click", (e) => {
+      if (e.target.closest("[data-add]")) return; // le bouton panier gère lui-même
+      openModal(products.find((p) => p.id === card.dataset.id));
+    });
+  });
+}
 
 function escapeHtml(value = ""){
   return value.replace(/[&<>"']/g, char => ({
@@ -347,6 +398,7 @@ async function loadProducts() {
         products = data.products;
         renderCategories();
         renderProducts();
+        renderBestSellers();
         return;
       }
     }
@@ -360,6 +412,7 @@ async function loadProducts() {
     products = await response.json();
     renderCategories();
     renderProducts();
+    renderBestSellers();
   } catch (error) {
     $("#productCount").textContent = "Catalogue indisponible";
     console.error("Product catalogue error:", error);
@@ -636,6 +689,14 @@ loadProducts();
 (function () {
   var bar = document.getElementById("announceBar");
   if (!bar) return;
+  // Cale le header (et le décalage de page) juste sous le bandeau, quelle que
+  // soit sa hauteur réelle (une ou deux lignes) → plus de chevauchement.
+  function positionHeader() {
+    var header = document.querySelector(".header");
+    if (!header) return;
+    if (bar.hidden) { header.style.top = "0px"; return; }
+    header.style.top = bar.offsetHeight + "px";
+  }
   function show(a) {
     if (a && a.active && a.message) {
       bar.dataset.raw = a.message;                 // message brut "FR ||| EN"
@@ -645,7 +706,10 @@ loadProducts();
     } else {
       bar.hidden = true;
     }
+    // Attendre le rendu pour mesurer la hauteur réelle du bandeau
+    requestAnimationFrame(positionHeader);
   }
+  window.addEventListener("resize", positionHeader);
   fetch("/api/announce").then(function (r) { return r.json(); })
     .then(function (d) { show(d && d.announce); })
     .catch(function () { fetch("data/announce.json").then(function (r) { return r.json(); }).then(show).catch(function () {}); });
