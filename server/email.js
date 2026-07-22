@@ -157,6 +157,44 @@ export async function sendShipped(order) {
   });
 }
 
+// ---------- Validation d'e-mail (à l'inscription) ----------
+export async function sendVerify(user, link) {
+  const body = `
+    <p style="color:#8a97a6;line-height:1.7">Bonjour${user.full_name ? " " + user.full_name : ""},<br>
+    Bienvenue chez NEXUS. Confirme ton adresse e-mail pour activer ton compte :</p>
+    <p style="text-align:center;margin:24px 0">${btn(link, "Valider mon adresse e-mail")}</p>
+    <p style="font-size:12px;color:#5a6472;line-height:1.6">Si le bouton ne fonctionne pas, copie ce lien dans ton navigateur :<br>
+    <span style="color:#37f5a9;word-break:break-all">${link}</span></p>`;
+  return send({ to: user.email, subject: "NEXUS — Confirme ton adresse e-mail", html: shell("Active ton compte 🧬", body) });
+}
+
+// ---------- Code de bienvenue newsletter ----------
+export async function sendNewsletterCode(email, code, pct) {
+  const pctTxt = pct ? ` (${pct}% de réduction)` : "";
+  const body = `
+    <p style="color:#8a97a6;line-height:1.7">Merci de ton inscription à la newsletter NEXUS ! 🧬<br>
+    Voici ton code de bienvenue${pctTxt} :</p>
+    <div style="text-align:center;margin:22px 0">
+      <div style="display:inline-block;padding:14px 28px;border:1px dashed #22e0ff;border-radius:12px;font-family:'Space Grotesk',monospace;font-size:22px;font-weight:700;color:#37f5a9;letter-spacing:3px">${code}</div>
+    </div>
+    <p style="color:#8a97a6;text-align:center;font-size:13px">À saisir au moment du paiement.</p>
+    ${SITE ? `<p style="text-align:center;margin-top:8px">${btn(SITE + "/produits", "Explorer le catalogue")}</p>` : ""}`;
+  return send({ to: email, subject: `NEXUS — Ton code de bienvenue ${code}`, html: shell("Bienvenue dans le labo 🧬", body) });
+}
+
+// ---------- Code fidélité (après la 1ère commande payée) ----------
+export async function sendLoyaltyCode(order, code, pct) {
+  const pctTxt = pct ? ` (${pct}%)` : "";
+  const body = `
+    <p style="color:#8a97a6;line-height:1.7">Bonjour${order.full_name ? " " + order.full_name : ""},<br>
+    Merci pour ta première commande chez NEXUS ! 🎉 Pour te remercier, voici un code${pctTxt} pour ta prochaine commande :</p>
+    <div style="text-align:center;margin:22px 0">
+      <div style="display:inline-block;padding:14px 28px;border:1px dashed #22e0ff;border-radius:12px;font-family:'Space Grotesk',monospace;font-size:22px;font-weight:700;color:#37f5a9;letter-spacing:3px">${code}</div>
+    </div>
+    <p style="color:#8a97a6;text-align:center;font-size:13px">À saisir au paiement de ta prochaine commande.</p>`;
+  return send({ to: order.email, subject: "NEXUS — Un cadeau pour ta prochaine commande 🎁", html: shell("Merci pour ta commande 🎁", body) });
+}
+
 // ---------- Bienvenue (à l'inscription) ----------
 export async function sendWelcome(user) {
   const body = `<p style="color:#8a97a6;line-height:1.7">Bonjour${user.full_name ? " " + user.full_name : ""},<br>

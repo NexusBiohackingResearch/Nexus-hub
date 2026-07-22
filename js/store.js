@@ -235,6 +235,7 @@
         <div class="field"><label>${T("Mot de passe", "Password")}</label><input type="password" id="li_pass"></div>
         <p class="form-msg" id="li_msg"></p>
         <button class="button button-primary" style="width:100%" id="li_btn">${T("Se connecter", "Log in")}</button>
+        <p class="mini" style="text-align:center;margin-top:10px"><a id="li_resend" style="color:var(--cyan,#18d7e8);cursor:pointer">${T("Renvoyer le lien de validation", "Resend validation link")}</a></p>
       </div>
       <div id="authRegister" style="display:none">
         <h3>${T("Créer un compte", "Create account")}</h3>
@@ -268,11 +269,33 @@
     });
 
     root.querySelector("#rg_btn").addEventListener("click", async () => {
-      const msg = root.querySelector("#rg_msg"); msg.textContent = "";
+      const msg = root.querySelector("#rg_msg"); msg.textContent = ""; msg.style.color = "";
       try {
-        await api("/api/auth/register", { method: "POST", body: { fullName: val("rg_name"), email: val("rg_email"), password: val("rg_pass") } });
-        await loadUser(); closeAll();
-        if (window.__afterAuth) window.__afterAuth();
+        const res = await api("/api/auth/register", { method: "POST", body: { fullName: val("rg_name"), email: val("rg_email"), password: val("rg_pass") } });
+        if (res && res.needVerify) {
+          // Compte créé mais non connecté : validation e-mail requise
+          msg.className = "form-msg"; msg.style.color = "#83ef68";
+          msg.textContent = T("Compte créé ✓ Vérifie ta boîte mail et clique le lien pour activer ton compte.",
+                              "Account created ✓ Check your inbox and click the link to activate your account.");
+        } else {
+          await loadUser(); closeAll();
+          if (window.__afterAuth) window.__afterAuth();
+        }
+      } catch (e) { msg.className = "form-msg err"; msg.textContent = e.message; }
+    });
+
+    // Renvoi du lien de validation
+    root.querySelector("#li_resend")?.addEventListener("click", async () => {
+      const msg = root.querySelector("#li_msg"); msg.textContent = ""; msg.style.color = "";
+      const email = val("li_email");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        msg.className = "form-msg err"; msg.textContent = T("Entre d'abord ton email ci-dessus.", "Enter your email above first."); return;
+      }
+      try {
+        await api("/api/auth/resend", { method: "POST", body: { email } });
+        msg.className = "form-msg"; msg.style.color = "#83ef68";
+        msg.textContent = T("Si un compte non vérifié existe, un nouveau lien vient d'être envoyé.",
+                            "If an unverified account exists, a new link was just sent.");
       } catch (e) { msg.className = "form-msg err"; msg.textContent = e.message; }
     });
   }

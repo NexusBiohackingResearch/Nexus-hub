@@ -12,6 +12,7 @@ import { sendPaymentConfirmed } from "./email.js";
 import { updateOrderStatus } from "./sheets.js";
 import { sendPurchase } from "./ga.js";
 import { notifyPaid } from "./notify.js";
+import { grantLoyaltyIfFirstOrder } from "./orders.js";
 
 function frNow() {
   return new Intl.DateTimeFormat("fr-FR", {
@@ -61,6 +62,7 @@ export async function nowpaymentsIpn(req, res) {
     updateOrderStatus(ref, "Payé", frNow()).catch((e) => console.error("sheet:", e));
     sendPurchase(updated).catch((e) => console.error("ga purchase:", e));        // GA4 e-commerce
     notifyPaid(updated).catch((e) => console.error("notify paid:", e));          // Telegram
+    grantLoyaltyIfFirstOrder(updated).catch((e) => console.error("loyalty:", e)); // code fidélité 1ère commande
     console.log(`[np-ipn] commande ${ref} payée ✓ (${status})`);
   } catch (e) {
     console.error("[np-ipn] traitement:", e?.message || e);
@@ -116,6 +118,7 @@ export async function btcpayWebhook(req, res) {
     updateOrderStatus(order.reference, "Payé", paidDate).catch((e) => console.error("sheet:", e));
     sendPurchase(updated).catch((e) => console.error("ga purchase:", e));        // GA4 e-commerce
     notifyPaid(updated).catch((e) => console.error("notify paid:", e));          // Telegram
+    grantLoyaltyIfFirstOrder(updated).catch((e) => console.error("loyalty:", e)); // code fidélité 1ère commande
 
     console.log(`[webhook] commande ${order.reference} payée ✓`);
   } catch (e) {

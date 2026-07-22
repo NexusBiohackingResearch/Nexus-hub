@@ -12,8 +12,9 @@ import { fileURLToPath } from "node:url";
 import { initSchema, query } from "./db.js";
 import {
   attachUser, requireAuth, requireAdmin,
-  register, login, logout, me,
+  register, login, logout, me, verifyEmail, resendVerification,
 } from "./auth.js";
+import { subscribe } from "./newsletter.js";
 import { createOrder, myOrders, trackOrder, quote, cancelOrder } from "./orders.js";
 import { listOrders, updateStatus, stats } from "./admin.js";
 import { sendWelcome } from "./email.js";
@@ -62,17 +63,15 @@ const authLimiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 40 });
 const orderLimiter = rateLimit({ windowMs: 60 * 1000, max: 12 });
 
 // ---- Auth ----
-app.post("/api/auth/register", authLimiter, async (req, res, next) => {
-  try {
-    await register(req, res);
-    if (req.body?.email)
-      query("SELECT * FROM users WHERE email=$1", [req.body.email])
-        .then((r) => r.rows[0] && sendWelcome(r.rows[0])).catch(() => {});
-  } catch (e) { next(e); }
-});
+app.post("/api/auth/register", authLimiter, (req, res, next) => register(req, res).catch(next));
 app.post("/api/auth/login", authLimiter, (req, res, next) => login(req, res).catch(next));
 app.post("/api/auth/logout", logout);
 app.get("/api/auth/me", (req, res, next) => me(req, res).catch(next));
+app.get("/api/auth/verify", (req, res, next) => verifyEmail(req, res).catch(next));
+app.post("/api/auth/resend", authLimiter, (req, res, next) => resendVerification(req, res).catch(next));
+
+// ---- Newsletter (pop-up) ----
+app.post("/api/newsletter", (req, res, next) => subscribe(req, res).catch(next));
 
 // ---- Catalogue (lu depuis Google Sheets, cache 60s) ----
 app.get("/api/products", async (_req, res, next) => {

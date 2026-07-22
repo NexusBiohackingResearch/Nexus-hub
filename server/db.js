@@ -105,6 +105,23 @@ export async function initSchema() {
     await query(`ALTER TABLE orders ADD COLUMN IF NOT EXISTS ${name} ${type};`);
   }
 
+  // Colonnes users : vérification e-mail (nullable => les comptes existants
+  // restent utilisables ; seules les NOUVELLES inscriptions passent à FALSE).
+  for (const [name, type] of [["email_verified", "BOOLEAN"], ["verify_token", "TEXT"]]) {
+    await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS ${name} ${type};`);
+  }
+
+  // Abonnés newsletter
+  await query(`
+    CREATE TABLE IF NOT EXISTS newsletter_subscribers (
+      id          SERIAL PRIMARY KEY,
+      email       TEXT UNIQUE NOT NULL,
+      promo_code  TEXT,
+      source      TEXT,
+      created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+    );
+  `);
+
   await query(`CREATE INDEX IF NOT EXISTS idx_orders_email ON orders(email);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);`);
   await query(`CREATE INDEX IF NOT EXISTS idx_orders_invoice ON orders(btcpay_invoice_id);`);

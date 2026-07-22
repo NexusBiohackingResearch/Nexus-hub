@@ -180,6 +180,7 @@ function layout({ title, description, canonical, image, jsonld, bodyClass, main 
   <link rel="stylesheet" href="/css/store.css">
   <script src="/js/analytics.js"></script>
   <script src="/js/age-gate.js"></script>
+  <script src="/js/newsletter.js"></script>
   ${jsonld ? `<script type="application/ld+json">${jsonld}</script>` : ""}
   <style>
     .seo-wrap{max-width:1080px;margin:0 auto;padding:120px 24px 80px}

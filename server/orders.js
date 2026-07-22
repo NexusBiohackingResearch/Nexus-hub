@@ -5,7 +5,8 @@
 import { query } from "./db.js";
 import { findOrCreateGuest } from "./auth.js";
 import { sendOrderReceived } from "./email.js";
-import { computeTotals, MIN_ORDER } from "./promo.js";
+import { computeTotals, MIN_ORDER, checkPromo } from "./promo.js";
+import { sendLoyaltyCode } from "./email.js";
 import { getBtcEurRate } from "./rate.js";
 import { createInvoice as btcpayCreateInvoice, btcpayConfigured } from "./btcpay.js";
 import { createInvoice as npCreateInvoice, nowpaymentsConfigured } from "./nowpayments.js";
@@ -20,6 +21,25 @@ function makeRef() {
   return "NX-" + r;
 }
 const emailOk = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e || "");
+const LOYALTY_CODE = process.env.LOYALTY_PROMO_CODE || "MERCI10";
+
+// Envoie le code fidélité si c'est la PREMIÈRE commande payée de ce client.
+// Appelé depuis le webhook après passage en statut "payment_received".
+export async function grantLoyaltyIfFirstOrder(order) {
+  try {
+    const r = await query(
+      "SELECT COUNT(*)::int AS n FROM orders WHERE lower(email)=lower($1) AND status IN ('payment_received','shipped')",
+      [order.email]
+    );
+    if ((r.rows[0]?.n || 0) !== 1) return; // pas la première commande payée
+    let pct = 0;
+    try { const p = await checkPromo(LOYALTY_CODE); if (p.valid) pct = p.reduction; } catch {}
+    await sendLoyaltyCode(order, LOYALTY_CODE, pct);
+    console.log(`[loyalty] code ${LOYALTY_CODE} envoyé à ${order.email} (1ère commande payée)`);
+  } catch (e) {
+    console.error("[loyalty]", e?.message || e);
+  }
+}
 
 // POST /api/quote  { items:[{id,quantity}], promoCode }
 // Renvoie sous-total, remise, frais, total, + estimation BTC (sans créer de commande).
