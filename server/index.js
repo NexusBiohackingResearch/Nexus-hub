@@ -14,7 +14,7 @@ import {
   attachUser, requireAuth, requireAdmin,
   register, login, logout, me,
 } from "./auth.js";
-import { createOrder, myOrders, trackOrder, quote } from "./orders.js";
+import { createOrder, myOrders, trackOrder, quote, cancelOrder } from "./orders.js";
 import { listOrders, updateStatus, stats } from "./admin.js";
 import { sendWelcome } from "./email.js";
 import { btcpayWebhook, nowpaymentsIpn } from "./webhook.js";
@@ -94,6 +94,7 @@ app.post("/api/quote", (req, res, next) => quote(req, res).catch(next));
 app.post("/api/orders", orderLimiter, (req, res, next) => createOrder(req, res).catch(next));
 app.get("/api/orders/mine", requireAuth, (req, res, next) => myOrders(req, res).catch(next));
 app.get("/api/orders/:reference", (req, res, next) => trackOrder(req, res).catch(next));
+app.post("/api/orders/:reference/cancel", orderLimiter, (req, res, next) => cancelOrder(req, res).catch(next));
 
 // ---- Admin ----
 app.get("/api/admin/stats", requireAuth, requireAdmin, (req, res, next) => stats(req, res).catch(next));

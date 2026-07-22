@@ -39,6 +39,10 @@
     .oc-detail{margin-top:10px;border-top:1px solid var(--line);padding-top:10px;font-size:13px;color:var(--muted)}
     .oc-detail .row{display:flex;justify-content:space-between;padding:3px 0}
     .oc-pay{display:flex;justify-content:center;width:100%;margin-top:12px;min-height:auto;padding:11px 12px;font-size:13px}
+    .oc-cancel{display:block;width:100%;margin-top:10px;padding:9px 12px;font-size:12px;border-radius:12px;
+      background:transparent;border:1px solid rgba(237,133,133,.35);color:#ed8585;cursor:pointer;transition:.15s}
+    .oc-cancel:hover{background:rgba(237,133,133,.08);border-color:rgba(237,133,133,.6)}
+    .oc-cancel:disabled{opacity:.5;cursor:default}
     .section-title{font-family:'Space Grotesk';font-size:20px;margin:10px 0 18px}
     @media(max-width:560px){.stats-row{grid-template-columns:1fr 1fr}}
   </style>
@@ -102,6 +106,9 @@
       // bouton payer si en attente + lien de paiement dispo
       const pay = (o.status==="awaiting_payment" && o.btcpay_checkout_link)
         ? `<a class="button button-primary oc-pay" href="${o.btcpay_checkout_link}">Payer maintenant →</a>` : "";
+      // bouton annuler tant que la commande est en attente de paiement
+      const cancel = (o.status==="awaiting_payment")
+        ? `<button class="oc-cancel" data-ref="${o.reference}">Annuler la commande</button>` : "";
       // suivi colis
       const track = o.trackingUrl
         ? `<a class="button button-secondary" href="${o.trackingUrl}" target="_blank" rel="noopener" style="display:flex;margin-top:12px;width:100%;min-height:auto;padding:9px 12px;font-size:12px;justify-content:center">📦 Suivre mon colis${o.carrier?` — ${esc(o.carrier)}`:""} →</a>`
@@ -118,6 +125,7 @@
         <div class="oc-detail">${lines}${shipping}${discount}</div>
         ${pay}
         ${track}
+        ${cancel}
       </div>`;
     }
     function renderStats(orders){
@@ -159,6 +167,20 @@
     }
     document.getElementById("logoutBtn").addEventListener("click", async ()=>{
       await NEXUS.api("/api/auth/logout",{method:"POST"}); location.reload();
+    });
+    // Annulation de commande (connecté ou invité) — délégation d'événement
+    document.addEventListener("click", async (e)=>{
+      const b = e.target.closest(".oc-cancel");
+      if(!b) return;
+      const ref = b.dataset.ref;
+      const email = NEXUS.user ? "" : (document.getElementById("t_email")?.value.trim() || "");
+      if(!confirm(`Annuler la commande ${ref} ? Cette action est définitive.`)) return;
+      b.disabled = true; b.textContent = "Annulation…";
+      try{
+        const url = "/api/orders/"+encodeURIComponent(ref)+"/cancel"+(email?("?email="+encodeURIComponent(email)):"");
+        await NEXUS.api(url,{method:"POST"});
+        location.reload();
+      }catch(err){ alert(err.message); b.disabled=false; b.textContent="Annuler la commande"; }
     });
     document.getElementById("trackBtn").addEventListener("click", async ()=>{
       const msg=document.getElementById("t_msg"); msg.textContent="";

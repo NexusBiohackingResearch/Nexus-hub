@@ -8,6 +8,21 @@
 // ============================================================
 (function () {
   var REDIRECT_URL = "https://www.google.com/";
+  var OK_KEY = "nx_age_ok";
+
+  // Déjà confirmé pendant cette session de navigation ? → on n'affiche rien.
+  // (Redemandé seulement à une nouvelle visite / réouverture du navigateur,
+  //  mais PAS à chaque page : plus de re-demande en allant au panier/checkout.)
+  try { if (sessionStorage.getItem(OK_KEY) === "1") return; } catch (e) {}
+
+  // Contrôle de la cinématique d'accueil : on la met en pause tant que
+  // l'âge n'est pas confirmé, puis on la lance après le "Oui".
+  function introVideos() {
+    return [document.getElementById("introVideo"), document.getElementById("introBlur")]
+      .filter(Boolean);
+  }
+  function pauseIntro() { introVideos().forEach(function (v) { try { v.pause(); v.currentTime = 0; } catch (e) {} }); }
+  function playIntro() { introVideos().forEach(function (v) { try { v.play(); } catch (e) {} }); }
 
   // --- Styles (injectés) ---
   var css =
@@ -72,6 +87,7 @@
   function mount() {
     (document.body || document.documentElement).appendChild(el);
     lockScroll(true);
+    pauseIntro(); // la cinématique attend la confirmation d'âge
     el.querySelector(".nx-yes").addEventListener("click", accept);
     el.querySelector(".nx-no").addEventListener("click", deny);
     var yes = el.querySelector(".nx-yes");
@@ -79,10 +95,12 @@
   }
 
   function accept() {
+    try { sessionStorage.setItem(OK_KEY, "1"); } catch (e) {} // mémorise pour la session
     lockScroll(false);
     if (el && el.parentNode) el.parentNode.removeChild(el);
     var s = document.getElementById("nx-age-style");
     if (s && s.parentNode) s.parentNode.removeChild(s);
+    playIntro(); // lance la cinématique maintenant seulement
   }
 
   function deny() {

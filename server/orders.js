@@ -9,9 +9,9 @@ import { computeTotals, MIN_ORDER } from "./promo.js";
 import { getBtcEurRate } from "./rate.js";
 import { createInvoice as btcpayCreateInvoice, btcpayConfigured } from "./btcpay.js";
 import { createInvoice as npCreateInvoice, nowpaymentsConfigured } from "./nowpayments.js";
-import { appendOrderRow, sheetsConfigured, getOrdersTrackingMap, trackingUrl } from "./sheets.js";
+import { appendOrderRow, sheetsConfigured, getOrdersTrackingMap, trackingUrl, updateOrderStatus } from "./sheets.js";
 import { getProducts } from "./catalog.js";
-import { notifyNewOrder } from "./notify.js";
+import { notifyNewOrder, notifyCancelled } from "./notify.js";
 
 function makeRef() {
   const s = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -191,6 +191,42 @@ export async function myOrders(req, res) {
   }
   await enrichTracking(orders);
   res.json({ orders });
+}
+
+// POST /api/orders/:reference/cancel   (body/query: email pour les invités)
+// Autorisé uniquement tant que la commande est en attente de paiement.
+export async function cancelOrder(req, res) {
+  const { reference } = req.params;
+  const email = req.body?.email || req.query.email;
+  const r = await query("SELECT * FROM orders WHERE reference=$1", [reference]);
+  const order = r.rows[0];
+  if (!order) return res.status(404).json({ error: "Commande introuvable." });
+
+  // Contrôle d'accès : propriétaire connecté OU invité avec le bon email
+  const owns = req.user && order.user_id === req.user.id;
+  const guestOk = !req.user && email && email.toLowerCase() === order.email.toLowerCase();
+  if (!owns && !guestOk)
+    return res.status(403).json({ error: "Email requis pour annuler cette commande." });
+
+  if (order.status === "cancelled")
+    return res.json({ ok: true, status: "cancelled" }); // déjà annulée
+  if (order.status !== "awaiting_payment")
+    return res.status(400).json({ error: "Cette commande ne peut plus être annulée (paiement déjà en cours ou expédiée)." });
+
+  const upd = await query(
+    "UPDATE orders SET status='cancelled', updated_at=now() WHERE id=$1 RETURNING *",
+    [order.id]
+  );
+  const updated = upd.rows[0];
+  updated.items = (await query("SELECT * FROM order_items WHERE order_id=$1", [order.id])).rows;
+
+  // Google Sheet : statut "Annulé" (colonne Statut)
+  if (sheetsConfigured())
+    updateOrderStatus(reference, "Annulé").catch((e) => console.error("[sheet] annulation:", e?.message || e));
+  // Notification propriétaire
+  notifyCancelled(updated).catch((e) => console.error("notify cancel:", e));
+
+  res.json({ ok: true, status: "cancelled" });
 }
 
 // GET /api/orders/:reference?email=...

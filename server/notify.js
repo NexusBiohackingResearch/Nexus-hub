@@ -61,6 +61,15 @@ export async function notifyNewOrder(order) {
   return sendTelegram(text);
 }
 
+// ❌ Commande annulée par le client
+export async function notifyCancelled(order) {
+  const text =
+    `❌ <b>Commande annulée</b> ${esc(order.reference)}\n` +
+    `<b>${Number(order.total).toFixed(2)} €</b> — annulée par le client\n\n` +
+    `👤 ${esc(order.full_name || "—")} (${esc(order.email)})`;
+  return sendTelegram(text);
+}
+
 // ✅ Paiement reçu (webhook confirmé)
 export async function notifyPaid(order) {
   const lignes = itemsLines(order);
