@@ -166,13 +166,13 @@ function renderBestSellers() {
   grid.innerHTML = picks.map((product, index) => `
     <article class="product-card best-card" data-id="${product.id}" data-available="${product.available}" style="animation-delay:${index*45}ms">
       <div class="product-image">
-        <span class="best-badge">★ Best-seller</span>
         <span class="availability ${product.available ? "available" : "unavailable"}">
           ${product.available ? translations[lang].available : translations[lang].unavailable}
         </span>
         <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='${product.fallbackImage || "assets/images/nexus-logo.webp"}';">
       </div>
       <div class="product-info">
+        <span class="best-badge">★ Best-seller</span>
         <small>${lang === "fr" ? product.categoryFr : product.categoryEn}</small>
         <h3>${product.name}</h3>
         <div class="product-footer">
