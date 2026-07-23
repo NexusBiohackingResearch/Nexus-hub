@@ -243,6 +243,7 @@ function layout({ title, description, canonical, image, jsonld, bodyClass, main 
   <script src="/js/analytics.js"></script>
   <script src="/js/age-gate.js"></script>
   <script src="/js/newsletter.js"></script>
+  <script src="/js/promo-link.js"></script>
   ${jsonld ? `<script type="application/ld+json">${jsonld}</script>` : ""}
   <style>
     .seo-wrap{max-width:1080px;margin:0 auto;padding:120px 24px 80px}
@@ -258,6 +259,7 @@ function layout({ title, description, canonical, image, jsonld, bodyClass, main 
     .seo-badge{display:inline-block;margin-left:12px;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;vertical-align:middle}
     .seo-badge.in{background:rgba(131,239,104,.16);color:#a6f58f;border:1px solid rgba(131,239,104,.35)}
     .seo-badge.out{background:rgba(255,120,120,.12);color:#ff9d9d;border:1px solid rgba(255,120,120,.3)}
+    .seo-bogo{display:inline-block;margin-left:8px;padding:4px 11px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.04em;vertical-align:middle;color:#04120c;background:linear-gradient(90deg,#9b47ff,#18d7e8)}
     .seo-cta{margin-top:22px}
     .seo-body h2{font-size:20px;margin:34px 0 12px;color:#eafcff}
     .seo-body p{color:#c4d7df;line-height:1.7;margin:0 0 14px}
@@ -458,7 +460,8 @@ seoRouter.get("/produits/:id", async (req, res, next) => {
         <p class="seo-eyebrow">${escapeHtml(cat)}</p>
         <h1>${escapeHtml(p.name)}</h1>
         <div><span class="seo-price">${price ? price.toFixed(2) + " €" : "Sur demande"}</span>
-        <span class="seo-badge ${available ? "in" : "out"}">${available ? "Disponible" : "Indisponible"}</span></div>
+        <span class="seo-badge ${available ? "in" : "out"}">${available ? "Disponible" : "Indisponible"}</span>
+        ${p.bogo ? `<span class="seo-bogo">🎁 ${p.bogo === "b1g1" ? "1 acheté = 1 offert" : "2 achetés = 1 offert"}</span>` : ""}</div>
         <p style="color:#c4d7df;line-height:1.7;margin-top:16px">${escapeHtml(shortDesc)}</p>
         <div class="seo-cta"><a class="button button-primary" href="/#catalogue">Commander sur la boutique</a></div>
       </div>

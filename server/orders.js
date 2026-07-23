@@ -5,7 +5,7 @@
 import { query } from "./db.js";
 import { findOrCreateGuest } from "./auth.js";
 import { sendOrderReceived } from "./email.js";
-import { computeTotals, MIN_ORDER, checkPromo } from "./promo.js";
+import { computeTotals, MIN_ORDER, checkPromo, computeBogoDiscount } from "./promo.js";
 import { sendLoyaltyCode } from "./email.js";
 import { getBtcEurRate } from "./rate.js";
 import { createInvoice as btcpayCreateInvoice, btcpayConfigured } from "./btcpay.js";
@@ -48,16 +48,19 @@ export async function quote(req, res) {
   const catalog = await getProducts();
   const byId = new Map(catalog.map((p) => [p.id, p]));
   let subtotal = 0;
+  const lines = [];
   for (const line of b.items || []) {
     const p = byId.get(line.id);
     if (!p || p.available === false) continue;
     const qty = Math.max(1, Math.min(99, parseInt(line.quantity, 10) || 1));
     subtotal += Number(p.price) * qty;
+    lines.push({ name: p.name, unit_price: Number(p.price), quantity: qty, bogo: p.bogo || null });
   }
-  const totals = await computeTotals(subtotal, b.promoCode);
+  const bogo = computeBogoDiscount(lines);
+  const totals = await computeTotals(subtotal, b.promoCode, bogo.discount);
   let btc = null, rate = null;
   try { rate = await getBtcEurRate(); btc = totals.total / rate; } catch {}
-  res.json({ ...totals, btcRate: rate, btcAmount: btc, minOrder: MIN_ORDER, belowMin: subtotal < MIN_ORDER });
+  res.json({ ...totals, bogoFreeCount: bogo.freeCount, btcRate: rate, btcAmount: btc, minOrder: MIN_ORDER, belowMin: subtotal < MIN_ORDER });
 }
 
 // POST /api/orders
@@ -79,7 +82,7 @@ export async function createOrder(req, res) {
     if (!p || p.available === false) continue;
     const unit = Number(p.price);
     subtotal += unit * qty;
-    items.push({ product_id: p.id, name: p.name, unit_price: unit, quantity: qty });
+    items.push({ product_id: p.id, name: p.name, unit_price: unit, quantity: qty, bogo: p.bogo || null });
   }
   if (items.length === 0)
     return res.status(400).json({ error: "Aucun produit disponible dans le panier." });
@@ -91,8 +94,9 @@ export async function createOrder(req, res) {
       minOrder: MIN_ORDER,
     });
 
-  // Totaux (promo + frais de port), recalculés côté serveur
-  const totals = await computeTotals(subtotal, b.promoCode);
+  // Totaux (BOGO + promo + frais de port), recalculés côté serveur
+  const bogo = computeBogoDiscount(items);
+  const totals = await computeTotals(subtotal, b.promoCode, bogo.discount);
 
   // Cours BTC indicatif (le montant exact sera fixé par la facture BTCPay)
   let btcRate = null, btcAmount = null;

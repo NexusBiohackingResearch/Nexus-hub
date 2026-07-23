@@ -125,6 +125,7 @@ function renderProducts() {
         <img src="${product.image}" alt="${product.name}" loading="lazy" onerror="this.onerror=null;this.src='${product.fallbackImage || "assets/images/nexus-logo.webp"}';">
       </div>
       <div class="product-info">
+        ${bogoBadge(product)}
         <small>${lang === "fr" ? product.categoryFr : product.categoryEn}</small>
         <h3>${product.name}</h3>
         <div class="product-footer">
@@ -141,6 +142,15 @@ function renderProducts() {
   });
 }
 
+
+// Badge d'offre "1 acheté = 1 offert" / "2 achetés = 1 offert" (piloté par le Sheet Produits)
+function bogoBadge(p){
+  if(!p || !p.bogo) return "";
+  const t = p.bogo === "b1g1"
+    ? (lang === "fr" ? "1 acheté = 1 offert" : "Buy 1 get 1 free")
+    : (lang === "fr" ? "2 achetés = 1 offert" : "Buy 2 get 1 free");
+  return `<span class="bogo-badge">🎁 ${t}</span>`;
+}
 
 // ---- Produits phares / best-sellers (au-dessus des articles) ----
 // Sélection curée : Rétatrutide, Glow, mélange BPC-157 + TB-500, GHK-Cu.
@@ -173,6 +183,7 @@ function renderBestSellers() {
       </div>
       <div class="product-info">
         <span class="best-badge">★ Best-seller</span>
+        ${bogoBadge(product)}
         <small>${lang === "fr" ? product.categoryFr : product.categoryEn}</small>
         <h3>${product.name}</h3>
         <div class="product-footer">

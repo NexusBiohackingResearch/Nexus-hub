@@ -13,6 +13,7 @@
   <meta name="robots" content="noindex,follow">
   <script src="/js/analytics.js"></script>
   <script src="/js/age-gate.js"></script>
+  <script src="/js/promo-link.js"></script>
 </head>
 <body>
   <canvas id="ambientCanvas" aria-hidden="true"></canvas>
@@ -95,9 +96,21 @@
         const dl = document.getElementById("discountLine");
         if(quoteData.discount>0){
           dl.style.display="flex";
-          document.getElementById("discountLabel").textContent = `Réduction${quoteData.promoCode?` (${quoteData.promoCode})`:""}`;
+          const hasBogo = quoteData.bogoDiscount>0, hasPromo = quoteData.promoDiscount>0;
+          const nb = quoteData.bogoFreeCount||0;
+          let label;
+          if(hasBogo && hasPromo) label = `🎁 Offre + code (${quoteData.promoCode})`;
+          else if(hasBogo) label = `🎁 Offre appliquée${nb?` (${nb} offert${nb>1?'s':''})`:""}`;
+          else label = `Réduction${quoteData.promoCode?` (${quoteData.promoCode})`:""}`;
+          document.getElementById("discountLabel").textContent = label;
           document.getElementById("sumDiscount").textContent = "−"+quoteData.discount.toFixed(2)+" €";
         }else dl.style.display="none";
+        // Retour visuel sur le code appliqué (lien promo ou saisie manuelle)
+        const pmsg = document.getElementById("promo_msg");
+        if(pmsg && appliedPromo){
+          if(quoteData.promoValid){ pmsg.className="form-msg"; pmsg.style.color="#83ef68"; pmsg.textContent="Code "+quoteData.promoCode+" appliqué ✓"; }
+          else { pmsg.className="form-msg err"; pmsg.style.color=""; pmsg.textContent="Code invalide ou expiré."; }
+        }
         document.getElementById("sumShip").textContent = quoteData.shipping>0 ? quoteData.shipping.toFixed(2)+" €" : "Gratuit";
         document.getElementById("sumTotal").textContent = quoteData.total.toFixed(2)+" €";
         document.getElementById("sumBtc").textContent = quoteData.btcAmount ? "₿ "+quoteData.btcAmount.toFixed(8) : "—";
@@ -168,6 +181,11 @@
     });
 
     document.addEventListener("DOMContentLoaded", ()=>{
+      // Applique automatiquement un code reçu via un lien promo (?promo=CODE)
+      try{
+        const stored=(localStorage.getItem("nexus_promo")||"").trim().toUpperCase();
+        if(stored){ appliedPromo=stored; const pi=document.getElementById("c_promo"); if(pi) pi.value=stored; }
+      }catch(e){}
       refreshQuote();
       // GA4 : début de checkout
       if(window.gtag && NEXUS.count()){

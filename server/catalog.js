@@ -95,7 +95,7 @@ export async function getProducts() {
   try {
     const res = await client.spreadsheets.values.get({
       spreadsheetId: SPREADSHEET_ID,
-      range: `${PRODUCTS_TAB}!A3:H`,
+      range: `${PRODUCTS_TAB}!A3:J`,
     });
     const rows = res.data.values || [];
     const products = rows
@@ -103,6 +103,9 @@ export async function getProducts() {
       .map((r) => {
         const nom = (r[1] || "").trim();
         const dosage = (r[2] || "").trim();
+        // Colonnes I (1 acheté = 1 offert) et J (2 achetés = 1 offert)
+        const b1g1 = isYes(r[8]);
+        const b2g1 = isYes(r[9]);
         return {
           id: (r[0] || "").trim(),
           name: [nom, dosage].filter(Boolean).join(" "),
@@ -112,6 +115,7 @@ export async function getProducts() {
           price: Number(String(r[5] || "0").replace(",", ".")) || 0,
           available: isYes(r[6]),
           image: (r[7] || "").trim(),
+          bogo: b1g1 ? "b1g1" : (b2g1 ? "b2g1" : null), // 1+1 prioritaire si les deux cochés
           fallbackImage: "assets/images/nexus-logo.webp",
         };
       });
