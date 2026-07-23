@@ -16,6 +16,68 @@ import { getProducts } from "./catalog.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.join(__dirname, "..");
 const DESC_DIR = path.join(ROOT, "content", "descriptions");
+const ARTICLES_DIR = path.join(ROOT, "content", "articles");
+const ARTICLE_IMG = (slug, n) => `/assets/images/articles/${slug}-${n}.png`;
+const ARTICLE_COVER = (slug) => `/assets/images/articles/${slug}-cover.png`;
+
+async function loadArticlesIndex() {
+  try { return JSON.parse(await readFile(path.join(ARTICLES_DIR, "index.json"), "utf8")); }
+  catch { return []; }
+}
+
+// Rendu markdown -> HTML pour les articles (titres, listes, tableaux, citations,
+// gras/italique, et marqueurs [IMAGE n] -> figure image).
+function articleMdToHtml(md, slug) {
+  const inline = (s) =>
+    escapeHtml(s)
+      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/(^|[^*])\*(?!\s)(.+?)\*/g, "$1<em>$2</em>")
+      .replace(/`(.+?)`/g, "<code>$1</code>");
+  const lines = md.split(/\r?\n/);
+  let html = "", inList = false, inTable = false, inQuote = false;
+  const closeList = () => { if (inList) { html += "</ul>"; inList = false; } };
+  const closeTable = () => { if (inTable) { html += "</tbody></table></div>"; inTable = false; } };
+  const closeQuote = () => { if (inQuote) { html += "</blockquote>"; inQuote = false; } };
+  const closeAll = () => { closeList(); closeTable(); closeQuote(); };
+
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (!line) { closeAll(); continue; }
+    const imgm = line.match(/^\[IMAGE\s*(\d+)\]$/i);
+    if (imgm) {
+      closeAll();
+      const n = imgm[1];
+      html += `<figure class="art-fig"><img src="${ARTICLE_IMG(slug, n)}" alt="Illustration NEXUS — recherche peptides" loading="lazy" onerror="this.closest('figure').style.display='none'"></figure>`;
+      continue;
+    }
+    if (line.startsWith("> ")) {
+      closeList(); closeTable();
+      if (!inQuote) { html += "<blockquote>"; inQuote = true; }
+      html += inline(line.slice(2));
+      continue;
+    }
+    if (line.startsWith("### ")) { closeAll(); html += `<h3>${inline(line.slice(4))}</h3>`; continue; }
+    if (line.startsWith("## ")) { closeAll(); html += `<h2>${inline(line.slice(3))}</h2>`; continue; }
+    if (line.startsWith("- ")) {
+      closeTable(); closeQuote();
+      if (!inList) { html += '<ul class="art-list">'; inList = true; }
+      html += `<li>${inline(line.slice(2))}</li>`;
+      continue;
+    }
+    if (line.startsWith("|")) {
+      closeList(); closeQuote();
+      const cells = line.split("|").slice(1, -1).map((c) => c.trim());
+      if (cells.every((c) => /^:?-{2,}:?$/.test(c))) continue;
+      if (!inTable) { html += '<div class="technical-table-wrap"><table class="technical-table"><tbody>'; inTable = true; }
+      if (cells.length >= 2) html += `<tr><th>${inline(cells[0])}</th><td>${inline(cells.slice(1).join(" | "))}</td></tr>`;
+      continue;
+    }
+    closeAll();
+    html += `<p>${inline(line)}</p>`;
+  }
+  closeAll();
+  return html;
+}
 
 // Domaine canonique du site (toujours le vrai domaine public, jamais l'URL interne Railway).
 // On ignore volontairement toute variable d'env mal réglée : pour le SEO, le host
@@ -208,6 +270,28 @@ function layout({ title, description, canonical, image, jsonld, bodyClass, main 
     .seo-card .p{margin-top:12px;font-family:'Space Grotesk',sans-serif;font-weight:700;color:#18d7e8}
     .seo-disclaimer{margin-top:52px;padding:18px 20px;border-radius:14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);font-size:13px;color:#9fb6c0;line-height:1.6}
     .seo-lead{color:#c4d7df;line-height:1.7;max-width:720px}
+    .art-hero{width:100%;height:clamp(200px,32vw,380px);border-radius:20px;background:#0a1620 center/cover no-repeat;border:1px solid rgba(24,215,232,.15)}
+    .art-body{max-width:760px}
+    .art-body h2{font-size:23px;color:#eafcff;margin:36px 0 12px}
+    .art-body h3{font-size:18px;color:#eafcff;margin:26px 0 10px}
+    .art-body p{color:#c4d7df;line-height:1.8;margin:0 0 16px}
+    .art-body strong{color:#eafcff}
+    .art-list{color:#c4d7df;line-height:1.8;padding-left:20px;margin:0 0 16px}
+    .art-body blockquote{margin:22px 0;padding:14px 18px;border-left:3px solid #18d7e8;border-radius:8px;background:rgba(24,215,232,.06);color:#9fb6c0;font-size:14px;line-height:1.6}
+    .art-fig{margin:26px 0}
+    .art-fig img{width:100%;border-radius:16px;border:1px solid rgba(24,215,232,.15);display:block}
+    .art-sources{max-width:760px;margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.08)}
+    .art-sources h2{font-size:16px;color:#eafcff;margin:0 0 10px}
+    .art-sources ul{padding-left:18px} .art-sources li{color:#8fb4c4;font-size:13px;line-height:1.7}
+    .art-sources a{color:#18d7e8;text-decoration:none;word-break:break-word} .art-sources a:hover{color:#83ef68}
+    .art-index-grid{grid-template-columns:repeat(3,1fr)}
+    .art-index-card{padding:0;overflow:hidden}
+    .art-index-thumb{height:150px;background:#0a1620 center/cover no-repeat;border-bottom:1px solid rgba(24,215,232,.12)}
+    .art-index-card .cat,.art-index-card h2,.art-index-card p{padding-left:18px;padding-right:18px}
+    .art-index-card .cat{display:block;margin-top:14px}
+    .art-index-card h2{margin:6px 0 0}
+    .art-index-card p{padding-bottom:18px}
+    @media(max-width:900px){.art-index-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body class="${bodyClass || ""}">
@@ -217,6 +301,7 @@ function layout({ title, description, canonical, image, jsonld, bodyClass, main 
     </a>
     <nav class="nav">
       <a href="/produits">Catalogue</a>
+      <a href="/articles">Articles</a>
       <a href="/calculateur.html">Calculateur</a>
       <a href="/comment-payer.html">Comment payer</a>
       <a href="/expedition.html">Livraison</a>
@@ -266,6 +351,7 @@ seoRouter.get("/sitemap.xml", async (_req, res) => {
   const staticPages = [
     { loc: abs("/"), pr: "1.0", freq: "daily" },
     { loc: abs("/produits"), pr: "0.9", freq: "daily" },
+    { loc: abs("/articles"), pr: "0.8", freq: "weekly" },
     { loc: abs("/calculateur.html"), pr: "0.6", freq: "monthly" },
     { loc: abs("/comment-payer.html"), pr: "0.6", freq: "monthly" },
     { loc: abs("/expedition.html"), pr: "0.5", freq: "monthly" },
@@ -275,7 +361,13 @@ seoRouter.get("/sitemap.xml", async (_req, res) => {
   const prodUrls = products
     .filter((p) => p && p.id)
     .map((p) => ({ loc: abs("/produits/" + encodeURIComponent(String(p.id))), pr: "0.8", freq: "weekly" }));
-  const urls = [...staticPages, ...prodUrls]
+  let articleUrls = [];
+  try {
+    articleUrls = (await loadArticlesIndex())
+      .filter((a) => a && a.slug)
+      .map((a) => ({ loc: abs("/articles/" + encodeURIComponent(a.slug)), pr: "0.7", freq: "monthly" }));
+  } catch {}
+  const urls = [...staticPages, ...prodUrls, ...articleUrls]
     .map((u) => `  <url><loc>${escapeXml(u.loc)}</loc><changefreq>${u.freq}</changefreq><priority>${u.pr}</priority></url>`)
     .join("\n");
   res.type("application/xml").send(
@@ -382,6 +474,81 @@ seoRouter.get("/produits/:id", async (req, res, next) => {
       image: imgPath,
       jsonld,
       main,
+    }));
+  } catch (e) { next(e); }
+});
+
+// /articles — index des articles (recherche & culture scientifique)
+seoRouter.get("/articles", async (_req, res, next) => {
+  try {
+    const arts = await loadArticlesIndex();
+    const cards = arts.map((a) => `<a class="seo-card art-index-card" href="/articles/${encodeURIComponent(a.slug)}">
+        <div class="art-index-thumb" style="background-image:url('${ARTICLE_COVER(a.slug)}')"></div>
+        <span class="cat">${escapeHtml(a.date || "")}</span>
+        <h2>${escapeHtml(a.title)}</h2>
+        <p style="color:#9fb6c0;font-size:13px;line-height:1.55;margin:8px 0 0">${escapeHtml(a.excerpt || "")}</p>
+      </a>`).join("\n");
+    const jsonld = JSON.stringify({
+      "@context": "https://schema.org", "@type": "Blog",
+      "name": "Recherche & articles — NEXUS Biohacking Research", "url": abs("/articles"),
+      "inLanguage": "fr-FR",
+    });
+    const main = `<nav class="seo-breadcrumb"><a href="/">Accueil</a> › Articles</nav>
+    <p class="seo-eyebrow">Le laboratoire</p>
+    <h1 style="font-size:clamp(30px,4vw,44px);margin:6px 0 16px">Recherche &amp; articles</h1>
+    <p class="seo-lead">Nos publications originales sur les peptides de recherche : mécanismes étudiés, littérature scientifique, reconstitution et conservation. Contenu éducatif, cadre strictement « research use only ».</p>
+    <div class="seo-grid art-index-grid">${cards}</div>`;
+    res.send(layout({
+      title: "Recherche & articles peptides — NEXUS Biohacking Research",
+      description: "Articles scientifiques originaux sur les peptides de recherche (rétatrutide, BPC-157, TB-500, MOTS-c, KPV…) : mécanismes, littérature, cadre laboratoire.",
+      canonical: abs("/articles"),
+      jsonld, main,
+    }));
+  } catch (e) { next(e); }
+});
+
+// /articles/:slug — page article rendue côté serveur
+seoRouter.get("/articles/:slug", async (req, res, next) => {
+  try {
+    const slug = String(req.params.slug || "").trim().toLowerCase();
+    const arts = await loadArticlesIndex();
+    const meta = arts.find((a) => a.slug === slug);
+    if (!meta) return next();
+    let md = "";
+    try { md = await readFile(path.join(ARTICLES_DIR, slug + ".md"), "utf8"); } catch { return next(); }
+
+    const canonical = abs("/articles/" + encodeURIComponent(slug));
+    const cover = ARTICLE_COVER(slug);
+    const bodyHtml = articleMdToHtml(md, slug);
+    const sources = (meta.sources || []).map((s) => {
+      const m = String(s).match(/(https?:\/\/\S+)/);
+      const label = String(s).replace(/\s*—?\s*https?:\/\/\S+/, "").trim() || s;
+      return m ? `<li><a href="${escapeHtml(m[1])}" target="_blank" rel="noopener nofollow">${escapeHtml(label)}</a></li>` : `<li>${escapeHtml(String(s))}</li>`;
+    }).join("");
+
+    const jsonld = JSON.stringify({
+      "@context": "https://schema.org", "@type": "Article",
+      "headline": meta.title,
+      "description": meta.excerpt,
+      "image": [abs(cover)],
+      "inLanguage": "fr-FR",
+      "author": { "@type": "Organization", "name": BRAND },
+      "publisher": { "@type": "Organization", "name": BRAND, "logo": { "@type": "ImageObject", "url": abs("/assets/images/nexus-logo.png") } },
+      "mainEntityOfPage": canonical,
+    });
+
+    const main = `<nav class="seo-breadcrumb"><a href="/">Accueil</a> › <a href="/articles">Articles</a> › ${escapeHtml(meta.title)}</nav>
+    <div class="art-hero" style="background-image:url('${cover}')"></div>
+    <p class="seo-eyebrow" style="margin-top:26px">${escapeHtml(meta.date || "")}</p>
+    <h1 style="font-size:clamp(28px,4vw,42px);line-height:1.12;margin:6px 0 22px">${escapeHtml(meta.title)}</h1>
+    <article class="art-body">${bodyHtml}</article>
+    ${sources ? `<div class="art-sources"><h2>Sources</h2><ul>${sources}</ul></div>` : ""}
+    <div class="seo-cta" style="margin-top:34px"><a class="button button-primary" href="/produits">Voir le catalogue</a></div>`;
+
+    res.send(layout({
+      title: `${meta.title} | NEXUS`,
+      description: meta.excerpt,
+      canonical, image: cover, jsonld, main,
     }));
   } catch (e) { next(e); }
 });

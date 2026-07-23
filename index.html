@@ -54,6 +54,10 @@
     .best-card{border-color:rgba(131,239,104,.28)}
     @media(max-width:1050px){.best-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:680px){.best-grid{grid-template-columns:1fr 1fr;gap:9px}}
+    /* Articles : photo de couverture légèrement adoucie (non opaque) */
+    .articles-section .art-thumb{opacity:.82;transition:opacity .3s}
+    .articles-section .art-card:hover .art-thumb{opacity:1}
+    .articles-section .art-thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,7,10,0) 45%,rgba(5,7,10,.55) 100%)}
   </style>
   <script src="/js/analytics.js"></script>
   <script src="/js/age-gate.js"></script>
@@ -153,6 +157,9 @@
         <button class="art-nav art-prev" id="artPrev" aria-label="Précédent" type="button">‹</button>
         <div class="articles-track" id="articlesTrack"></div>
         <button class="art-nav art-next" id="artNext" aria-label="Suivant" type="button">›</button>
+      </div>
+      <div class="reveal" style="text-align:center;margin-top:28px">
+        <a class="button button-secondary" href="/articles" data-i18n="articlesAll">Tous les articles →</a>
       </div>
     </section>
 

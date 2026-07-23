@@ -1,0 +1,82 @@
+[
+  {
+    "slug": "retatrutide",
+    "title": "Rétatrutide (LY3437943) : le triple agoniste GIP/GLP-1/glucagon décrypté",
+    "excerpt": "Le rétatrutide, triple agoniste GIP/GLP-1/glucagon, décrypté à travers la littérature scientifique et les essais publiés, en cadre recherche.",
+    "date": "18 juillet 2026",
+    "sources": [
+      "New England Journal of Medicine — https://www.nejm.org/doi/full/10.1056/NEJMoa2301972",
+      "Nature Medicine — https://www.nature.com/articles/s41591-024-03018-2"
+    ]
+  },
+  {
+    "slug": "glow-70",
+    "title": "GLOW-70 : décryptage d'un blend de recherche GHK-Cu + BPC-157 + TB-500",
+    "excerpt": "GLOW-70 réunit GHK-Cu, BPC-157 et TB-500 : synthèse des mécanismes et de la littérature préclinique, en cadre strictement recherche laboratoire.",
+    "date": "17 juillet 2026",
+    "sources": [
+      "MDPI Cosmetics — https://www.mdpi.com/2079-9284/5/2/29",
+      "PubMed (BPC-157/VEGF) — https://pubmed.ncbi.nlm.nih.gov/20388964/"
+    ]
+  },
+  {
+    "slug": "kpv",
+    "title": "KPV : le tripeptide anti-inflammatoire dérivé de l'α-MSH sous la loupe de la recherche",
+    "excerpt": "Le KPV, tripeptide dérivé de l'α-MSH, est étudié en laboratoire pour ses effets anti-inflammatoires sur l'intestin et la peau.",
+    "date": "16 juillet 2026",
+    "sources": [
+      "Gastroenterology (Dalmasso et al., 2008) — https://pubmed.ncbi.nlm.nih.gov/18092346/",
+      "Peptpedia — https://peptpedia.org/peptide/kpv"
+    ]
+  },
+  {
+    "slug": "bpc-157",
+    "title": "BPC-157 : le pentadécapeptide gastro-protecteur au microscope de la recherche",
+    "excerpt": "Séquence, mécanismes d'angiogenèse et réalité des preuves : tour d'horizon scientifique du BPC-157, un peptide encore essentiellement préclinique.",
+    "date": "15 juillet 2026",
+    "sources": [
+      "Scientific Reports (2020) — https://www.nature.com/articles/s41598-020-74022-y",
+      "Frontiers in Pharmacology — https://www.frontiersin.org/journals/pharmacology/articles/10.3389/fphar.2022.1026182/full"
+    ]
+  },
+  {
+    "slug": "tb-500",
+    "title": "TB-500 : le fragment de la Thymosine β4 sous l'objectif de la recherche",
+    "excerpt": "Fragment synthétique de la Thymosine β4, le TB-500 est étudié pour son rôle dans la dynamique de l'actine et la migration cellulaire.",
+    "date": "14 juillet 2026",
+    "sources": [
+      "PubMed (Thymosine β4) — https://pubmed.ncbi.nlm.nih.gov/22074294/",
+      "PubMed (cœur, Nature 2004) — https://pubmed.ncbi.nlm.nih.gov/15616553/"
+    ]
+  },
+  {
+    "slug": "mots-c",
+    "title": "MOTS-c : le peptide mitochondrial au cœur de la recherche métabolique",
+    "excerpt": "Peptide codé par le génome mitochondrial, le MOTS-c fascine la recherche sur l'AMPK, le métabolisme du glucose et le vieillissement.",
+    "date": "12 juillet 2026",
+    "sources": [
+      "Cell Metabolism (Lee et al., 2015) — https://www.cell.com/cell-metabolism/fulltext/S1550-4131(15)00061-3",
+      "Nature Communications (Reynolds et al., 2021) — https://www.nature.com/articles/s41467-020-20790-0"
+    ]
+  },
+  {
+    "slug": "cjc-1295-ipamorelin",
+    "title": "CJC-1295 & Ipamorelin : anatomie d'une association GHRH + sécrétagogue en recherche",
+    "excerpt": "Analogue GHRH et sécrétagogue GHS-R sélectif : ce que la littérature scientifique décrit du duo CJC-1295 / Ipamorelin, en cadre recherche.",
+    "date": "10 juillet 2026",
+    "sources": [
+      "J. Clin. Endocrinol. Metab. (Teichman et al., 2006) — https://academic.oup.com/jcem/article-abstract/91/3/799/2843281",
+      "Ipamorelin (Raun et al., 1998) — https://www.researchgate.net/publication/13437588_Ipamorelin_the_first_selective_growth_hormone_secretagogue"
+    ]
+  },
+  {
+    "slug": "kisspeptine",
+    "title": "Kisspeptine (Kisspeptin-10) : ce que révèle la recherche sur l'axe reproducteur",
+    "excerpt": "Peptide issu du gène KISS1, la Kisspeptin-10 pilote l'axe reproducteur en activant les neurones à GnRH : synthèse recherche.",
+    "date": "8 juillet 2026",
+    "sources": [
+      "Frontiers in Endocrinology — https://www.frontiersin.org/journals/endocrinology/articles/10.3389/fendo.2022.925206/full",
+      "J. Clin. Endocrinol. Metab. — https://academic.oup.com/jcem/article/100/9/3322/2836046"
+    ]
+  }
+]

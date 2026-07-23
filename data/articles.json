@@ -1,34 +1,10 @@
 [
-  {
-    "title": "Qu'est-ce qu'un peptide de recherche ?",
-    "excerpt": "Comprendre ce que sont les peptides et pourquoi ils sont étudiés en laboratoire.",
-    "content": "Les peptides sont de courtes chaînes d'acides aminés, les mêmes briques élémentaires qui composent les protéines. Leur petite taille et leur spécificité en font des outils précieux pour la recherche en biologie cellulaire et moléculaire.\n\nEn laboratoire, les peptides servent notamment à étudier la signalisation cellulaire, les récepteurs, ou encore les mécanismes de réparation et de régulation. Chaque séquence possède une structure précise qui détermine la manière dont elle interagit avec les systèmes biologiques étudiés.\n\nImportant : les produits présentés par NEXUS sont destinés exclusivement à la recherche en laboratoire et in vitro. Ils ne sont pas destinés à la consommation humaine ou animale, ni à un usage médical ou thérapeutique.",
-    "image": "assets/images/articles/article-peptide-recherche.jpg",
-    "date": "2026",
-    "link": ""
-  },
-  {
-    "title": "BPC-157 & TB-500 : axes de recherche sur la réparation tissulaire",
-    "excerpt": "Deux peptides fréquemment étudiés dans les travaux sur la régénération.",
-    "content": "Le BPC-157 et le TB-500 (fragment de la thymosine β4) figurent parmi les peptides les plus explorés dans les études précliniques portant sur les processus de réparation tissulaire, la migration cellulaire et l'angiogenèse.\n\nCes recherches, menées in vitro et sur modèles animaux, visent à mieux comprendre les voies de signalisation impliquées dans la cicatrisation et le renouvellement cellulaire. Les résultats relèvent du domaine de la recherche fondamentale et ne constituent pas des allégations d'efficacité chez l'humain.\n\nProduits réservés à un usage de laboratoire.",
-    "image": "assets/images/articles/article-bpc157-tb500.jpg",
-    "date": "2026",
-    "link": ""
-  },
-  {
-    "title": "Peptides GHRH / GHRP : étudier la sécrétion hormonale",
-    "excerpt": "Comment la recherche utilise ces peptides pour explorer l'axe de la GH.",
-    "content": "Les peptides de la famille GHRH (comme le CJC-1295) et GHRP (comme l'Ipamorelin ou le GHRP-6) sont utilisés en recherche pour étudier les mécanismes de sécrétion de l'hormone de croissance et le fonctionnement de ses récepteurs.\n\nCes composés servent de sondes moléculaires pour disséquer les voies de signalisation hormonale dans des systèmes expérimentaux contrôlés. Ils sont un outil d'étude, non un produit à visée thérapeutique.\n\nTous les composés sont fournis pour la recherche en laboratoire uniquement.",
-    "image": "assets/images/articles/article-ghrh-ghrp.jpg",
-    "date": "2026",
-    "link": ""
-  },
-  {
-    "title": "Peptides & longévité cellulaire : pistes explorées",
-    "excerpt": "Épithalon, MOTS-c, SS-31… un aperçu des axes d'étude sur le vieillissement cellulaire.",
-    "content": "Le vieillissement cellulaire est un champ de recherche actif. Certains peptides — comme l'Épithalon, le MOTS-c ou le SS-31 — y sont étudiés pour leur rôle potentiel dans des mécanismes tels que l'activité mitochondriale, le stress oxydatif ou la régulation de la longueur des télomères.\n\nCes travaux sont majoritairement préliminaires (in vitro et modèles animaux) et relèvent de la recherche fondamentale. Ils ne préjugent d'aucun effet chez l'humain et ne constituent pas un conseil de santé.\n\nRéservé à l'usage recherche et laboratoire.",
-    "image": "assets/images/articles/article-longevite-cellulaire.jpg",
-    "date": "2026",
-    "link": ""
-  }
+  {"title":"Rétatrutide (LY3437943) : le triple agoniste GIP/GLP-1/glucagon","excerpt":"Le triple agoniste métabolique décrypté à travers la littérature et les essais publiés, en cadre recherche.","image":"assets/images/articles/retatrutide-cover.png","date":"18 juillet 2026","link":"/articles/retatrutide"},
+  {"title":"GLOW-70 : le blend GHK-Cu + BPC-157 + TB-500","excerpt":"Trois peptides de régénération réunis : mécanismes et littérature préclinique, cadre laboratoire.","image":"assets/images/articles/glow-70-cover.png","date":"17 juillet 2026","link":"/articles/glow-70"},
+  {"title":"KPV : le tripeptide anti-inflammatoire dérivé de l'α-MSH","excerpt":"Un fragment de l'α-MSH étudié pour ses effets anti-inflammatoires sur l'intestin et la peau.","image":"assets/images/articles/kpv-cover.png","date":"16 juillet 2026","link":"/articles/kpv"},
+  {"title":"BPC-157 : le pentadécapeptide gastro-protecteur","excerpt":"Séquence, mécanismes d'angiogenèse et réalité des preuves : un peptide encore essentiellement préclinique.","image":"assets/images/articles/bpc-157-cover.png","date":"15 juillet 2026","link":"/articles/bpc-157"},
+  {"title":"TB-500 : le fragment de la Thymosine β4","excerpt":"Un fragment synthétique étudié pour son rôle dans la dynamique de l'actine et la migration cellulaire.","image":"assets/images/articles/tb-500-cover.png","date":"14 juillet 2026","link":"/articles/tb-500"},
+  {"title":"MOTS-c : le peptide mitochondrial du métabolisme","excerpt":"Codé par le génome mitochondrial, il fascine la recherche sur l'AMPK, le glucose et le vieillissement.","image":"assets/images/articles/mots-c-cover.png","date":"12 juillet 2026","link":"/articles/mots-c"},
+  {"title":"CJC-1295 & Ipamorelin : GHRH + sécrétagogue","excerpt":"Analogue GHRH et sécrétagogue GHS-R sélectif : ce que décrit la littérature du duo, en cadre recherche.","image":"assets/images/articles/cjc-1295-ipamorelin-cover.png","date":"10 juillet 2026","link":"/articles/cjc-1295-ipamorelin"},
+  {"title":"Kisspeptine (Kisspeptin-10) : l'axe reproducteur","excerpt":"Issue du gène KISS1, elle pilote l'axe reproducteur en activant les neurones à GnRH : synthèse recherche.","image":"assets/images/articles/kisspeptine-cover.png","date":"8 juillet 2026","link":"/articles/kisspeptine"}
 ]
